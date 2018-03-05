@@ -8,7 +8,8 @@
 #'
 print.function <- function(x, ...) {
   tempfile <- tempfile(pattern="rhistory_felp_", fileext=".txt")
-  utils::savehistory(tempfile)
+  if(.Platform$OS.type == 'windows') savehistory <- get('savehistory')
+  savehistory(tempfile)
   cmd <- as.character(parse(text = tail(readLines(tempfile), 1)))
   # cmd <- deparse(rev(histry::histry())[[2]])
 
