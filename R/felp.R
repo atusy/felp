@@ -20,9 +20,9 @@ felp <- function(x, package = NULL, ...) {
 
   # print help
   if(is.null(package))
-    print(help(input[[1]], ...))
+    try(print(help(input[[1]], ...)))
   else
-    print(help(input[[1]], package = package[1], ...))
+    try(print(help(input[[1]], package = package[1], ...)))
 
   # print source of the function
   base::print.function(get(
