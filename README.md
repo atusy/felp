@@ -2,7 +2,6 @@
 
 felp is a short of **f**unction h**elp**.
 This package provides functions to print source and help of a function simultaneously.
-Current test version seems to be support Linux and Mac OS X, but not Windows.
 
 ## Installation
 
