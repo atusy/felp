@@ -9,7 +9,7 @@
 print.function <- function(x, ...) {
   tempfile <- tempfile(pattern="rhistory_felp_", fileext=".txt")
   if(base::.Platform$OS.type == 'windows' && base::.Platform$GUI == 'RStudio')
-    savehistory <- get('savehistory', envir = as.environment(find('RStudio.Version')))
+    savehistory <- get('savehistory', envir = as.environment('tools:rstudio'))
   savehistory(file = tempfile)
   cmd <- as.character(parse(text = tail(readLines(tempfile), 1)))
 
