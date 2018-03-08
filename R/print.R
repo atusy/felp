@@ -8,10 +8,10 @@
 #'
 print.function <- function(x, ...) {
   tempfile <- tempfile(pattern="rhistory_felp_", fileext=".txt")
-  if(.Platform$OS.type == 'windows') savehistory <- get('savehistory')
-  savehistory(tempfile)
+  if(base::.Platform$OS.type == 'windows' && base::.Platform$GUI == 'RStudio')
+    savehistory <- get('savehistory', envir = as.environment(find('RStudio.Version')))
+  savehistory(file = tempfile)
   cmd <- as.character(parse(text = tail(readLines(tempfile), 1)))
-  # cmd <- deparse(rev(histry::histry())[[2]])
 
   # return result of felp when print.function is explicitly called or via print.
   if(grepl('print(.function)?\\(', cmd)) {
