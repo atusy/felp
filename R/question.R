@@ -11,7 +11,7 @@
 #' @export
 `?.function` <- function() {
   f <- deparse(substitute(e1))
-  print.function(e1)
+  base::print.function(e1)
   help(f)
 }
 #' @rdname question
