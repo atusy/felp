@@ -19,6 +19,7 @@ Following codes provide same results to print help and source of `help`.
 
 ``` r
 ?help
+?utils::help
 felp(help)
 felp("help")
 felp(utils::help)
