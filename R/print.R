@@ -1,10 +1,7 @@
 #' Display source and help of function
 #' @param x function
 #' @param ... Other arguments passed to felp. felp is called when print.function is explicitly called or via print.
-#' @importFrom utils savehistory
-#' @importFrom utils tail
-#' @importFrom utils ?
-#' @export
+#' @importFrom utils savehistory tail ?
 #'
 print.function <- function(x, ...) {
   tempfile <- tempfile(pattern="rhistory_felp_", fileext=".txt")
