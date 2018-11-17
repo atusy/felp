@@ -11,14 +11,14 @@ felp <- function(x, package = NULL, ...) {
   x_substituted <- substitute(x)
   # convert package::name to list("name", "package", "`::`)
   # if x = name, input = list("name")
-  input <- if(is.character(x)) {
+  input <- if (is.character(x)) {
     list(x)
   } else {
     rev(lapply(x_substituted, deparse))
   }
 
   # Package to look for help of the function
-  if (!missing(package) && is.name(p <- substitute(package))) {
+  if (is.name(p <- substitute(package))) {
     package <- as.character(p)
   }
   package <- c(package, input[2][[1]])
