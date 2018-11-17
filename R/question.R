@@ -10,9 +10,9 @@
 #' @inheritParams ?
 #' @export
 `?.function` <- function() {
-  f <- deparse(substitute(e1))
-  base::print.function(e1)
-  help(f)
+  .felp <- felp
+  formals(.felp)$x <- substitute(e1)
+  .felp()
 }
 #' @rdname question
 #' @aliases ?
