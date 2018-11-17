@@ -18,7 +18,7 @@ felp <- function(x, package = NULL, ...) {
   }
 
   # Package to look for help of the function
-  if (!missing(package) && (p <- substitute(package))) {
+  if (!missing(package) && is.name(p <- substitute(package))) {
     package <- as.character(p)
   }
   package <- c(package, input[2][[1]])
