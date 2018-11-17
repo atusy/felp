@@ -4,17 +4,15 @@
 #' @param package a name or character string specifying the package for which help and source are sought. If the package is specified by x, this parameter is neglected, or NULL (default).
 #' @param ... other arguments passed to help
 #' @importFrom utils help
-#' @importFrom prettycode highlight
 #' @export
 #'
 felp <- function(x, package = NULL, ...) {
-  x_substituted <- substitute(x)
   # convert package::name to list("name", "package", "`::`)
-  # if x = name, input = list("name")
+  # if x = name or "name", input = list("name")
   input <- if (is.character(x)) {
     list(x)
   } else {
-    rev(lapply(x_substituted, deparse))
+    rev(lapply(substitute(x), deparse))
   }
 
   # Package to look for help of the function
