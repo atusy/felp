@@ -1,3 +1,7 @@
+# felp 0.1.2
+
+- Use `prettycode:::print.function()`
+
 # felp 0.1.1
 
 - Added S3 version of `?`
