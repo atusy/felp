@@ -6,7 +6,7 @@
 #' @importFrom utils help
 #' @export
 #'
-felp <- function(x, package = NULL, ...) {
+felp <- function (x, package = NULL, ...) {
   # convert package::name to list("name", "package", "`::`)
   # if x = name or "name", input = list("name")
   input <- if (is.character(x)) {
@@ -27,6 +27,6 @@ felp <- function(x, package = NULL, ...) {
   # Print source of the function
   prettycode:::print.function(get(
     input[[1]],
-    envir = `if`(is.null(package), parent.frame(), getNamespace(package))
+    envir = `if`(is.null(package), parent.frame(), asNamespace(package))
   ))
 }
