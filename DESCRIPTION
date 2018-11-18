@@ -3,10 +3,10 @@ Type: Package
 Title: Print function and its help simultaneously
 Version: 0.1.3
 Author: YASUMOTO Atsushi
-Maintainer: YASUMOTO Atsushi atusy7+felp@gmail.com
+Maintainer: YASUMOTO Atsushi <atusy7+felp@gmail.com>
 Description: Try `?help` and `help?.`.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Imports: prettycode

@@ -4,7 +4,7 @@
 \alias{?}
 \alias{?.function}
 \alias{?.default}
-\title{S3 version of base::`?`}
+\title{S3 version of [utils::`?`]}
 \usage{
 "?"(e1, e2)
 
@@ -13,5 +13,5 @@
 \method{?}{default}(e1, e2)
 }
 \description{
-S3 version of base::`?`
+S3 version of [utils::`?`]
 }
