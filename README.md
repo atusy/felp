@@ -18,6 +18,8 @@ devtools::install_github("atusy/felp")
 Following codes provide same results to print help and source of `help`.
 
 ``` r
+help?.
+utils::help?.
 ?help
 ?utils::help
 felp(help)
