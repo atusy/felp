@@ -7,7 +7,7 @@ options(repos = c(CRAN = "https://cran.ism.ac.jp/"))
 installed <- rownames(utils::installed.packages())
 
 ## Stop if callr not installed
-if(!('callr' %in% installed)) stop('Install callr to load .Rprofile') 
+if(!('callr' %in% installed)) stop('Install callr to load .Rprofile')
 
 ## Required packages on CRAN and GitHub
 
@@ -47,11 +47,11 @@ callr::r(
 # Done if interactive mode on RStudio
 
 if(interactive() && "RSTUDIO" %in% names(Sys.getenv())) {
-  
+
   ## Copy .Rprofile to project root
   if(!file.exists('.Rprofile') && dir(pattern = '\\.Rproj$') > 0)
     file.copy('~/R/.Rprofile', '.Rprofile')
-  
+
   ## Set default packages
   options(defaultPackages =
     c(getOption('defaultPackages'), cran, gh2)
@@ -60,4 +60,4 @@ if(interactive() && "RSTUDIO" %in% names(Sys.getenv())) {
 
 # Remove values
 
-rm(installed, cran, gh, gh2)
+rm(cran, cran_missing, gh, gh2, gh_missing, installed)
