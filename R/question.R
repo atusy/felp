@@ -1,4 +1,4 @@
-#' S3 version of base::`?`
+#' S3 version of [utils::`?`]
 #'
 #' @inheritParams ?
 #' @rdname question
@@ -10,6 +10,9 @@
 #' @inheritParams ?
 #' @export
 `?.function` <- function() {
+  if(!missing(e2) && as.character(substitute(e2)) != ".") {
+    NextMethod()
+  }
   .felp <- felp
   formals(.felp)$x <- substitute(e1)
   .felp()

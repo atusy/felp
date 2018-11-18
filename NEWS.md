@@ -1,3 +1,10 @@
+# felp 0.1.3
+
+- Officially support `function?.` form to print function and its help simultaneously.
+    - This feature was already present in felp 0.1.1 without knowing it.
+    - Before 0.1.3, `.` of `function?.` can be any like `function?hoge`. 
+      This behavior is changed because of conflicts with `type?topic` form of ``utils::`?` ``.
+
 # felp 0.1.2
 
 - Use `prettycode:::print.function()`
