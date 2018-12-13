@@ -6,16 +6,15 @@ source and help of a function simultaneously.
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/) with:
+Copy & paste:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("atusy/felp")
+source("https://install-github.me/atusy/felp")
 ```
 
 ## Example
 
-Following codes provide same results to print help and source of `help`.
+These provide same results to print help and source of `help`.
 
 ``` r
 help?.
@@ -26,13 +25,4 @@ felp(help)
 felp("help")
 felp(utils::help)
 felp(help, utils)
-```
-`print.function()` is also implemented to give the same results above 
-just simply entering objects name like below.
-However, `print.function()` is not exported due to a conflict with 
-RStudio's autocompletions.
-
-```r
-help
-utils::help
 ```
