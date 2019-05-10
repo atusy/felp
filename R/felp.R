@@ -21,12 +21,13 @@ felp <- function (x, package = NULL, ...) {
   }
   package <- c(package, input[2][[1]])
 
-  # Try to find help
-  try(print(help(input[[1]], package = package[1], ...)))
 
   # Print source of the function
   prettycode:::print.function(get(
     input[[1]],
     envir = `if`(is.null(package), parent.frame(), asNamespace(package))
   ))
+
+  try(help(input[[1]], package = package[1], ...))
+
 }
