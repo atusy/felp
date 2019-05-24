@@ -1,27 +1,29 @@
 #' S3 version of [utils::`?`]
 #'
-#' @inheritParams ?
+#' @param e1
+#'   A topic ought to be documented. Refer to `topic` argument described in `` utils::`?` ``.
+#' @param e2
+#'   `.` equals to `missing(e2)`. If else, see `type` argument described in `` utils::`?` ``.
 #' @rdname question
 #' @aliases ?
 #' @export
-`?` <- function() UseMethod("?")
+`?` <- function(e1, e2) UseMethod("?")
+
 #' @rdname question
 #' @aliases ?
-#' @inheritParams ?
 #' @export
-`?.function` <- function() {
-  if(!missing(e2) && as.character(substitute(e2)) != ".") {
-    NextMethod()
-  }
-  .felp <- felp
-  formals(.felp)$x <- substitute(e1)
-  .felp()
+`?.function` <- function(e1, e2) {
+  if (!missing(e2) && as.character(substitute(e2)) != ".") NextMethod()
+  do.call(felp, list(topic = substitute(e1)))
 }
+
 #' @rdname question
 #' @aliases ?
-#' @inheritParams ?
 #' @importFrom utils ?
 #' @export
-`?.default` <- utils::"?"
-
-formals(`?`) <- formals(`?.function`) <- formals(`?.default`)
+`?.default` <- function(e1, e2) {
+  .arg <- list(e1 = substitute(e1))
+  .e2 <- substitute(e2)
+  if (!missing(.e2) && as.character(.e2) != ".") .arg$e2 <- .e2
+  do.call(utils::"?", .arg)
+}

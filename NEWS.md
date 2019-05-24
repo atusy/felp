@@ -1,3 +1,15 @@
+# felp 0.1.3.9000
+
+# Major changes
+
+- `felp()` has more consistent arguments to `utils::help` by changing
+  a name of first argument to "topic" from "x".
+- Pseudo-postfix operator `?.` supports arguments other than fucntions.
+
+# Minor changes
+
+- `felp()` is simplified.
+
 # felp 0.1.3
 
 - Officially support `function?.` form to print function and its help simultaneously.

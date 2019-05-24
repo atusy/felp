@@ -12,6 +12,11 @@
 
 \method{?}{default}(e1, e2)
 }
+\arguments{
+\item{e1}{A topic ought to be documented. Refer to `topic` argument described in `` utils::`?` ``.}
+
+\item{e2}{`.` equals to `missing(e2)`. If else, see `type` argument described in `` utils::`?` ``.}
+}
 \description{
 S3 version of [utils::`?`]
 }
