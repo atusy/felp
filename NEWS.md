@@ -1,14 +1,13 @@
-# felp 0.1.3.9000
+# felp 0.2.0
 
 # Major changes
 
-- `felp()` has more consistent arguments to `utils::help` by changing
-  a name of first argument to "topic" from "x".
+- `felp()` and `?` returns structure of a value specified to the first argument
+  if possible. If function is specified, the source of function is returned 
+  instead of the structure.
+- `felp()`'s argument is updated to be completely consistent to `utils::help`.
 - Pseudo-postfix operator `?.` supports arguments other than fucntions.
-
-# Minor changes
-
-- `felp()` is simplified.
+- Pseudo-postfix operator `?p` is added to display document of a package.
 
 # felp 0.1.3
 
