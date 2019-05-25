@@ -2,21 +2,21 @@
 % Please edit documentation in R/question.R
 \name{?}
 \alias{?}
-\alias{?.function}
-\alias{?.default}
-\title{S3 version of \link[utils:`?`]{utils::?}}
+\title{Functional help with \code{?} operator}
 \usage{
 "?"(e1, e2)
-
-\method{?}{function}(e1, e2)
-
-\method{?}{default}(e1, e2)
 }
 \arguments{
-\item{e1}{A topic ought to be documented. Refer to \code{topic} argument described in \code{utils::`?`}.}
+\item{e1}{A topic ought to be documented.
+Refer to \code{topic} argument described in \code{utils::`?`}.}
 
-\item{e2}{\code{.} equals to \code{missing(e2)}. If else, see \code{type} argument described in \code{utils::`?`}.}
+\item{e2}{\code{.} equals to \code{missing(e2)}.
+If else, see \code{type} argument described in \code{utils::`?`}.}
 }
 \description{
-S3 version of \link[utils:`?`]{utils::?}
+Displays help and structure of an object.
+A special syntax \code{?.} is supported in addition to
+the one in \code{utils::?}.
+\code{?.} works as if it is a postfix operator.
+For example, \code{help?.} is equivalent to \code{?help}.
 }

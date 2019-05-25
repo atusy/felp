@@ -20,5 +20,4 @@ felp <- function(topic, package = NULL, ...) {
   str(get(t[1L], envir = `if`(is.null(p), parent.frame(), asNamespace(p))))
 
   try(help(t[1L], p[1L], ...))
-
 }
