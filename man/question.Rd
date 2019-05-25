@@ -7,16 +7,15 @@
 "?"(e1, e2)
 }
 \arguments{
-\item{e1}{A topic ought to be documented.
+\item{e1}{A topic of document.
 Refer to \code{topic} argument described in \code{utils::`?`}.}
 
-\item{e2}{\code{.} equals to \code{missing(e2)}.
-If else, see \code{type} argument described in \code{utils::`?`}.}
+\item{e2}{\code{.} and \code{p} have special meanings as documented above.
+Otherwise, \code{e2} is same as \code{type} argument of \code{utils::`?`}.}
 }
 \description{
-Displays help and structure of an object.
-A special syntax \code{?.} is supported in addition to
-the one in \code{utils::?}.
-\code{?.} works as if it is a postfix operator.
-For example, \code{help?.} is equivalent to \code{?help}.
+Displays help and structure of an object, or help of a package.
+Two syntaxes are added to those of \code{utils::?}.
+One is \code{object?.} which works as if \code{?object}.
+Another is \code{package?p} which works as if \code{help(package = package)}
 }
