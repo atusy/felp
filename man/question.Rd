@@ -4,7 +4,7 @@
 \alias{?}
 \alias{?.function}
 \alias{?.default}
-\title{S3 version of [utils::`?`]}
+\title{S3 version of \link[utils:`?`]{utils::?}}
 \usage{
 "?"(e1, e2)
 
@@ -13,10 +13,10 @@
 \method{?}{default}(e1, e2)
 }
 \arguments{
-\item{e1}{A topic ought to be documented. Refer to `topic` argument described in `` utils::`?` ``.}
+\item{e1}{A topic ought to be documented. Refer to \code{topic} argument described in \code{utils::`?`}.}
 
-\item{e2}{`.` equals to `missing(e2)`. If else, see `type` argument described in `` utils::`?` ``.}
+\item{e2}{\code{.} equals to \code{missing(e2)}. If else, see \code{type} argument described in \code{utils::`?`}.}
 }
 \description{
-S3 version of [utils::`?`]
+S3 version of \link[utils:`?`]{utils::?}
 }

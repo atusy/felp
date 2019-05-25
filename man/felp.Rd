@@ -2,17 +2,43 @@
 % Please edit documentation in R/felp.R
 \name{felp}
 \alias{felp}
-\title{Returns source and help of a function simultaneously}
+\title{Functional help which displays structure an object in addition to help}
 \usage{
 felp(topic, package = NULL, ...)
 }
 \arguments{
-\item{topic}{A name or character string specifying the function for which help and source are sought. Package to be sought can also be defined simultaneously if x is specified in the style of package::name or package:::name}
+\item{topic}{usually, a \link{name} or character string specifying the
+   topic for which help is sought.  A character string (enclosed in
+   explicit single or double quotes) is always taken as naming a topic.
 
-\item{package}{A name or character string specifying the package for which help and source are sought. If the package is specified by x, this parameter is neglected, or NULL (default).}
+   If the value of \code{topic} is a length-one
+   character vector the topic is taken to be the value of the only
+   element.  Otherwise \code{topic} must be a name or a \link{reserved}
+   word (if syntactically valid) or character string.
 
-\item{...}{Other arguments passed to help}
+   See \sQuote{Details} for what happens if this is omitted.
+ }
+
+\item{package}{a name or character vector giving the packages to look
+   into for documentation, or \code{NULL}.  By default, all packages
+   whose namespaces are loaded are used.  To avoid a name being deparsed use e.g.
+   \code{(pkg_ref)} (see the examples).}
+
+\item{...}{Arguments passed on to \code{utils::help}
+\describe{
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+   or \code{NULL}.  The default value of \code{NULL} corresponds to all
+   libraries currently known.  If the default is used, the loaded
+   packages are searched before the libraries.  This is not used for
+   HTML help (see \sQuote{Details}).}
+  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
+  \item{try.all.packages}{logical; see \code{Note}.}
+  \item{help_type}{character string: the type of help required.
+   Possible values are \code{"text"}, \code{"html"} and \code{"pdf"}.
+   Case is ignored, and partial matching is allowed.}
+}}
 }
 \description{
-Returns source and help of a function simultaneously
+Structure of object is returned by \code{str()}.
+For a function, its source is returned instead of \code{str()}.
 }
