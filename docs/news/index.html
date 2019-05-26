@@ -104,6 +104,51 @@
     <div id="felp-020" class="section level1">
 <h1 class="page-header">
 <a href="#felp-020" class="anchor"></a>felp 0.2.0</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>
+<code><a href="../reference/felp.html">felp()</a></code> and <code>?</code> returns structure of a value specified to the first argument if possible. If function is specified, the source of function is returned instead of the structure.</li>
+<li>
+<code><a href="../reference/felp.html">felp()</a></code>
+<ul>
+<li>improves consistency with <code><a href="https://www.rdocumentation.org/packages/utils/topics/help">utils::help</a></code> in terms of arguments</li>
+<li>supports to display package documentation just like <code><a href="https://www.rdocumentation.org/packages/utils/topics/help">help(package = )</a></code>
+</li>
+</ul>
+</li>
+<li>Pseudo-postfix operators
+<ul>
+<li>
+<code>?.</code> supports arguments other than fucntions.</li>
+<li>
+<code>?p</code> is added to display document of a package.</li>
+</ul>
+</li>
+<li>Updates on documents with <code>pkgdown</code> site</li>
+</ul>
+</div>
+</div>
+    <div id="felp-0139000" class="section level1">
+<h1 class="page-header">
+<a href="#felp-0139000" class="anchor"></a>felp 0.1.3.9000</h1>
+<p>Tagged, but not released.</p>
+<div id="major-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<ul>
+<li>felp() has more consistent arguments to utils::help by changing a name of first argument to “topic” from “x”.</li>
+<li>Pseudo-postfix operator ?. supports arguments other than fucntions.</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>felp() is simplified.</li>
+</ul>
+</div>
 </div>
     <div id="felp-013" class="section level1">
 <h1 class="page-header">
@@ -173,6 +218,7 @@
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#felp-020">0.2.0</a></li>
+        <li><a href="#felp-0139000">0.1.3.9000</a></li>
         <li><a href="#felp-013">0.1.3</a></li>
         <li><a href="#felp-012">0.1.2</a></li>
         <li><a href="#felp-011">0.1.1</a></li>

@@ -1,6 +1,6 @@
 # felp 0.2.0
 
-# Major changes
+## Major changes
 
 - `felp()` and `?` returns structure of a value specified to the first argument
   if possible. If function is specified, the source of function is returned 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/felp.R
 \name{felp}
 \alias{felp}
-\title{Functional help which displays structure an object in addition to help}
+\title{Functional help which displays structure of an object in addition to help}
 \usage{
 felp(topic, package = NULL, ...)
 }
