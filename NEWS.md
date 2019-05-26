@@ -1,5 +1,8 @@
 # felp 0.2.0
 
+`felp` is now a short of "**f**unctional h**elp**" to help things in addition to functions. 
+It was formerly "**f**unction h**elp**"
+
 ## Major changes
 
 - `felp()` and `?` returns structure of a value specified to the first argument
