@@ -1,0 +1,83 @@
+---
+title: "felp"
+output: 
+  rmarkdown::html_vignette: default
+vignette: >
+  %\VignetteIndexEntry{felp}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{css, echo = FALSE}
+h1 {
+  color: darkblue;
+}
+```
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "",
+  class.output = "text"
+)
+```
+
+```{r setup, include = FALSE}
+library(felp)
+library(printr) # To include documents output by `?` in this article
+```
+
+```{r setup-echo, ref.label='setup', eval = FALSE}
+
+```
+
+The `felp` package provides
+
+- the `?.` pseudo-post fix operator to simultaneously display a help document
+  and a structure of an object
+- the `?p` pseudo-post fix operator to display document of a package
+- the `felp` function and `?` operator to extend `help` and `?` in the `utils` package
+  by displaying structure of an object
+
+# Syntax
+
+``` r
+# ? as a prefix operator
+?help
+?utils::help
+
+# ?. as a pseudo postfix operator for functions and objects
+help?.
+utils::help?.
+
+# ?p as a pseudo postfix operator fur packages
+utils?.
+
+# felp as an extention of utils::help
+felp(help)
+felp("help")
+felp(utils::help)
+felp(help, utils)
+felp(package = utils)
+```
+
+# felp(function)
+
+```{r fun, attr.output=".r"}
+felp?. # and `felp(felp)` return source and document of `felp` function
+```
+
+
+# felp(dataset)
+
+```{r data}
+dummy?. # and `felp(dummy)` return sructure and document of `dummy` dataset.
+```
+
+# felp(package)
+
+```{r pkg}
+felp?p # and `felp(package = felp)` return document of `felp` package
+```
+
