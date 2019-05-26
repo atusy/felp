@@ -28,7 +28,7 @@ help?.
 utils::help?.
 
 # ?p pseudo postfix operator for packages
-utils?.
+utils?p
 
 # felp as an extention of utils::help
 felp(help)
