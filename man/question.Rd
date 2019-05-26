@@ -2,21 +2,20 @@
 % Please edit documentation in R/question.R
 \name{?}
 \alias{?}
-\alias{?.function}
-\alias{?.default}
-\title{S3 version of [utils::`?`]}
+\title{Functional help with \code{?} operator}
 \usage{
 "?"(e1, e2)
-
-\method{?}{function}(e1, e2)
-
-\method{?}{default}(e1, e2)
 }
 \arguments{
-\item{e1}{A topic ought to be documented. Refer to `topic` argument described in `` utils::`?` ``.}
+\item{e1}{A topic of document.
+Refer to \code{topic} argument described in \code{utils::`?`}.}
 
-\item{e2}{`.` equals to `missing(e2)`. If else, see `type` argument described in `` utils::`?` ``.}
+\item{e2}{\code{.} and \code{p} have special meanings as documented above.
+Otherwise, \code{e2} is same as \code{type} argument of \code{utils::`?`}.}
 }
 \description{
-S3 version of [utils::`?`]
+Displays help and structure of an object, or help of a package.
+Two syntaxes are added to those of \code{utils::?}.
+One is \code{object?.} which works as if \code{?object}.
+Another is \code{package?p} which works as if \code{help(package = package)}
 }
