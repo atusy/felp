@@ -1,6 +1,6 @@
 # felp
 
-`felp` is a short of **f**unctional h**elp**
+`felp` is a short of **f**unctional h**elp**, and provides
 
 - the `?.` pseudo-post fix operator to simultaneously display a help document
   and a structure of an object
