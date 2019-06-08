@@ -1,3 +1,5 @@
+[![Travis build status](https://travis-ci.org/atusy/felp.svg?branch=master)](https://travis-ci.org/atusy/felp) [![Codecov test coverage](https://codecov.io/gh/atusy/felp/branch/master/graph/badge.svg)](https://codecov.io/gh/atusy/felp?branch=master)
+
 # felp
 
 `felp` is a short of **f**unctional h**elp**, and provides

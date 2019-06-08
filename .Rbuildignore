@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 \.Rprofile
 docs
+^\.travis\.yml$
+^codecov\.yml$
