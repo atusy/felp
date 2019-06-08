@@ -1,17 +1,17 @@
 Package: felp
 Type: Package
 Title: Functional help for functions, objects, and packages
-Version: 0.2.0
-Author: YASUMOTO Atsushi [aut, cph, cre]
+Version: 0.2.1
+Author: YASUMOTO Atsushi [aut, cph, cre] (<https://orcid.org/0000-0002-8335-495X>)
 Authors@R: c(
         person(
             given = "YASUMOTO Atsushi",
             role = c("aut", "cph", "cre"),
-            email = "atusy7+felp@gmail.com",
+            email = "atusy.7+felp@gmail.com",
             comment = c(ORCID = "0000-0002-8335-495X")
         )
     )
-Maintainer: YASUMOTO Atsushi <atusy7+felp@gmail.com>
+Maintainer: YASUMOTO Atsushi <atusy.7+felp@gmail.com>
 Description: This package extends utils::`?` by pseudo-postfix operators `?.` for objects and `?p` for packages. For objects, a result of `str` or `print.function` is also displayed.
 URL: https://github.com/atusy/felp
 BugReports: https://github.com/atusy/felp/issues
