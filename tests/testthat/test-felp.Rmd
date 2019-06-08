@@ -1,0 +1,23 @@
+---
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(printr)
+library(felp)
+```
+
+
+```{r}
+felp(identity)
+```
+
+```{r}
+felp(iris)
+```
+
+```{r}
+felp(package = base)
+```
+
