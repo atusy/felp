@@ -2,7 +2,7 @@
 #'
 #' @noRd
 #'
-#' @importFrom utils str
+#' @importFrom utils str getFromNamespace
 str.function <- function(object, ...) {
-  prettycode:::print.function(object, ...)
+  getFromNamespace("print.function", "prettycode")(object, ...)
 }
