@@ -17,6 +17,6 @@ felp(felp:::dummy)
 ```
 
 ```{r}
-felp(package = utils)
+felp(package = felp)
 ```
 
