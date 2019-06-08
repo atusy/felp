@@ -8,7 +8,6 @@ fortran: false
 
 jobs:
   include:
-  - r: oldrel
   - r: release
   - r: devel
   - os: osx
