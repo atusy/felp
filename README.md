@@ -1,4 +1,4 @@
-[![Travis build status](https://travis-ci.org/atusy/felp.svg?branch=master)](https://travis-ci.org/atusy/felp) [![Codecov test coverage](https://codecov.io/gh/atusy/felp/branch/master/graph/badge.svg)](https://codecov.io/gh/atusy/felp?branch=master)
+[![Travis build status](https://travis-ci.org/atusy/felp.svg?branch=master)](https://travis-ci.org/atusy/felp) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/atusy/felp?branch=master&svg=true)](https://ci.appveyor.com/project/atusy/felp) [![Codecov test coverage](https://codecov.io/gh/atusy/felp/branch/master/graph/badge.svg)](https://codecov.io/gh/atusy/felp?branch=master)
 
 # felp
 
