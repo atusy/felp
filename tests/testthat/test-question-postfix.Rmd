@@ -10,14 +10,14 @@ library(felp)
 
 
 ```{r}
-felp(identity)
+identity?.
 ```
 
 ```{r}
-felp(iris)
+iris?.
 ```
 
 ```{r}
-felp(package = base)
+base?p
 ```
 
