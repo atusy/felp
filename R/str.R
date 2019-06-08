@@ -2,7 +2,7 @@
 #'
 #' @noRd
 #'
-#' @importFrom utils str getFromNamespace
+#' @importFrom utils str
 str.function <- function(object, ...) {
-  getFromNamespace("print.function", "prettycode")(object, ...)
+  get("print.function", envir = asNamespace("prettycode"))(object, ...)
 }
