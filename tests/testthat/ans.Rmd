@@ -9,14 +9,16 @@ library(printr)
 
 
 ```{r}
-felp(identity)
+print(identity)
+help(identity)
 ```
 
 ```{r}
-felp(iris)
+str(iris)
+help(iris)
 ```
 
 ```{r}
-felp(package = base)
+help(package = base)
 ```
 

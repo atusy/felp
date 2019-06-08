@@ -1,9 +1,4 @@
-test_that("multiplication works", {
-  rmarkdown::render("test-felp.Rmd", output_file =  "test-felp-ans.md", encoding = "UTF-8", quiet = TRUE)
-  tst <- readLines("test-felp.md")
-  ans <- readLines("test-felp-ans.md")
-  expect_identical(
-    tst[!grepl("^    ## <bytecode:", tst)],
-    ans[!grepl("^    ## <bytecode:", ans)]
-  )
+test_that("felp works as if str + help", {
+  rmarkdown::render("test-felp.Rmd", encoding = "UTF-8", quiet = TRUE)
+  expect_identical_except_bytecode("test-felp.md", "ans.md")
 })
