@@ -5,7 +5,7 @@
 #'
 #' @inheritParams utils::help
 #' @inheritDotParams utils::help -topic -package
-#' @importFrom utils help
+#' @importFrom utils help str
 #' @export
 #'
 felp <- function(topic, package = NULL, ...) {

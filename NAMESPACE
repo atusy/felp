@@ -3,6 +3,5 @@
 export("?")
 export(felp)
 importFrom(utils,"?")
-importFrom(utils,getFromNamespace)
 importFrom(utils,help)
 importFrom(utils,str)
