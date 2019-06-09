@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">felp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -52,7 +52,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/atusy/felp">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -67,7 +74,7 @@
       <h1>felp</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/atusy/felp/blob/master/vignettes/felp.Rmd"><code>vignettes/felp.Rmd</code></a></small>
       <div class="hidden name"><code>felp.Rmd</code></div>
 
     </div>
@@ -126,7 +133,7 @@ h1 {
 <a class="sourceLine" id="cb4-12" title="12">    <span class="cf">else</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-internal">asNamespace</a></span>(p)))</a>
 <a class="sourceLine" id="cb4-13" title="13">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/try">try</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/help">help</a></span>(t[1L], p[1L], ...))</a>
 <a class="sourceLine" id="cb4-14" title="14">}</a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x5560eaf6f598</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x558893401960</span><span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb4-16" title="16"><span class="er">&lt;</span>environment<span class="op">:</span><span class="st"> </span>namespace<span class="op">:</span>felp<span class="op">&gt;</span></a></code></pre></div>
 <div class="r-help-page">
 <table class="table"><tr>
@@ -138,7 +145,7 @@ R Documentation
 </td>
 </tr></table>
 <h2>
-Functional help which displays structure an object in addition to help
+Functional help which displays structure of an object in addition to help
 </h2>
 <h3>
 Description
@@ -281,12 +288,18 @@ Type:               Package
 Title:              Functional help for functions, objects, and
                     packages
 Version:            0.2.0
-Author:             YASUMOTO Atsushi
+Author:             YASUMOTO Atsushi [aut, cph, cre]
+Authors@R:          c( person( given = "YASUMOTO Atsushi", role =
+                    c("aut", "cph", "cre"), email =
+                    "atusy7+felp@gmail.com", comment = c(ORCID =
+                    "0000-0002-8335-495X") ) )
 Maintainer:         YASUMOTO Atsushi &lt;atusy7+felp@gmail.com&gt;
 Description:        This package extends utils::`?` by
                     pseudo-postfix operators `?.` for objects and
                     `?p` for packages. For objects, a result of
                     `str` or `print.function` is also displayed.
+URL:                https://github.com/atusy/felp
+BugReports:         https://github.com/atusy/felp/issues
 License:            MIT + file LICENSE
 Encoding:           UTF-8
 LazyData:           true
@@ -300,20 +313,20 @@ RemoteHost:         api.github.com
 RemoteRepo:         felp
 RemoteUsername:     atusy
 RemoteRef:          master
-RemoteSha:          f03cc64e28e7f1a37e653ba406e905b854b33e1f
+RemoteSha:          dad4f6990cc1370f024fb563ebf80b5d3ad0da53
 GithubRepo:         felp
 GithubUsername:     atusy
 GithubRef:          master
-GithubSHA1:         f03cc64e28e7f1a37e653ba406e905b854b33e1f
+GithubSHA1:         dad4f6990cc1370f024fb563ebf80b5d3ad0da53
 NeedsCompilation:   no
-Packaged:           2019-05-26 01:24:04 UTC; rstudio
-Built:              R 3.6.0; ; 2019-05-26 01:24:05 UTC; unix
+Packaged:           2019-06-08 07:43:12 UTC; root
+Built:              R 3.6.0; ; 2019-06-08 07:43:13 UTC; unix
 
 Index:
 
 ?                       Functional help with '?' operator
 dummy                   A dummy data for felp
-felp                    Functional help which displays structure an
+felp                    Functional help which displays structure of an
                         object in addition to help</code></pre>
 </div>
   </div>
