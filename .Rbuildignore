@@ -5,3 +5,5 @@ docs
 ^\.travis\.yml$
 ^codecov\.yml$
 ^appveyor\.yml$
+^cran-comments.md
+^LICENSE\.md$
