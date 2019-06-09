@@ -15,7 +15,7 @@ Otherwise, \code{e2} is same as \code{type} argument of \code{utils::`?`}.}
 }
 \description{
 Displays help and structure of an object, or help of a package.
-Two syntaxes are added to those of \code{utils::?}.
+Two syntax sugars are added to enhance \code{utils::?}.
 One is \code{object?.} which works as if \code{?object}.
 Another is \code{package?p} which works as if \code{help(package = package)}
 }
