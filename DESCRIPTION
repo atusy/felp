@@ -32,3 +32,4 @@ Suggests:
     covr
 VignetteBuilder:
     knitr
+Language: en-US
