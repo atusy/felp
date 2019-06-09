@@ -2,6 +2,7 @@
 
 - local: x86_64-pc-linux-gnu
 - travis: release, devel, osx release
+- appveyor: release
 - win-builder: windows-x86_64-release
 
 ## R CMD check results
