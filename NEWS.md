@@ -1,3 +1,11 @@
+# felp 0.2.1
+
+Just internal changes and tests to be ready on CRAN.
+
+- Refactored to suppress notes
+- Add tests
+- Use Travis CI, Appveyor, Codecov for test with CI and visualize code coverage.
+
 # felp 0.2.0
 
 `felp` is now a short of "**f**unctional h**elp**" to help things in addition to functions. 
