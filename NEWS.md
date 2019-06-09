@@ -4,7 +4,7 @@ Just internal changes and tests to be ready on CRAN.
 
 - Refactored to suppress notes
 - Add tests
-- Use Travis CI, Appveyor, Codecov for test with CI and visualize code coverage.
+- Use Travis CI, AppVeyor, Codecov for test with CI and visualize code coverage.
 
 # felp 0.2.0
 
@@ -20,7 +20,7 @@ It was formerly "**f**unction h**elp**"
     - improves consistency with `utils::help` in terms of arguments
     - supports to display package documentation just like `help(package = )`
 - Pseudo-postfix operators
-    - `?.` supports arguments other than fucntions.
+    - `?.` supports arguments other than functions.
     - `?p` is added to display document of a package.
 - Updates on documents with `pkgdown` site
 
@@ -31,7 +31,7 @@ Tagged, but not released.
 ## Major changes
 
 - felp() has more consistent arguments to utils::help by changing a name of first argument to "topic" from "x".
-- Pseudo-postfix operator ?. supports arguments other than fucntions.
+- Pseudo-postfix operator ?. supports arguments other than functions.
 
 ## Minor changes
 
@@ -54,7 +54,7 @@ Tagged, but not released.
 - Added S3 version of `?`
     - A method `?.function` provides `print.function()` and `help()` simultaneously.
     - A default method `?.default` is equivalent to utils::`?`
-- Unexported `print.function` as it may conflict with autocompletions of RStudio.
+- Unexported `print.function` as it may conflict with auto-completions of RStudio.
 
 ## Help wanted
 

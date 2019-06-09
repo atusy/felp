@@ -1,7 +1,7 @@
 #' Functional help with `?` operator
 #'
 #' Displays help and structure of an object, or help of a package.
-#' Two syntaxes are added to those of `utils::?`.
+#' Two syntax sugars are added to enhance `utils::?`.
 #' One is `object?.` which works as if `?object`.
 #' Another is `package?p` which works as if `help(package = package)`
 #'
