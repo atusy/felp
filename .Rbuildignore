@@ -7,3 +7,4 @@ docs
 ^appveyor\.yml$
 ^cran-comments.md
 ^LICENSE\.md$
+^CRAN-RELEASE$
