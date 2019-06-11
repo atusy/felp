@@ -1,3 +1,11 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+- Rewritten the Description field to clarify the purpose and the usefulness of the package.
+- Un-capitalized my name in the Author field and Authors@R field
+- Added executable examples in Rd-files
+
 ## Test environments
 
 - local: x86_64-pc-linux-gnu
