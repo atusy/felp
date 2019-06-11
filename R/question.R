@@ -15,6 +15,18 @@
 #' @rdname question
 #' @aliases ?
 #'
+#' @examples
+#' # Identical to help(identity); print(identity)
+#' ?identity
+#' identity?.  # The same
+#'
+#' # Identical to help(iris); str(iris)
+#' ?iris
+#' iris?.  # The same
+#'
+#' # Identical to help(package = MASS)
+#' MASS?p
+#'
 #' @importFrom utils ?
 #' @export
 `?` <-  function(e1, e2) {

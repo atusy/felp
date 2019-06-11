@@ -42,3 +42,15 @@ felp(topic, package = NULL, ...)
 Structure of object is returned by \code{str()}.
 For a function, its source is returned instead of \code{str()}.
 }
+\examples{
+# Identical to help(identity); print(identity)
+felp(identity)
+
+# Identical to help(iris); str(iris)
+felp(iris)
+
+# Identical to help(package = MASS)
+felp(package = MASS)
+
+
+}

@@ -5,6 +5,18 @@
 #'
 #' @inheritParams utils::help
 #' @inheritDotParams utils::help -topic -package
+#'
+#' @examples
+#' # Identical to help(identity); print(identity)
+#' felp(identity)
+#'
+#' # Identical to help(iris); str(iris)
+#' felp(iris)
+#'
+#' # Identical to help(package = MASS)
+#' felp(package = MASS)
+#'
+#'
 #' @importFrom utils help str
 #' @export
 #'

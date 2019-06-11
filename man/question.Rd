@@ -19,3 +19,16 @@ Two syntax sugars are added to enhance \code{utils::?}.
 One is \code{object?.} which works as if \code{?object}.
 Another is \code{package?p} which works as if \code{help(package = package)}
 }
+\examples{
+# Identical to help(identity); print(identity)
+?identity
+identity?.  # The same
+
+# Identical to help(iris); str(iris)
+?iris
+iris?.  # The same
+
+# Identical to help(package = MASS)
+MASS?p
+
+}
