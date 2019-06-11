@@ -2,17 +2,20 @@ Package: felp
 Type: Package
 Title: Functional Help for Functions, Objects, and Packages
 Version: 0.2.1
-Author: YASUMOTO Atsushi [aut, cph, cre] (<https://orcid.org/0000-0002-8335-495X>)
+Author: Atsushi Yasumoto [aut, cph, cre] (<https://orcid.org/0000-0002-8335-495X>)
 Authors@R: c(
         person(
-            given = "YASUMOTO Atsushi",
+            given = "Atsushi", family = "Yasumoto",
             role = c("aut", "cph", "cre"),
             email = "atusy.rpkg@gmail.com",
             comment = c(ORCID = "0000-0002-8335-495X")
         )
     )
 Maintainer: YASUMOTO Atsushi <atusy.rpkg@gmail.com>
-Description: Display a document and a content (source or structure) of an object simultaneously by pseudo-postfix operator `?.`. Display a package document by pseudo-postfix operator `?p`.
+Description:
+    Provides postfix operators and more to enhance displaying documents.
+    The `?.` postfix operator and the `?` prefix operator displays documents and contents (source or structure) of objects simultaneously to help understanding the objects.
+    The `?p` postfix operator displays package documents, and is shorter than help(package = foo).
 URL: https://github.com/atusy/felp
 BugReports: https://github.com/atusy/felp/issues
 License: MIT + file LICENSE
