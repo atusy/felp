@@ -3,7 +3,7 @@
 This is a resubmission. In this version I have:
 
 - Rewritten the Description field to clarify the purpose and the usefulness of the package.
-- Un-capitalized my name in the Author field and Authors@R field
+- Un-capitalized my name in the Author, the Authors@R, and the Maintainer fields
 - Added executable examples in Rd-files
 
 ## Test environments
