@@ -11,7 +11,7 @@ Authors@R: c(
             comment = c(ORCID = "0000-0002-8335-495X")
         )
     )
-Maintainer: Atsushi Yasumto <atusy.rpkg@gmail.com>
+Maintainer: Atsushi Yasumoto <atusy.rpkg@gmail.com>
 Description:
     Provides postfix operators and more to enhance displaying documents.
     The `?.` postfix operator and the `?` prefix operator displays documents and contents (source or structure) of objects simultaneously to help understanding the objects.
