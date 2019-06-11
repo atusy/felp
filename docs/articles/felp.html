@@ -119,22 +119,23 @@ h1 {
 <h1 class="hasAnchor">
 <a href="#felpfunction" class="anchor"></a>felp(function)</h1>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">felp?. <span class="co"># and `felp(felp)` return source and document of `felp` function</span></a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode text r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="cf">function</span> (topic, <span class="dt">package =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb4-2" title="2">{</a>
-<a class="sourceLine" id="cb4-3" title="3">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/missing">missing</a></span>(topic)) </a>
-<a class="sourceLine" id="cb4-4" title="4">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/do.call">do.call</a></span>(help, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">package =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substitute">substitute</a></span>(package), </a>
-<a class="sourceLine" id="cb4-5" title="5">            ...)))</a>
-<a class="sourceLine" id="cb4-6" title="6">    t &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rev">rev</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substitute">substitute</a></span>(topic)))</a>
-<a class="sourceLine" id="cb4-7" title="7">    p &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substitute">substitute</a></span>(package)), t[2L])[1L]</a>
-<a class="sourceLine" id="cb4-8" title="8">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(p)) </a>
-<a class="sourceLine" id="cb4-9" title="9">        p &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb4-10" title="10">    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/get">get</a></span>(t[1L], <span class="dt">envir =</span> <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(p)) </a>
-<a class="sourceLine" id="cb4-11" title="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sys.parent">parent.frame</a></span>()</a>
-<a class="sourceLine" id="cb4-12" title="12">    <span class="cf">else</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-internal">asNamespace</a></span>(p)))</a>
-<a class="sourceLine" id="cb4-13" title="13">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/try">try</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/help">help</a></span>(t[1L], p[1L], ...))</a>
-<a class="sourceLine" id="cb4-14" title="14">}</a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x5634a419d558</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="er">&lt;</span>environment<span class="op">:</span><span class="st"> </span>namespace<span class="op">:</span>felp<span class="op">&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode text r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="cf">function</span>(topic, <span class="dt">package =</span> <span class="ot">NULL</span>, ...) {</a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="co"># Display package document</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/missing">missing</a></span>(topic)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/do.call">do.call</a></span>(help, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">package =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substitute">substitute</a></span>(package), ...)))</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="co"># Convert `package::name` to c("name", "package", "`::`") or `name` to "name"</span></a>
+<a class="sourceLine" id="cb4-6" title="6">  t &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rev">rev</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substitute">substitute</a></span>(topic)))</a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8">  p &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substitute">substitute</a></span>(package)), t[2L])[1L]</a>
+<a class="sourceLine" id="cb4-9" title="9">  <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(p)) p &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11">  <span class="co"># Display structure and document of an object</span></a>
+<a class="sourceLine" id="cb4-12" title="12">  <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/get">get</a></span>(t[1L], <span class="dt">envir =</span> <span class="st">`</span><span class="dt">if</span><span class="st">`</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(p), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sys.parent">parent.frame</a></span>(), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-internal">asNamespace</a></span>(p))))</a>
+<a class="sourceLine" id="cb4-13" title="13"></a>
+<a class="sourceLine" id="cb4-14" title="14">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/try">try</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/help">help</a></span>(t[1L], p[1L], ...))</a>
+<a class="sourceLine" id="cb4-15" title="15">}</a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x55b46942bbb0</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="er">&lt;</span>environment<span class="op">:</span><span class="st"> </span>namespace<span class="op">:</span>felp<span class="op">&gt;</span></a></code></pre></div>
 <div class="r-help-page">
 <table class="table"><tr>
 <td>
@@ -234,6 +235,21 @@ character string: the type of help required. Possible values are <code>â€œtextâ€
 </td>
 </tr>
 </table>
+<h3>
+Examples
+</h3>
+<pre class="r">
+# Identical to help(identity); print(identity)
+felp(identity)
+
+# Identical to help(iris); str(iris)
+felp(iris)
+
+# Identical to help(package = MASS)
+felp(package = MASS)
+
+
+</pre>
 </div>
 </div>
 <div id="felpdataset" class="section level1">
@@ -283,44 +299,39 @@ An object of class <code>list</code> of length 2.
 
 Description:
 
-Package:            felp
-Type:               Package
-Title:              Functional help for functions, objects, and
-                    packages
-Version:            0.2.0
-Author:             YASUMOTO Atsushi [aut, cph, cre]
-Authors@R:          c( person( given = "YASUMOTO Atsushi", role =
-                    c("aut", "cph", "cre"), email =
-                    "atusy7+felp@gmail.com", comment = c(ORCID =
-                    "0000-0002-8335-495X") ) )
-Maintainer:         YASUMOTO Atsushi &lt;atusy7+felp@gmail.com&gt;
-Description:        This package extends utils::`?` by
-                    pseudo-postfix operators `?.` for objects and
-                    `?p` for packages. For objects, a result of
-                    `str` or `print.function` is also displayed.
-URL:                https://github.com/atusy/felp
-BugReports:         https://github.com/atusy/felp/issues
-License:            MIT + file LICENSE
-Encoding:           UTF-8
-LazyData:           true
-Roxygen:            list(markdown = TRUE)
-RoxygenNote:        6.1.1
-Imports:            prettycode
-Suggests:           knitr, pkgdown, printr, rmarkdown, roxygen2
-VignetteBuilder:    knitr
-RemoteType:         github
-RemoteHost:         api.github.com
-RemoteRepo:         felp
-RemoteUsername:     atusy
-RemoteRef:          master
-RemoteSha:          dad4f6990cc1370f024fb563ebf80b5d3ad0da53
-GithubRepo:         felp
-GithubUsername:     atusy
-GithubRef:          master
-GithubSHA1:         dad4f6990cc1370f024fb563ebf80b5d3ad0da53
-NeedsCompilation:   no
-Packaged:           2019-06-08 07:43:12 UTC; root
-Built:              R 3.6.0; ; 2019-06-08 07:43:13 UTC; unix
+Package:           felp
+Type:              Package
+Title:             Functional Help for Functions, Objects, and
+                   Packages
+Version:           0.2.1
+Author:            Atsushi Yasumoto [aut, cph, cre]
+                   (&lt;https://orcid.org/0000-0002-8335-495X&gt;)
+Authors@R:         c( person( given = "Atsushi", family =
+                   "Yasumoto", role = c("aut", "cph", "cre"),
+                   email = "atusy.rpkg@gmail.com", comment =
+                   c(ORCID = "0000-0002-8335-495X") ) )
+Maintainer:        Atsushi Yasumto &lt;atusy.rpkg@gmail.com&gt;
+Description:       Provides postfix operators and more to enhance
+                   displaying documents.  The `?.` postfix
+                   operator and the `?` prefix operator displays
+                   documents and contents (source or structure) of
+                   objects simultaneously to help understanding
+                   the objects.  The `?p` postfix operator
+                   displays package documents, and is shorter than
+                   help(package = foo).
+URL:               https://github.com/atusy/felp
+BugReports:        https://github.com/atusy/felp/issues
+License:           MIT + file LICENSE
+Encoding:          UTF-8
+LazyData:          true
+Roxygen:           list(markdown = TRUE)
+RoxygenNote:       6.1.1
+Imports:           prettycode
+Suggests:          knitr, pkgdown, printr, rmarkdown, roxygen2,
+                   testthat (&gt;= 2.1.0), covr
+VignetteBuilder:   knitr
+Language:          en-US
+Built:             R 3.6.0; ; 2019-06-11 11:36:44 UTC; unix
 
 Index:
 
@@ -348,7 +359,7 @@ felp                    Functional help which displays structure of an
 
 
       <footer><div class="copyright">
-  <p>Developed by YASUMOTO Atsushi.</p>
+  <p>Developed by Atsushi Yasumoto.</p>
 </div>
 
 <div class="pkgdown">
