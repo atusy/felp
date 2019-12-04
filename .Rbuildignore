@@ -1,7 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 \.Rprofile
-docs
+^docs$
+^pkgdown$
 ^\.travis\.yml$
 ^codecov\.yml$
 ^appveyor\.yml$
