@@ -1,1 +1,1 @@
-rmarkdown::render("ans.Rmd", quiet = TRUE)
+knitr::knit("ans.Rmd", quiet = TRUE)

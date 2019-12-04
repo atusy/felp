@@ -1,7 +1,7 @@
 Package: felp
 Type: Package
 Title: Functional Help for Functions, Objects, and Packages
-Version: 0.2.1
+Version: 0.2.2
 Author: Atsushi Yasumoto [aut, cph, cre] (<https://orcid.org/0000-0002-8335-495X>)
 Authors@R: c(
         person(
@@ -29,11 +29,9 @@ Suggests:
     knitr,
     pkgdown,
     printr,
-    rmarkdown,
     roxygen2,
     testthat (>= 2.1.0),
     covr
 VignetteBuilder:
     knitr
-SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 Language: en-US

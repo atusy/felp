@@ -1,3 +1,8 @@
+# felp 0.2.2
+
+- Update tests so to be independent from pandoc, and improve code coverage.
+- Add logo and CRAN badge, download badge, and favicon
+
 # felp 0.2.1
 
 Just internal changes and tests to be ready on CRAN.
