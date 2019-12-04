@@ -35,4 +35,5 @@ Suggests:
     covr
 VignetteBuilder:
     knitr
+SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 Language: en-US
