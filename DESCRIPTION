@@ -29,7 +29,6 @@ Suggests:
     knitr,
     pkgdown,
     printr,
-    rmarkdown,
     roxygen2,
     testthat (>= 2.1.0),
     covr
