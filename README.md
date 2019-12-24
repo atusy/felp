@@ -18,7 +18,13 @@ and more in [Syntax](#Syntax) and [Get started](https://felp.atusy.net/articles/
 
 ## Installation
 
-Copy & paste:
+### From CRAN
+
+``` r
+install.packages("felp")
+```
+
+### From GitHub
 
 ``` r
 source("https://install-github.me/atusy/felp")
