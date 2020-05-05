@@ -1,3 +1,7 @@
+# felp 0.2.3
+
+- Add `telp`, short of "Translated Help"
+
 # felp 0.2.2
 
 - Update tests so to be independent from pandoc, and improve code coverage.
