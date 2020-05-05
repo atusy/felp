@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="felp">
 <meta property="og:description" content="">
@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">felp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@ h1 {
 <span id="cb4-12"><a href="#cb4-12"></a>    <span class="cf">else</span> <span class="kw"><a href="https://rdrr.io/r/base/ns-internal.html">asNamespace</a></span>(p)))</span>
 <span id="cb4-13"><a href="#cb4-13"></a>    <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/help.html">help</a></span>(t[1L], p[1L], ...))</span>
 <span id="cb4-14"><a href="#cb4-14"></a>}</span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x55b5c6d050d0</span><span class="op">&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x559b8fba5858</span><span class="op">&gt;</span></span>
 <span id="cb4-16"><a href="#cb4-16"></a><span class="er">&lt;</span>environment<span class="op">:</span><span class="st"> </span>namespace<span class="op">:</span>felp<span class="op">&gt;</span></span></code></pre></div>
 <div class="r-help-page">
 <table class="table"><tr>
@@ -208,7 +208,7 @@ Arguments passed on to <code><a href="https://rdrr.io/r/utils/help.html">utils::
 </p>
 <dl>
 <dt>
-lib.loc
+<code>lib.loc</code>
 </dt>
 <dd>
 <p>
@@ -216,7 +216,7 @@ a character vector of directory names of <span style="font-family: Courier New, 
 </p>
 </dd>
 <dt>
-verbose
+<code>verbose</code>
 </dt>
 <dd>
 <p>
@@ -224,7 +224,7 @@ logical; if <code>TRUE</code>, the file name is reported.
 </p>
 </dd>
 <dt>
-try.all.packages
+<code>try.all.packages</code>
 </dt>
 <dd>
 <p>
@@ -232,7 +232,7 @@ logical; see <code>Note</code>.
 </p>
 </dd>
 <dt>
-help_type
+<code>help_type</code>
 </dt>
 <dd>
 <p>
@@ -309,45 +309,44 @@ Description:
 
 Package:           felp
 Type:              Package
-Title:             Functional Help for Functions, Objects, and
-                   Packages
-Version:           0.2.1
+Title:             Functional Help for Functions, Objects, and Packages
+Version:           0.2.3
 Author:            Atsushi Yasumoto [aut, cph, cre]
                    (&lt;https://orcid.org/0000-0002-8335-495X&gt;)
-Authors@R:         c( person( given = "Atsushi", family =
-                   "Yasumoto", role = c("aut", "cph", "cre"),
-                   email = "atusy.rpkg@gmail.com", comment =
-                   c(ORCID = "0000-0002-8335-495X") ) )
+Authors@R:         c( person( given = "Atsushi", family = "Yasumoto",
+                   role = c("aut", "cph", "cre"), email =
+                   "atusy.rpkg@gmail.com", comment = c(ORCID =
+                   "0000-0002-8335-495X") ) )
 Maintainer:        Atsushi Yasumoto &lt;atusy.rpkg@gmail.com&gt;
 Description:       Provides pseudo-postfix operators and more to
                    enhance displaying documents.  The `?.`
-                   pseudo-postfix operator and the `?` prefix
-                   operator displays documents and contents
-                   (source or structure) of objects simultaneously
-                   to help understanding the objects.  The `?p`
-                   pseudo-postfix operator displays package
-                   documents, and is shorter than help(package =
-                   foo).
+                   pseudo-postfix operator and the `?` prefix operator
+                   displays documents and contents (source or
+                   structure) of objects simultaneously to help
+                   understanding the objects.  The `?p` pseudo-postfix
+                   operator displays package documents, and is shorter
+                   than help(package = foo).
 URL:               https://github.com/atusy/felp
 BugReports:        https://github.com/atusy/felp/issues
 License:           MIT + file LICENSE
 Encoding:          UTF-8
 LazyData:          true
 Roxygen:           list(markdown = TRUE)
-RoxygenNote:       6.1.1
-Imports:           prettycode
+RoxygenNote:       7.1.0
+Imports:           prettycode, curl
 Suggests:          knitr, pkgdown, printr, roxygen2, testthat (&gt;=
                    2.1.0), covr
 VignetteBuilder:   knitr
 Language:          en-US
-Built:             R 3.6.1; ; 2019-12-04 14:10:35 UTC; unix
+Built:             R 3.6.2; ; 2020-05-05 14:29:20 UTC; unix
 
 Index:
 
-?                       Functional help with '?' operator
+?                       Functional help with ? operator
 dummy                   A dummy data for felp
 felp                    Functional help which displays structure of an
-                        object in addition to help</code></pre>
+                        object in addition to help
+telp                    Translated Help</code></pre>
 </div>
   </div>
 
@@ -374,7 +373,7 @@ felp                    Functional help which displays structure of an
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

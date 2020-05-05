@@ -16,6 +16,7 @@
 #' telp(help)
 #' }
 #'
+#' @export
 telp <- function(topic, package = NULL, translate_to = "default", ...) {
   if (missing(topic)) {
     warning("telp requires a topic to be translated")
