@@ -29,13 +29,15 @@ telp <- function(topic, package = NULL, translate_to = "default", ...) {
   description <- utils::packageDescription(package)
 
   disconnected <- !curl::has_internet()
-  not_cran <- !identical(description$Repository, "CRAN")
-  if (disconnected || not_cran) {
+  on_cran <- identical(description$Repository, "CRAN")
+  builtin <- any(c("base", "recommended") %in% description$Priority)
+  unavailable <- !on_cran && !builtin
+  if (disconnected || unavailable) {
     warning(
       "Showing local help ",
       if (disconnected) "because of being offline",
       if (disconnected && not_cran) "and",
-      if (not_cran) "because the package is not installed from CRAN"
+      if (unavailable) "because the package is not installed from CRAN"
     )
     return(.help)
   }
