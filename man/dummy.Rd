@@ -4,7 +4,9 @@
 \name{dummy}
 \alias{dummy}
 \title{A dummy data for felp}
-\format{An object of class \code{list} of length 2.}
+\format{
+An object of class \code{list} of length 2.
+}
 \usage{
 dummy
 }

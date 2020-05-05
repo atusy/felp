@@ -2,9 +2,9 @@
 % Please edit documentation in R/question.R
 \name{?}
 \alias{?}
-\title{Functional help with \code{?} operator}
+\title{Functional help with \verb{?} operator}
 \usage{
-"?"(e1, e2)
+`?`(e1, e2)
 }
 \arguments{
 \item{e1}{A topic of document.
@@ -15,7 +15,7 @@ Otherwise, \code{e2} is same as \code{type} argument of \code{utils::`?`}.}
 }
 \description{
 Displays help and structure of an object, or help of a package.
-Two syntax sugars are added to enhance \code{utils::?}.
+Two syntax sugars are added to enhance \verb{utils::?}.
 One is \code{object?.} which works as if \code{?object}.
 Another is \code{package?p} which works as if \code{help(package = package)}
 }

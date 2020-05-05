@@ -24,19 +24,20 @@ felp(topic, package = NULL, ...)
    whose namespaces are loaded are used.  To avoid a name being deparsed use e.g.
    \code{(pkg_ref)} (see the examples).}
 
-\item{...}{Arguments passed on to \code{utils::help}
-\describe{
-  \item{lib.loc}{a character vector of directory names of \R libraries,
+\item{...}{
+  Arguments passed on to \code{\link[utils:help]{utils::help}}
+  \describe{
+    \item{\code{lib.loc}}{a character vector of directory names of \R libraries,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
    libraries currently known.  If the default is used, the loaded
    packages are searched before the libraries.  This is not used for
    HTML help (see \sQuote{Details}).}
-  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
-  \item{try.all.packages}{logical; see \code{Note}.}
-  \item{help_type}{character string: the type of help required.
+    \item{\code{verbose}}{logical; if \code{TRUE}, the file name is reported.}
+    \item{\code{try.all.packages}}{logical; see \code{Note}.}
+    \item{\code{help_type}}{character string: the type of help required.
    Possible values are \code{"text"}, \code{"html"} and \code{"pdf"}.
    Case is ignored, and partial matching is allowed.}
-}}
+  }}
 }
 \description{
 Structure of object is returned by \code{str()}.
