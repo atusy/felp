@@ -39,7 +39,7 @@ telp <- function(topic, package = NULL, translate_to = "default", ...) {
     return(.help)
   }
 
-  browseURL(url_telp(
+  utils::browseURL(url_telp(
     translate_to = spec_translate_to(translate_to),
     package = package,
     version = description$Version,
