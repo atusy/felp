@@ -2,7 +2,6 @@
 
 export("?")
 export(felp)
-export(telp)
 importFrom(utils,"?")
 importFrom(utils,help)
 importFrom(utils,str)
