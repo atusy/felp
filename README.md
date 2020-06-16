@@ -3,7 +3,8 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/atusy/felp?branch=master&svg=true)](https://ci.appveyor.com/project/atusy/felp)
 [![Codecov test coverage](https://codecov.io/gh/atusy/felp/branch/master/graph/badge.svg)](https://codecov.io/gh/atusy/felp?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/felp)](https://cran.r-project.org/package=felp)
-![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/felp)
+![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/felp)
+![Monthly downloads](https://cranlogs.r-pkg.org/badges/felp)
 <!-- badges: end -->
 
 # felp <img src="man/figures/logo.png" align="right" alt="" width="120" />
