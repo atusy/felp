@@ -24,8 +24,8 @@
 #' ?iris
 #' iris?.  # The same
 #'
-#' # Identical to help(package = MASS)
-#' MASS?p
+#' # Identical to help(package = stats)
+#' stats?p
 #'
 #' @importFrom utils ?
 #' @export

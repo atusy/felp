@@ -50,8 +50,8 @@ felp(identity)
 # Identical to help(iris); str(iris)
 felp(iris)
 
-# Identical to help(package = MASS)
-felp(package = MASS)
+# Identical to help(package = stats)
+felp(package = stats)
 
 
 }
