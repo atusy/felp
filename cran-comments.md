@@ -31,5 +31,5 @@ There are currently no downstream dependencies for this package.
 
 ## Remarks
 
-CRAN noticed that pandoc is missing from SystemRequirements.
-The problem is fixed by removing the dependency on Pandoc.
+Corrected problems shown on
+<https://cran.r-project.org/web/checks/check_results_felp.html>.
