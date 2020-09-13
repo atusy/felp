@@ -10,8 +10,6 @@ jobs:
   include:
   - r: release
   - r: devel
-  - os: osx
-    r: release
 r_binary_packages:
   - covr
 warnings_are_errors: false
