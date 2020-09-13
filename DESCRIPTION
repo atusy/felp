@@ -28,9 +28,7 @@ Imports:
     curl
 Suggests:
     knitr,
-    pkgdown,
     printr,
-    roxygen2,
     testthat (>= 2.1.0),
     covr
 VignetteBuilder:
