@@ -1,5 +1,9 @@
 # felp 0.2.3
 
+- Corrected problems noticed by CRAN
+    - avoid package 'MASS' in examples because it is not a build-in package for some platforms
+    - internally import `prettycode::default_style` without using it to suppress a NOTE, "All declared Imports should be used."
+
 # felp 0.2.2
 
 - Update tests so to be independent from pandoc, and improve code coverage.
