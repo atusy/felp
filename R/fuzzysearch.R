@@ -59,7 +59,7 @@ score_toc <- function(toc, queries) {
 }
 
 arrange <- function(df, queries) {
-  if (identical(queries, "")) return(df)
+  if (length(queries) == 0L) return(df)
   df |>
     dplyr::mutate(SCORE = score_toc(df, queries)) |>
     dplyr::arrange(.data$SCORE) |>
