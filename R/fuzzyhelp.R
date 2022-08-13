@@ -24,8 +24,7 @@ stringhelp <- function(topic, help_type = "html", ...) {
 create_toc <- function() {
   db <- utils::hsearch_db()
   df <- db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
-    dplyr::left_join(db$Aliases[c("Alias", "ID")], by = "ID") %>%
-    dplyr::filter(.data$Alias == .data$Topic) %>%
+    dplyr::left_join(db$Aliases[c("Package", "Alias", "ID")], by = c("Package", "ID")) %>%
     dplyr::select(!c("ID", "Topic")) %>%
     dplyr::relocate("Package", "Alias", "Title", "Type") %>%
     dplyr::filter(.data$Type == "help") %>% dplyr::select(!"Type") %>% # TODO: support vignette
