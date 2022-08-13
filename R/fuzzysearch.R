@@ -70,8 +70,8 @@ create_ui <- function() {
   shiny::fluidPage(
     shiny::titlePanel("Fuzzy Help Search"),
     shiny::textInput("query", label = "Search query", width = "100%", value = "ggplot geom_pint"),
-    reactable::reactableOutput("searchResult", width = "100%", height = "200px"),
-    shiny::uiOutput("helpHTML")
+    reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
+    shiny::uiOutput("helpViewer")
   )
 }
 
