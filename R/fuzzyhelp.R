@@ -79,9 +79,30 @@ create_ui <- function() {
     miniUI::miniContentPanel(
       shiny::textInput("query", label = "Search query", width = "100%"),
       reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
+      htmltools::tags$div(
+        id = "bar",
+        style = "width: 100%; height: 8px; cursor: pointer;",
+        draggable = "true"
+      ),
       shiny::uiOutput("helpViewer"),
-      style = "display: grid; grid-template-rows: auto auto 1fr"
+      style = "display: grid; grid-template-rows: auto auto auto 1fr"
     ),
+    htmltools::tags$script("
+      (function(){
+        // Resize tocViewer
+        const toc = document.getElementById('tocViewer');
+        const bar = document.getElementById('bar');
+        let screenY, tocHeight
+        bar.addEventListener('dragstart', function() {
+          screenY = window.event.screenY;
+          tocHeight = toc.getBoundingClientRect().height;
+        });
+        bar.addEventListener('drag', function() {
+          const diff = window.event.screenY - screenY;
+          toc.style.height = tocHeight + diff + 'px';
+        });
+      })();
+    "),
     style = "display: grid; grid-template-rows: auto 1fr; height: 100vh"
   )
 }
@@ -107,7 +128,7 @@ server <- function(input, output) {
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
       srcdoc = stringhelp(reactiveToc()[reactiveSelection(), ]),
-      width = "100%", height = "100%"
+      style = "width: 100%; height: 100%;"
     )
   )
 

@@ -1,7 +1,7 @@
 # felp 0.3.0
 
-- Added `fuzzyhelp` function which launches Shiny Gadget to search help topics fuzzily, and preview the result. Done button will also launch `help` function.
-- Added RStudio Addin named "Fuzzy Search on R Help", which launches the `fuzzyhelp` function.
+- Added `fuzzyhelp` function which launches Shiny Gadget to search help topics fuzzily, and preview the result. Done button will also launch `help` function (#12, #13).
+- Added RStudio Addin named "Fuzzy Search on R Help", which launches the `fuzzyhelp` function (#12, #13).
 
 
 # felp 0.2.3
