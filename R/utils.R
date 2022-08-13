@@ -3,4 +3,5 @@
 # > checking dependencies in R code ... NOTE
 # > Namespace in Imports field not imported from: ‘prettycode’
 # > All declared Imports should be used.
-.default_style <- prettycode::default_style
+.default_style <- function(...) prettycode::default_style(...)
+.curl <- function(...) curl::curl(...)
