@@ -1,8 +1,11 @@
 .data <- rlang::.data
 
-stringhelp <- function(topic, package, help_type = "html", ...) {
+stringhelp <- function(topic, help_type = "html", ...) {
+  if (NROW(topic) == 0L) return("")
   conv <- c(html = tools::Rd2HTML, text = tools::Rd2txt)[[help_type]]
-  x <- help((topic), package = (package), help_type = help_type)
+  x <- help(
+    (topic$Topic[1L]), package = (topic$Package[1L]), help_type = help_type
+  )
   paths <- as.character(x)
   file <- paths[1L]
   pkgname <- basename(dirname(dirname(file)))
