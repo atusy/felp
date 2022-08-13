@@ -1,4 +1,5 @@
 .data <- rlang::.data
+`%>%` <- magrittr::`%>%`
 
 getHelpFile <- function(...) {
   get(".getHelpFile", envir = asNamespace("utils"))(...)
@@ -22,13 +23,13 @@ stringhelp <- function(topic, help_type = "html", ...) {
 
 create_toc <- function() {
   db <- utils::hsearch_db()
-  df <- db$Base[c("Topic", "ID", "Package", "Title", "Type")] |>
-    dplyr::left_join(db$Aliases[c("Alias", "ID")], by = "ID") |>
-    dplyr::filter(.data$Alias == .data$Topic) |>
-    dplyr::select(!c("ID", "Topic")) |>
-    dplyr::relocate("Package", "Alias", "Title", "Type") |>
-    dplyr::filter(.data$Type == "help") |> dplyr::select(!"Type") |> # TODO: support vignette
-    dplyr::rename(Topic = .data$Alias) |>
+  df <- db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
+    dplyr::left_join(db$Aliases[c("Alias", "ID")], by = "ID") %>%
+    dplyr::filter(.data$Alias == .data$Topic) %>%
+    dplyr::select(!c("ID", "Topic")) %>%
+    dplyr::relocate("Package", "Alias", "Title", "Type") %>%
+    dplyr::filter(.data$Type == "help") %>% dplyr::select(!"Type") %>% # TODO: support vignette
+    dplyr::rename(Topic = .data$Alias) %>%
     identity()
   df
 }
@@ -44,7 +45,7 @@ score_toc <- function(toc, queries) {
     package = matrixStats::rowSums2(dist_package),
     topic = matrixStats::rowSums2(dist_topic),
     title = matrixStats::rowSums2(afound_title$distance)
-  ) |>
+  ) %>%
     dplyr::mutate(score = 0.5 * .data$package + .data$topic + 0.1 * .data$title)
     # focus on topic, less on score, and least on title
 
@@ -66,9 +67,9 @@ score_toc <- function(toc, queries) {
 
 arrange <- function(df, queries) {
   if (length(queries) == 0L) return(df)
-  df |>
-    dplyr::mutate(SCORE = score_toc(df, queries)) |>
-    dplyr::arrange(.data$SCORE) |>
+  df %>%
+    dplyr::mutate(SCORE = score_toc(df, queries)) %>%
+    dplyr::arrange(.data$SCORE) %>%
     dplyr::select(!"SCORE")
 }
 
