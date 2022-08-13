@@ -77,7 +77,7 @@ create_ui <- function() {
   miniUI::miniPage(
     miniUI::gadgetTitleBar("Fuzzy Help Search"),
     miniUI::miniContentPanel(
-      shiny::textInput("query", label = "Search query", width = "100%", value = "ggplot geom_pint"),
+      shiny::textInput("query", label = "Search query", width = "100%"),
       reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
       shiny::uiOutput("helpViewer"),
       style = "display: grid; grid-template-rows: auto auto 1fr"
