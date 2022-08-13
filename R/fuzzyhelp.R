@@ -1,5 +1,9 @@
 .data <- rlang::.data
 
+getHelpFile <- function(...) {
+  get(".getHelpFile", envir = asNamespace("utils"))(...)
+}
+
 stringhelp <- function(topic, help_type = "html", ...) {
   if (NROW(topic) == 0L) return("")
   conv <- c(html = tools::Rd2HTML, text = tools::Rd2txt)[[help_type]]
@@ -10,7 +14,7 @@ stringhelp <- function(topic, help_type = "html", ...) {
   file <- paths[1L]
   pkgname <- basename(dirname(dirname(file)))
   html <- paste(
-    capture.output(conv(utils:::.getHelpFile(file), package = pkgname)),
+    utils::capture.output(conv(getHelpFile(file), package = pkgname)),
     collapse = "\n"
   )
   return(html)
@@ -47,8 +51,8 @@ score_toc <- function(toc, queries) {
   if (length(queries) == 1L) return(score_df$score)
 
   score <- score_df[["score"]]
-  idx <- head(dplyr::arrange(score_df, .data$score)$index, 20)
-  idx_last <- tail(idx, 1L)
+  idx <- utils::head(dplyr::arrange(score_df, .data$score)$index, 20)
+  idx_last <- utils::tail(idx, 1L)
   tbl <- c(table(queries))
   for (i in idx) {
     p <- which.min(dist_package[i, ])
