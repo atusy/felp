@@ -106,6 +106,10 @@ server <- function(input, output) {
 
   output$tocViewer <- reactable::renderReactable(reactiveTocViewer())
   output$helpViewer <- shiny::renderUI(reactiveHelp())
+
+  shiny::observeEvent(input$done, {
+    shiny::stopApp()
+  })
 }
 
 #' @export
