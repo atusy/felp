@@ -9,8 +9,10 @@ stringhelp <- function(topic, help_type = "html", ...) {
   paths <- as.character(x)
   file <- paths[1L]
   pkgname <- basename(dirname(dirname(file)))
-  html <- paste(capture.output(conv(utils:::.getHelpFile(file), package = pkgname)), collapse = "\n")
-  print(html)
+  html <- paste(
+    capture.output(conv(utils:::.getHelpFile(file), package = pkgname)),
+    collapse = "\n"
+  )
   return(html)
 }#; stringhelp("mutate", "dplyr")
 
