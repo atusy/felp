@@ -1,0 +1,4 @@
+Name: Fuzzy Search Help
+Description: Search and view help files with fuzzy queries.
+Binding: fuzzyhelp
+Interactive: true
