@@ -37,8 +37,8 @@ score_toc <- function(toc, queries) {
 
   score_df <- data.frame(
     index = seq(NROW(toc)),
-    package = matrixStats::rowMins(dist_package),
-    topic = matrixStats::rowMins(dist_topic),
+    package = matrixStats::rowSums2(dist_package),
+    topic = matrixStats::rowSums2(dist_topic),
     title = matrixStats::rowSums2(afound_title$distance)
   ) |>
     dplyr::mutate(score = 0.5 * .data$package + .data$topic + 0.1 * .data$title)
@@ -69,11 +69,13 @@ arrange <- function(df, queries) {
 }
 
 create_ui <- function() {
-  shiny::fluidPage(
-    shiny::titlePanel("Fuzzy Help Search"),
-    shiny::textInput("query", label = "Search query", width = "100%", value = "ggplot geom_pint"),
-    reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
-    shiny::uiOutput("helpViewer")
+  miniUI::miniPage(
+    miniUI::gadgetTitleBar("Fuzzy Help Search"),
+    miniUI::miniContentPanel(
+      shiny::textInput("query", label = "Search query", width = "100%", value = "ggplot geom_pint"),
+      reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
+      shiny::uiOutput("helpViewer")
+    )
   )
 }
 
@@ -106,4 +108,5 @@ server <- function(input, output) {
   output$helpViewer <- shiny::renderUI(reactiveHelp())
 }
 
-shiny::runGadget(create_ui(), server)
+#' @export
+fuzzyhelp <- function() shiny::runGadget(create_ui(), server)
