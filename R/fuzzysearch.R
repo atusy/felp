@@ -74,8 +74,10 @@ create_ui <- function() {
     miniUI::miniContentPanel(
       shiny::textInput("query", label = "Search query", width = "100%", value = "ggplot geom_pint"),
       reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
-      shiny::uiOutput("helpViewer")
-    )
+      shiny::uiOutput("helpViewer"),
+      style = "display: grid; grid-template-rows: auto auto 1fr"
+    ),
+    style = "display: grid; grid-template-rows: auto 1fr; height: 100vh"
   )
 }
 
@@ -100,7 +102,7 @@ server <- function(input, output) {
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
       srcdoc = stringhelp(reactiveToc()[reactiveSelection(), ]),
-      width = "100%", height = "500px"
+      width = "100%", height = "100%"
     )
   )
 
