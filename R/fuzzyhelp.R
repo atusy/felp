@@ -124,7 +124,7 @@ server <- function(input, output) {
   reactiveTocViewer <- shiny::reactive(
     reactable::reactable(
       reactiveToc(), pagination = TRUE, defaultPageSize = 20,
-      selection = "single", defaultSelected = 1L
+      selection = "single", defaultSelected = 1L, onClick = "select"
     )
   )
   reactiveSelection <- shiny::reactive(
