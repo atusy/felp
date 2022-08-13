@@ -87,6 +87,11 @@ create_ui <- function() {
       shiny::uiOutput("helpViewer"),
       style = "display: grid; grid-template-rows: auto auto auto 1fr"
     ),
+    htmltools::tags$style("
+      #tocViewer {
+        overflow: hidden;
+      }
+    "),
     htmltools::tags$script("
       (function(){
         // Resize tocViewer
