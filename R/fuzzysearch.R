@@ -77,16 +77,19 @@ htmltable <- function(x) {
 
 server <- function(input, output) {
   toc <- create_toc()
+  reactiveQueries <- shiny::reactive(stringr::str_split(input$query, "\\s+")[[1L]])
+  reactiveToc <- shiny::reactive(arrange(toc, reactiveQueries()))
+  reactiveHelp <- shiny::reactive(
+    htmltools::tags$iframe(
+      srcdoc = stringhelp(reactiveToc()$Topic[1], reactiveToc()$Package[1]),
+      width = "100%", height = "500px"
+    )
+  )
+
   output$searchResult <- reactable::renderReactable({
-    queries <- stringr::str_split(input$query, "\\s+")[[1L]]
-    view <- arrange(toc, queries)
-    reactable::reactable(view, pagination = TRUE, defaultPageSize = 20)
+    reactable::reactable(reactiveToc(), pagination = TRUE, defaultPageSize = 20)
   })
-  output$helpHTML <- shiny::renderUI({
-    queries <- stringr::str_split(input$query, "\\s+")[[1L]]
-    view <- arrange(toc, queries)
-    htmltools::tags$iframe(srcdoc = stringhelp(view$Topic[1], view$Package[1]), width = "100%", height = "500px")
-  })
+  output$helpHTML <- shiny::renderUI(reactiveHelp())
 }
 
 shiny::runGadget(create_ui(), server)
