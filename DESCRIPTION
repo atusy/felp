@@ -1,7 +1,7 @@
 Package: felp
 Type: Package
 Title: Functional Help for Functions, Objects, and Packages
-Version: 0.2.3
+Version: 0.3.0
 Author: Atsushi Yasumoto [aut, cph, cre] (<https://orcid.org/0000-0002-8335-495X>)
 Authors@R: c(
         person(
