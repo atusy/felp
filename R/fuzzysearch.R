@@ -21,6 +21,7 @@ create_toc <- function() {
     dplyr::filter(.data$Alias == .data$Topic) |>
     dplyr::select(!c("ID", "Topic")) |>
     dplyr::relocate("Package", "Alias", "Title", "Type") |>
+    dplyr::filter(.data$Type == "help") |> dplyr::select(!"Type") |> # TODO: support vignette
     dplyr::rename(Topic = .data$Alias) |>
     identity()
   df
