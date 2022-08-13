@@ -75,25 +75,33 @@ create_ui <- function() {
   )
 }
 
-htmltable <- function(x) {
-  reactable::reactable(x, pagination = TRUE, defaultPageSize = 20)
+parse_query <- function(string) {
+  queries <- stringr::str_split(string, "\\s+")[[1L]]
+  queries[queries != ""]
 }
 
 server <- function(input, output) {
   toc <- create_toc()
-  reactiveQueries <- shiny::reactive(stringr::str_split(input$query, "\\s+")[[1L]])
+  reactiveQueries <- shiny::reactive(parse_query(input$query))
   reactiveToc <- shiny::reactive(arrange(toc, reactiveQueries()))
+  reactiveTocViewer <- shiny::reactive(
+    reactable::reactable(
+      reactiveToc(), pagination = TRUE, defaultPageSize = 20,
+      selection = "single", defaultSelected = 1L
+    )
+  )
+  reactiveSelection <- shiny::reactive(
+    reactable::getReactableState("tocViewer", "selected")
+  )
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
-      srcdoc = stringhelp(reactiveToc()$Topic[1], reactiveToc()$Package[1]),
+      srcdoc = stringhelp(reactiveToc()[reactiveSelection(), ]),
       width = "100%", height = "500px"
     )
   )
 
-  output$searchResult <- reactable::renderReactable({
-    reactable::reactable(reactiveToc(), pagination = TRUE, defaultPageSize = 20)
-  })
-  output$helpHTML <- shiny::renderUI(reactiveHelp())
+  output$tocViewer <- reactable::renderReactable(reactiveTocViewer())
+  output$helpViewer <- shiny::renderUI(reactiveHelp())
 }
 
 shiny::runGadget(create_ui(), server)
