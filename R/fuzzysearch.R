@@ -123,5 +123,15 @@ server <- function(input, output) {
   })
 }
 
+#' Fuzzily Search Help and View the Selection
+#'
+#' Users no more have to afraid of exact name of the object they need help.
+#' A shiny gadget helps you to find a topic fuzzily.
+#' Click radio buttons to switch preview contents.
+#' Click "Done" or "Cancel" to close the widget.
+#' The "Done" button will also hook `help` function on the selection.
+#'
+#' @return NULL
+#'
 #' @export
 fuzzyhelp <- function() shiny::runGadget(create_ui(), server)
