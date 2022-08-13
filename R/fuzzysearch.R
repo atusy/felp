@@ -111,6 +111,15 @@ server <- function(input, output) {
 
   shiny::observeEvent(input$done, {
     shiny::stopApp()
+    selection <- reactiveToc()[reactiveSelection(), ]
+    if (rstudioapi::isAvailable()) {
+      rstudioapi::sendToConsole(
+        sprintf("help(%s, package = %s)", selection$Topic, selection$Package),
+        execute = TRUE
+      )
+    } else {
+      print(help((selection$Topic), (selection$Package)))
+    }
   })
 }
 
