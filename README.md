@@ -5,7 +5,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/felp)](https://cran.r-project.org/package=felp)
 ![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/felp)
 ![Monthly downloads](https://cranlogs.r-pkg.org/badges/felp)
-[![R build status](https://github.com/atusy/felp/workflows/R-CMD-check/badge.svg)](https://github.com/atusy/felp/actions)
+[![R-CMD-check](https://github.com/atusy/felp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/atusy/felp/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # felp <img src="man/figures/logo.png" align="right" alt="" width="120" />
