@@ -13,7 +13,7 @@ Authors@R: c(
     )
 Maintainer: Atsushi Yasumoto <atusy.rpkg@gmail.com>
 Description:
-    Provides pseudo-postfix operators and more to enhance displaying documents.
+    Enhance R help system by fuzzy search and preview interface, pseudo-postfix operators, and more.
     The `?.` pseudo-postfix operator and the `?` prefix operator displays documents and contents (source or structure) of objects simultaneously to help understanding the objects.
     The `?p` pseudo-postfix operator displays package documents, and is shorter than help(package = foo).
 URL: https://github.com/atusy/felp
