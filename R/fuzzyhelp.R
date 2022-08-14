@@ -80,7 +80,7 @@ create_ui <- function() {
       reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
       htmltools::tags$div(
         id = "bar",
-        style = "width: 100%; height: 8px; cursor: pointer; background-color: transparent;",
+        style = "width: 100%; height: 8px; cursor: row-resize; background-color: transparent;",
         draggable = "true"
       ),
       shiny::uiOutput("helpViewer"),
