@@ -12,6 +12,7 @@
 
 `felp` is a short of **f**unctional h**elp**, and provides
 
+- fuzzy search and preview of help with `fuzzyhelp` function or "Fuzzy Search on R Help" RStudio Addin
 - the `?.` pseudo-post fix operator to simultaneously display a help document
   and a structure of an object
 - the `?p` pseudo-post fix operator to display document of a package
