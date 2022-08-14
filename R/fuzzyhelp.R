@@ -126,9 +126,10 @@ server <- function(input, output) {
       selection = "single", defaultSelected = 1L, onClick = "select"
     )
   )
-  reactiveSelection <- shiny::reactive(
+  reactiveSelection <- shiny::reactive({
+    reactiveToc()  # avoids noisy refresh
     reactable::getReactableState("tocViewer", "selected")
-  )
+  })
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
       srcdoc = stringhelp(reactiveToc()[reactiveSelection(), ]),
