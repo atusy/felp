@@ -35,7 +35,8 @@ Imports:
     rlang,
     shiny,
     stringdist,
-    stringr
+    stringr,
+    utils
 Suggests:
     knitr,
     printr,
