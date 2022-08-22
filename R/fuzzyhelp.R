@@ -6,12 +6,9 @@ getHelpFile <- function(...) {
   get(".getHelpFile", envir = asNamespace("utils"))(...)
 }
 
-stringhelp <- function(topic, help_type = "html", ...) {
-  if (NROW(topic) == 0L) return("")
+get_help <- function(topic, package, help_type = "html", ...) {
   conv <- c(html = tools::Rd2HTML, text = tools::Rd2txt)[[help_type]]
-  x <- help(
-    (topic$Topic[1L]), package = (topic$Package[1L]), help_type = help_type
-  )
+  x <- help((topic), package = (package), help_type = help_type)
   paths <- as.character(x)
   file <- paths[1L]
   pkgname <- basename(dirname(dirname(file)))
@@ -22,13 +19,36 @@ stringhelp <- function(topic, help_type = "html", ...) {
   return(content)
 }
 
+
+get_vignette <- function(topic, package) {
+  v <- utils::vignette(topic, package)
+  p <- file.path(v$Dir, "doc", v$PDF)
+  ext <- tools::file_ext(p)
+  if (ext != "html") {
+    return(sprintf(
+      "<p>The extention of vignette should be html: %s</p>", p
+    ))
+  }
+  paste(readLines(p), collapse = "")
+}
+
+
+get_content <- function(x) {
+  if (NROW(x) == 0L) return("")
+  type <- x$Type[1L]
+  topic <- x$Topic[1L]
+  package <- x$Package[1L]
+  if (type == "vignette") return(get_vignette(topic, package))
+  get_help(topic, package)
+}
+
+
 create_toc <- function() {
   db <- utils::hsearch_db()
   df <- db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
     dplyr::left_join(db$Aliases[c("Package", "Alias", "ID")], by = c("Package", "ID")) %>%
     dplyr::select(!c("ID", "Topic")) %>%
     dplyr::relocate("Package", "Alias", "Title", "Type") %>%
-    dplyr::filter(.data$Type == "help") %>% dplyr::select(!"Type") %>% # TODO: support vignette
     dplyr::rename(Topic = .data$Alias) %>%
     identity()
   df
@@ -47,7 +67,7 @@ score_toc <- function(toc, queries) {
     title = matrixStats::rowSums2(afound_title$distance)
   ) %>%
     dplyr::mutate(score = 0.5 * .data$package + .data$topic + 0.1 * .data$title)
-    # focus on topic, less on score, and least on title
+    # focus on topic, less on package, and least on title
 
   if (length(queries) == 1L) return(score_df$score)
 
@@ -133,7 +153,7 @@ server <- function(input, output) {
   })
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
-      srcdoc = stringhelp(reactiveToc()[reactiveSelection(), ]),
+      srcdoc = get_content(reactiveToc()[reactiveSelection(), ]),
       style = "width: 100%; height: 100%;"
     )
   )
@@ -144,13 +164,21 @@ server <- function(input, output) {
   shiny::observeEvent(input$done, {
     shiny::stopApp()
     selection <- reactiveToc()[reactiveSelection(), ]
+    type <- selection$Type[1L]
+    topic <- selection$Topic[1L]
+    package <- selection$Package[1L]
     if (rstudioapi::isAvailable()) {
       rstudioapi::sendToConsole(
-        sprintf("help(%s, package = %s)", selection$Topic, selection$Package),
+        sprintf(
+          '%s(%s, package = %s)',
+          type,
+          if (type == "help") topic else sprintf('"%s"', topic),
+          if (type == "help") package else sprintf('"%s"', package)
+        ),
         execute = TRUE
       )
     } else {
-      print(help((selection$Topic), (selection$Package)))
+      print(`::`("utils", type)((topic), (package)))
     }
   })
 }
