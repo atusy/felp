@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">felp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/felp.html">Get started</a>
 </li>
@@ -62,8 +58,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/atusy/felp/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/atusy/felp/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -77,13 +73,13 @@
 
       
 
-      </header><script src="felp_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>felp</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/atusy/felp/blob/master/vignettes/felp.Rmd"><code>vignettes/felp.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/atusy/felp/blob/HEAD/vignettes/felp.Rmd" class="external-link"><code>vignettes/felp.Rmd</code></a></small>
       <div class="hidden name"><code>felp.Rmd</code></div>
 
     </div>
@@ -95,57 +91,71 @@ h1 {
   color: darkblue;
 }
 </style>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">felp</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">printr</span>) <span class="co"># To include documents output by `?` in this article</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atusy/felp" class="external-link">felp</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/printr/" class="external-link">printr</a></span><span class="op">)</span> <span class="co"># To include documents output by `?` in this article</span></span></code></pre></div>
 <p>The <code>felp</code> package provides</p>
 <ul>
-<li>the <code>?.</code> pseudo-post fix operator to simultaneously display a help document and a structure of an object</li>
-<li>the <code>?p</code> pseudo-post fix operator to display document of a package</li>
-<li>the <code>felp</code> function and <code>?</code> operator to extend <code>help</code> and <code>?</code> in the <code>utils</code> package by displaying structure of an object</li>
+<li>the <code>?.</code> pseudo-post fix operator to simultaneously
+display a help document and a structure of an object</li>
+<li>the <code>?p</code> pseudo-post fix operator to display document of
+a package</li>
+<li>the <code>felp</code> function and <code>?</code> operator to extend
+<code>help</code> and <code>?</code> in the <code>utils</code> package
+by displaying structure of an object</li>
 </ul>
-<div id="syntax" class="section level1">
-<h1 class="hasAnchor">
-<a href="#syntax" class="anchor"></a>Syntax</h1>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># ? as a prefix operator</span>
-?<span class="no">help</span>
-?<span class="kw pkg">utils</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/utils/help.html">help</a></span>
-
-<span class="co"># ?. as a pseudo postfix operator for functions and objects</span>
-<span class="no">help</span>?<span class="no">.</span>
-<span class="kw pkg">utils</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/utils/help.html">help</a></span>?<span class="no">.</span>
-
-<span class="co"># ?p as a pseudo postfix operator fur packages</span>
-<span class="no">utils</span>?<span class="no">p</span>
-
-<span class="co"># felp as an extention of utils::help</span>
-<span class="fu"><a href="../reference/felp.html">felp</a></span>(<span class="no">help</span>)
-<span class="fu"><a href="../reference/felp.html">felp</a></span>(<span class="st">"help"</span>)
-<span class="fu"><a href="../reference/felp.html">felp</a></span>(<span class="kw pkg">utils</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/utils/help.html">help</a></span>)
-<span class="fu"><a href="../reference/felp.html">felp</a></span>(<span class="no">help</span>, <span class="no">utils</span>)
-<span class="fu"><a href="../reference/felp.html">felp</a></span>(<span class="kw">package</span> <span class="kw">=</span> <span class="no">utils</span>)</pre></body></html></div>
+<div class="section level2">
+<h2 id="syntax">Syntax<a class="anchor" aria-label="anchor" href="#syntax"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ? as a prefix operator</span></span>
+<span><span class="op">?</span><span class="va">help</span></span>
+<span><span class="op">?</span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span></span>
+<span></span>
+<span><span class="co"># ?. as a pseudo postfix operator for functions and objects</span></span>
+<span><span class="va">help</span><span class="op">?</span><span class="va">.</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">?</span><span class="va">.</span></span>
+<span></span>
+<span><span class="co"># ?p as a pseudo postfix operator fur packages</span></span>
+<span><span class="va">utils</span><span class="op">?</span><span class="va">p</span></span>
+<span></span>
+<span><span class="co"># felp as an extention of utils::help</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">help</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="st">"help"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">help</span>, <span class="va">utils</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span>package <span class="op">=</span> <span class="va">utils</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="felpfunction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#felpfunction" class="anchor"></a>felp(function)</h1>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">felp</span>?<span class="no">.</span> <span class="co"># and `felp(felp)` return source and document of `felp` function</span></pre></body></html></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode text r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">function</span> (topic, <span class="dt">package =</span> <span class="ot">NULL</span>, ...) </span>
-<span id="cb4-2"><a href="#cb4-2"></a>{</span>
-<span id="cb4-3"><a href="#cb4-3"></a>    <span class="cf">if</span> (<span class="kw">missing</span>(topic)) </span>
-<span id="cb4-4"><a href="#cb4-4"></a>        <span class="kw">return</span>(<span class="kw">do.call</span>(help, <span class="kw">list</span>(<span class="dt">package =</span> <span class="kw">substitute</span>(package), </span>
-<span id="cb4-5"><a href="#cb4-5"></a>            ...)))</span>
-<span id="cb4-6"><a href="#cb4-6"></a>    t &lt;-<span class="st"> </span><span class="kw">rev</span>(<span class="kw">as.character</span>(<span class="kw">substitute</span>(topic)))</span>
-<span id="cb4-7"><a href="#cb4-7"></a>    p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.character</span>(<span class="kw">substitute</span>(package)), t[2L])[1L]</span>
-<span id="cb4-8"><a href="#cb4-8"></a>    <span class="cf">if</span> (<span class="kw">is.na</span>(p)) </span>
-<span id="cb4-9"><a href="#cb4-9"></a>        p &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>    <span class="kw">str</span>(<span class="kw">get</span>(t[1L], <span class="dt">envir =</span> <span class="cf">if</span> (<span class="kw">is.null</span>(p)) </span>
-<span id="cb4-11"><a href="#cb4-11"></a>        <span class="kw">parent.frame</span>()</span>
-<span id="cb4-12"><a href="#cb4-12"></a>    <span class="cf">else</span> <span class="kw">asNamespace</span>(p)))</span>
-<span id="cb4-13"><a href="#cb4-13"></a>    <span class="kw">try</span>(<span class="kw">help</span>(t[1L], p[1L], ...))</span>
-<span id="cb4-14"><a href="#cb4-14"></a>}</span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="op">&lt;</span>bytecode<span class="op">:</span><span class="st"> </span><span class="dv">0x55bc1128a258</span><span class="op">&gt;</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="er">&lt;</span>environment<span class="op">:</span><span class="st"> </span>namespace<span class="op">:</span>felp<span class="op">&gt;</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="felpfunction">felp(function)<a class="anchor" aria-label="anchor" href="#felpfunction"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">felp</span><span class="op">?</span><span class="va">.</span> <span class="co"># and `felp(felp)` return source and document of `felp` function</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode text r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> [31mfunction [39m  [33m( [39mtopic, <span class="at">package =</span>  [34m [1mNULL [22m [39m, ... [33m) [39m </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> [33m{ [39m</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     [31mif [39m  [34m( [39m [36mmissing [39m [36m( [39mtopic [36m) [39m [34m) [39m </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         [36mreturn [39m [34m( [39m [36mdo.call [39m [36m( [39mhelp,  [36mlist [39m [33m( [39mpackage <span class="ot">=</span>  [36msubstitute [39m [34m( [39mpackage [34m) [39m, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            ... [33m) [39m [36m) [39m [34m) [39m</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    t  [32m<span class="ot">&lt;-</span> [39m  [36mrev [39m [34m( [39m [36mas.character [39m [36m( [39m [36msubstitute [39m [33m( [39mtopic [33m) [39m [36m) [39m [34m) [39m</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    p  [32m<span class="ot">&lt;-</span> [39m  [36mc [39m [34m( [39m [36mas.character [39m [36m( [39m [36msubstitute [39m [33m( [39mpackage [33m) [39m [36m) [39m, t [36m[ [39m [34m2L [39m [36m] [39m [34m) [39m [34m[ [39m [34m1L [39m [34m] [39m</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     [31mif [39m  [34m( [39m [36mis.na [39m [36m( [39mp [36m) [39m [34m) [39m </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        p  [32m<span class="ot">&lt;-</span> [39m  [34m [1mNULL [22m [39m</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>     [36mstr [39m [34m( [39m [36mget [39m [36m( [39mt [33m[ [39m [34m1L [39m [33m] [39m, <span class="at">envir =</span>  [31mif [39m  [33m( [39m [36mis.null [39m [34m( [39mp [34m) [39m [33m) [39m </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         [36mparent.frame [39m [33m( [39m [33m) [39m</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>     [31melse [39m  [36masNamespace [39m [33m( [39mp [33m) [39m [36m) [39m [34m) [39m</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>     [36mtry [39m [34m( [39m [36mhelp [39m [36m( [39mt [33m[ [39m [34m1L [39m [33m] [39m, p [33m[ [39m [34m1L [39m [33m] [39m, ... [36m) [39m [34m) [39m</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a> [33m} [39m</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>felp<span class="sc">&gt;</span></span></code></pre></div>
+<pre><code>Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
+
+Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
+
+Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
+
+Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf</code></pre>
 <div class="r-help-page">
-<table class="table"><tr>
+<div class="container">
+<table style="width: 100%;" class="table"><tr>
 <td>
 felp
 </td>
@@ -153,58 +163,66 @@ felp
 R Documentation
 </td>
 </tr></table>
-<h2>
-Functional help which displays structure of an object in addition to help
-</h2>
 <h3>
+Functional help which displays structure of an object in addition to
+help
+</h3>
+<h4>
 Description
-</h3>
+</h4>
 <p>
-Structure of object is returned by <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>. For a function, its source is returned instead of <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>.
+Structure of object is returned by <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>. For a function,
+its source is returned instead of <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>.
 </p>
-<h3>
+<h4>
 Usage
-</h3>
-<pre class="r">
-felp(topic, package = NULL, ...)
-</pre>
-<h3>
+</h4>
+<pre class="r"><code class="language-R"><span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">topic</span>, package <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre>
+<h4>
 Arguments
-</h3>
+</h4>
 <table class="table">
-<tr valign="top">
+<tr style="vertical-align: top;">
 <td>
 <code>topic</code>
 </td>
 <td>
 <p>
-usually, a name or character string specifying the topic for which help is sought. A character string (enclosed in explicit single or double quotes) is always taken as naming a topic.
+usually, a name or character string specifying the topic for which help
+is sought. A character string (enclosed in explicit single or double
+quotes) is always taken as naming a topic.
 </p>
 <p>
-If the value of <code>topic</code> is a length-one character vector the topic is taken to be the value of the only element. Otherwise <code>topic</code> must be a name or a reserved word (if syntactically valid) or character string.
+If the value of <code>topic</code> is a length-one character vector the
+topic is taken to be the value of the only element. Otherwise
+<code>topic</code> must be a name or a reserved word (if syntactically
+valid) or character string.
 </p>
 <p>
 See ‘Details’ for what happens if this is omitted.
 </p>
 </td>
 </tr>
-<tr valign="top">
+<tr style="vertical-align: top;">
 <td>
 <code>package</code>
 </td>
 <td>
 <p>
-a name or character vector giving the packages to look into for documentation, or <code>NULL</code>. By default, all packages whose namespaces are loaded are used. To avoid a name being deparsed use e.g. <code>(pkg_ref)</code> (see the examples).
+a name or character vector giving the packages to look into for
+documentation, or <code>NULL</code>. By default, all packages whose
+namespaces are loaded are used. To avoid a name being deparsed use e.g.
+<code>(pkg_ref)</code> (see the examples).
 </p>
 </td>
 </tr>
-<tr valign="top">
+<tr style="vertical-align: top;">
 <td>
 <code>…</code>
 </td>
 <td>
 <p>
-Arguments passed on to <code><a href="https://rdrr.io/r/utils/help.html">utils::help</a></code>
+Arguments passed on to <code><a href="https://rdrr.io/r/utils/help.html" class="external-link">utils::help</a></code>
 </p>
 <dl>
 <dt>
@@ -212,7 +230,11 @@ Arguments passed on to <code><a href="https://rdrr.io/r/utils/help.html">utils::
 </dt>
 <dd>
 <p>
-a character vector of directory names of <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> libraries, or <code>NULL</code>. The default value of <code>NULL</code> corresponds to all libraries currently known. If the default is used, the loaded packages are searched before the libraries. This is not used for HTML help (see ‘Details’).
+a character vector of directory names of <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>
+libraries, or <code>NULL</code>. The default value of <code>NULL</code>
+corresponds to all libraries currently known. If the default is used,
+the loaded packages are searched before the libraries. This is not used
+for HTML help (see ‘Details’).
 </p>
 </dd>
 <dt>
@@ -236,39 +258,49 @@ logical; see <code>Note</code>.
 </dt>
 <dd>
 <p>
-character string: the type of help required. Possible values are <code>“text”</code>, <code>“html”</code> and <code>“pdf”</code>. Case is ignored, and partial matching is allowed.
+character string: the type of help required. Possible values are
+<code>“text”</code>, <code>“html”</code> and <code>“pdf”</code>. Case is
+ignored, and partial matching is allowed.
 </p>
 </dd>
 </dl>
 </td>
 </tr>
 </table>
-<h3>
+<h4>
 Examples
-</h3>
-<pre class="r">
-# Identical to help(identity); print(identity)
-felp(identity)
-
-# Identical to help(iris); str(iris)
-felp(iris)
-
-# Identical to help(package = stats)
-felp(package = stats)
-
-
-</pre>
+</h4>
+<pre class="r"><code class="language-R"><span><span class="co"># Identical to help(identity); print(identity)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">identity</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Identical to help(iris); str(iris)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Identical to help(package = stats)</span></span>
+<span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span>package <span class="op">=</span> <span class="va">stats</span><span class="op">)</span></span>
+<span></span>
+<span></span></code></pre>
 </div>
 </div>
-<div id="felpdataset" class="section level1">
-<h1 class="hasAnchor">
-<a href="#felpdataset" class="anchor"></a>felp(dataset)</h1>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">dummy</span>?<span class="no">.</span> <span class="co"># and `felp(dummy)` return sructure and document of `dummy` dataset.</span></pre></body></html></div>
+</div>
+<div class="section level2">
+<h2 id="felpdataset">felp(dataset)<a class="anchor" aria-label="anchor" href="#felpdataset"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dummy</span><span class="op">?</span><span class="va">.</span> <span class="co"># and `felp(dummy)` return sructure and document of `dummy` dataset.</span></span></code></pre></div>
 <pre class="text"><code>List of 2
  $ a: chr "a"
  $ b: num 1</code></pre>
+<pre><code>Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
+
+Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
+
+Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
+
+Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf</code></pre>
 <div class="r-help-page">
-<table class="table"><tr>
+<div class="container">
+<table style="width: 100%;" class="table"><tr>
 <td>
 dummy
 </td>
@@ -276,33 +308,33 @@ dummy
 R Documentation
 </td>
 </tr></table>
-<h2>
-A dummy data for felp
-</h2>
 <h3>
-Description
+A dummy data for felp
 </h3>
+<h4>
+Description
+</h4>
 <p>
 A dummy data for felp
 </p>
-<h3>
+<h4>
 Usage
-</h3>
-<pre class="r">
-dummy
-</pre>
-<h3>
+</h4>
+<pre class="r"><code class="language-R"><span><span class="va">dummy</span></span></code></pre>
+<h4>
 Format
-</h3>
+</h4>
 <p>
 An object of class <code>list</code> of length 2.
 </p>
 </div>
 </div>
-<div id="felppackage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#felppackage" class="anchor"></a>felp(package)</h1>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">felp</span>?<span class="no">p</span> <span class="co"># and `felp(package = felp)` return document of `felp` package</span></pre></body></html></div>
+</div>
+<div class="section level2">
+<h2 id="felppackage">felp(package)<a class="anchor" aria-label="anchor" href="#felppackage"></a>
+</h2>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">felp</span><span class="op">?</span><span class="va">p</span> <span class="co"># and `felp(package = felp)` return document of `felp` package</span></span></code></pre></div>
 <pre class="text"><code>        Information on package 'felp'
 
 Description:
@@ -310,7 +342,7 @@ Description:
 Package:           felp
 Type:              Package
 Title:             Functional Help for Functions, Objects, and Packages
-Version:           0.2.3
+Version:           0.3.0
 Author:            Atsushi Yasumoto [aut, cph, cre]
                    (&lt;https://orcid.org/0000-0002-8335-495X&gt;)
 Authors@R:         c( person( given = "Atsushi", family = "Yasumoto",
@@ -318,10 +350,10 @@ Authors@R:         c( person( given = "Atsushi", family = "Yasumoto",
                    "atusy.rpkg@gmail.com", comment = c(ORCID =
                    "0000-0002-8335-495X") ) )
 Maintainer:        Atsushi Yasumoto &lt;atusy.rpkg@gmail.com&gt;
-Description:       Provides pseudo-postfix operators and more to
-                   enhance displaying documents.  The `?.`
-                   pseudo-postfix operator and the `?` prefix operator
-                   displays documents and contents (source or
+Description:       Enhance R help system by fuzzy search and preview
+                   interface, pseudo-postfix operators, and more.  The
+                   `?.` pseudo-postfix operator and the `?` prefix
+                   operator displays documents and contents (source or
                    structure) of objects simultaneously to help
                    understanding the objects.  The `?p` pseudo-postfix
                    operator displays package documents, and is shorter
@@ -330,21 +362,23 @@ URL:               https://github.com/atusy/felp
 BugReports:        https://github.com/atusy/felp/issues
 License:           MIT + file LICENSE
 Encoding:          UTF-8
-LazyData:          true
 Roxygen:           list(markdown = TRUE)
-RoxygenNote:       7.1.1
-Imports:           prettycode, curl
-Suggests:          knitr, printr, testthat (&gt;= 2.1.0), covr
+RoxygenNote:       7.2.1
+Imports:           prettycode, curl, dplyr, htmltools, magrittr,
+                   matrixStats, miniUI, reactable, rstudioapi, rlang,
+                   shiny, stringdist, stringr, utils
+Suggests:          knitr, printr, testthat (&gt;= 2.1.0), covr, rmarkdown
 VignetteBuilder:   knitr
 Language:          en-US
-Built:             R 4.0.2; ; 2020-09-13 15:00:42 UTC; unix
+Built:             R 4.2.1; ; 2022-08-22 23:29:53 UTC; unix
 
 Index:
 
 ?                       Functional help with ? operator
 dummy                   A dummy data for felp
 felp                    Functional help which displays structure of an
-                        object in addition to help</code></pre>
+                        object in addition to help
+fuzzyhelp               Fuzzily Search Help and View the Selection</code></pre>
 </div>
   </div>
 
@@ -359,11 +393,13 @@ felp                    Functional help which displays structure of an
 
 
       <footer><div class="copyright">
-  <p>Developed by Atsushi Yasumoto.</p>
+  <p></p>
+<p>Developed by Atsushi Yasumoto.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -371,6 +407,8 @@ felp                    Functional help which displays structure of an
 
   
 
+
+  
 
   </body>
 </html>

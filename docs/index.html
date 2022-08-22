@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Functional Help for Functions, Objects, and Packages">
 <meta property="og:description" content="
-    Provides pseudo-postfix operators and more to enhance displaying documents.
+    Enhance R help system by fuzzy search and preview interface, pseudo-postfix operators, and more.
     The `?.` pseudo-postfix operator and the `?` prefix operator displays documents and contents (source or structure) of objects simultaneously to help understanding the objects.
     The `?p` pseudo-postfix operator displays package documents, and is shorter than help(package = foo).">
 <meta property="og:image" content="/logo.png">
@@ -29,6 +29,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -41,18 +43,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">felp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/felp.html">Get started</a>
 </li>
@@ -65,8 +61,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/atusy/felp/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/atusy/felp/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -84,50 +80,53 @@
   <div class="contents col-md-9">
 
 
-<div id="felp-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#felp-" class="anchor"></a>felp <img src="reference/figures/logo.png" align="right" alt="" width="120">
+<div class="section level1">
+<div class="page-header"><h1 id="felp-">felp <img src="reference/figures/logo.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#felp-"></a>
 </h1></div>
 <p><code>felp</code> is a short of <strong>f</strong>unctional h<strong>elp</strong>, and provides</p>
 <ul>
+<li>fuzzy search and preview of help with <code>fuzzyhelp</code> function or “Fuzzy Search on R Help” RStudio Addin</li>
 <li>the <code>?.</code> pseudo-post fix operator to simultaneously display a help document and a structure of an object</li>
 <li>the <code>?p</code> pseudo-post fix operator to display document of a package</li>
 </ul>
-<p>and more in <a href="#Syntax">Syntax</a> and <a href="https://felp.atusy.net/articles/felp.html">Get started</a></p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="from-cran" class="section level3">
-<h3 class="hasAnchor">
-<a href="#from-cran" class="anchor"></a>From CRAN</h3>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"felp"</span>)</pre></div>
+<p>and more in <a href="#Syntax">Syntax</a> and <a href="https://felp.atusy.net/articles/felp.html" class="external-link">Get started</a></p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="from-cran">From CRAN<a class="anchor" aria-label="anchor" href="#from-cran"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"felp"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="from-github" class="section level3">
-<h3 class="hasAnchor">
-<a href="#from-github" class="anchor"></a>From GitHub</h3>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/source.html">source</a></span>(<span class="st">"https://install-github.me/atusy/felp"</span>)</pre></div>
+<div class="section level3">
+<h3 id="from-github">From GitHub<a class="anchor" aria-label="anchor" href="#from-github"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"https://install-github.me/atusy/felp"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="syntax" class="section level2">
-<h2 class="hasAnchor">
-<a href="#syntax" class="anchor"></a>Syntax</h2>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="co"># ? operator</span>
-?<span class="no">help</span>
-?<span class="kw pkg">utils</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/utils/help.html">help</a></span>
-
-<span class="co"># ?. pseudo postfix operator for functions and objects</span>
-<span class="no">help</span>?<span class="no">.</span>
-<span class="kw pkg">utils</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/utils/help.html">help</a></span>?<span class="no">.</span>
-
-<span class="co"># ?p pseudo postfix operator for packages</span>
-<span class="no">utils</span>?<span class="no">p</span>
-
-<span class="co"># felp as an extention of utils::help</span>
-<span class="fu"><a href="reference/felp.html">felp</a></span>(<span class="no">help</span>)
-<span class="fu"><a href="reference/felp.html">felp</a></span>(<span class="st">"help"</span>)
-<span class="fu"><a href="reference/felp.html">felp</a></span>(<span class="kw pkg">utils</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/utils/help.html">help</a></span>)
-<span class="fu"><a href="reference/felp.html">felp</a></span>(<span class="no">help</span>, <span class="no">utils</span>)
-<span class="fu"><a href="reference/felp.html">felp</a></span>(<span class="kw">package</span> <span class="kw">=</span> <span class="no">utils</span>)</pre></div>
+<div class="section level2">
+<h2 id="syntax">Syntax<a class="anchor" aria-label="anchor" href="#syntax"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ? operator</span></span>
+<span><span class="op">?</span><span class="va">help</span></span>
+<span><span class="op">?</span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span></span>
+<span></span>
+<span><span class="co"># ?. pseudo postfix operator for functions and objects</span></span>
+<span><span class="va">help</span><span class="op">?</span><span class="va">.</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">?</span><span class="va">.</span></span>
+<span></span>
+<span><span class="co"># ?p pseudo postfix operator for packages</span></span>
+<span><span class="va">utils</span><span class="op">?</span><span class="va">p</span></span>
+<span></span>
+<span><span class="co"># felp as an extention of utils::help</span></span>
+<span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span><span class="va">help</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span><span class="st">"help"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span><span class="va">help</span>, <span class="va">utils</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span>package <span class="op">=</span> <span class="va">utils</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 
@@ -135,50 +134,60 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=felp">https://​cloud.r-project.org/​package=felp</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/atusy/felp/">https://​github.com/​atusy/​felp/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/atusy/felp/issues">https://​github.com/​atusy/​felp/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Atsushi Yasumoto <br><small class="roles"> Author, copyright holder, maintainer </small> <a href="https://orcid.org/0000-0002-8335-495X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://cloud.r-project.org/package=felp" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/atusy/felp/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/atusy/felp/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/atusy/felp"><img src="https://travis-ci.org/atusy/felp.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/atusy/felp"><img src="https://ci.appveyor.com/api/projects/status/github/atusy/felp?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
-<li><a href="https://codecov.io/gh/atusy/felp?branch=master"><img src="https://codecov.io/gh/atusy/felp/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://cran.r-project.org/package=felp"><img src="https://www.r-pkg.org/badges/version/felp" alt="CRAN status"></a></li>
-<li><a href="https://github.com/atusy/felp/actions"><img src="https://github.com/atusy/felp/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing felp</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Atsushi Yasumoto <br><small class="roles"> Author, copyright holder, maintainer </small> <a href="https://orcid.org/0000-0002-8335-495X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/atusy/felp" class="external-link"><img src="https://travis-ci.org/atusy/felp.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://ci.appveyor.com/project/atusy/felp" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/atusy/felp?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
+<li><a href="https://codecov.io/gh/atusy/felp?branch=master" class="external-link"><img src="https://codecov.io/gh/atusy/felp/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=felp" class="external-link"><img src="https://www.r-pkg.org/badges/version/felp" alt="CRAN status"></a></li>
+<li><a href="https://github.com/atusy/felp/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/atusy/felp/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Atsushi Yasumoto.</p>
+  <p></p>
+<p>Developed by Atsushi Yasumoto.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -186,6 +195,8 @@
 
   
 
+
+  
 
   </body>
 </html>
