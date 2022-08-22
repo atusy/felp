@@ -4,7 +4,10 @@
 \alias{fuzzyhelp}
 \title{Fuzzily Search Help and View the Selection}
 \usage{
-fuzzyhelp()
+fuzzyhelp(query = "")
+}
+\arguments{
+\item{query}{An initial query to search for the help system.}
 }
 \description{
 Users no more have to afraid of exact name of the object they need help.
@@ -15,4 +18,10 @@ The "Done" button will also hook \code{help} function on the selection.
 }
 \note{
 The fuzzy match algorithm is experimental, and may change in the future.
+}
+\examples{
+if (FALSE) {
+  fuzzyhelp()
+}
+
 }
