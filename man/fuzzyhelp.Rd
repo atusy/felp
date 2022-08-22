@@ -13,3 +13,6 @@ Click radio buttons to switch preview contents.
 Click "Done" or "Cancel" to close the widget.
 The "Done" button will also hook \code{help} function on the selection.
 }
+\note{
+The fuzzy match algorithm is experimental, and may change in the future.
+}

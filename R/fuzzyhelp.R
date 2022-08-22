@@ -163,6 +163,9 @@ server <- function(input, output) {
 #' Click "Done" or "Cancel" to close the widget.
 #' The "Done" button will also hook `help` function on the selection.
 #'
+#' @note
+#' The fuzzy match algorithm is experimental, and may change in the future.
+#'
 #' @return NULL
 #'
 #' @export
