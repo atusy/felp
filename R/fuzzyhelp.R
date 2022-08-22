@@ -93,11 +93,16 @@ arrange <- function(df, queries) {
     dplyr::select(!"SCORE")
 }
 
-create_ui <- function() {
+create_ui <- function(query = "") {
   miniUI::miniPage(
     miniUI::gadgetTitleBar("Fuzzy Help Search"),
     miniUI::miniContentPanel(
-      shiny::textInput("query", label = "Search query", width = "100%"),
+      shiny::textInput(
+        "query",
+        label = "Search query",
+        value = paste(query, collapse = " "),
+        width = "100%"
+      ),
       reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
       htmltools::tags$div(
         id = "bar",
@@ -191,10 +196,16 @@ server <- function(input, output) {
 #' Click "Done" or "Cancel" to close the widget.
 #' The "Done" button will also hook `help` function on the selection.
 #'
+#' @param query An initial query to search for the help system.
 #' @note
 #' The fuzzy match algorithm is experimental, and may change in the future.
 #'
 #' @return NULL
 #'
+#' @examples
+#' if (FALSE) {
+#'   fuzzyhelp()
+#' }
+#'
 #' @export
-fuzzyhelp <- function() shiny::runGadget(create_ui(), server)
+fuzzyhelp <- function(query = "") shiny::runGadget(create_ui(query), server)
