@@ -1,5 +1,6 @@
-.data <- rlang::.data
-`%>%` <- magrittr::`%>%`
+#' @importFrom rlang .data
+#' @importFrom magrittr %>%
+NULL
 
 getHelpFile <- function(...) {
   get(".getHelpFile", envir = asNamespace("utils"))(...)

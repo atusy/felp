@@ -27,10 +27,12 @@ Imports:
     curl,
     dplyr,
     htmltools,
+    magrittr,
     matrixStats,
     miniUI,
     reactable,
     rstudioapi,
+    rlang,
     shiny,
     stringdist,
     stringr

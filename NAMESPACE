@@ -3,6 +3,8 @@
 export("?")
 export(felp)
 export(fuzzyhelp)
+importFrom(magrittr,"%>%")
+importFrom(rlang,.data)
 importFrom(utils,"?")
 importFrom(utils,help)
 importFrom(utils,str)
