@@ -183,7 +183,7 @@ server <- function(input, output) {
         execute = TRUE
       )
     } else {
-      print(`::`("utils", type)((topic), (package)))
+      getNamespace("utils")[[type]]((topic), (package))
     }
   })
 }
