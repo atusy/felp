@@ -95,10 +95,13 @@ score_toc <- function(toc, queries) {
   # the current implementation does not support space (` `) as a part of queries
   prefilter <- rep(TRUE, N)
   txt <- paste(toc$Package, toc$Topic)
+  opts <- stringi::stri_opts_regex(case_insensitive = TRUE)
   for (
     query in stringi::stri_replace_all_regex(unique(queries), "(.)", "$1.*")
   ) {
-    prefilter[prefilter] <- stringi::stri_detect_regex(txt[prefilter], query)
+    prefilter[prefilter] <- stringi::stri_detect_regex(
+      txt[prefilter], query, opts_regex = opts
+    )
     if (!any(prefilter)) {
       return(score)
     }
@@ -177,7 +180,7 @@ server <- function(input, output) {
       pagination = TRUE,
       defaultPageSize = 20,
       selection = "single",
-      defaultSelected = if(nrow(toc_matched) != 0) 1L,
+      defaultSelected = if (nrow(toc_matched) != 0) 1L,
       onClick = "select"
     )
   }))
@@ -203,12 +206,7 @@ server <- function(input, output) {
     package <- selection$Package[1L]
     if (rstudioapi::isAvailable()) {
       rstudioapi::sendToConsole(
-        sprintf(
-          '%s(%s, package = %s)',
-          type,
-          if (type == "help") topic else sprintf('"%s"', topic),
-          if (type == "help") package else sprintf('"%s"', package)
-        ),
+        sprintf('%s("%s", package = "%s")', type, topic, package),
         execute = TRUE
       )
     } else {
