@@ -54,17 +54,18 @@ create_toc <- function() {
   df
 }
 
-score_toc <- function(toc, queries) {
+score_toc_filtered <- function(toc, queries) {
   unique_queries <- unique(queries)
   dist_package <- stringdist::stringdistmatrix(toc$Package, unique_queries, method = "lv")
   dist_topic <- stringdist::stringdistmatrix(toc$Topic, unique_queries, method = "lv")
-  afound_title <- stringdist::afind(toc$Title, unique_queries)
+  #afound_title <- stringdist::afind(toc$Title, unique_queries)
 
   score_df <- data.frame(
     index = seq(NROW(toc)),
     package = matrixStats::rowSums2(dist_package),
     topic = matrixStats::rowSums2(dist_topic),
-    title = matrixStats::rowSums2(afound_title$distance)
+    #title = matrixStats::rowSums2(afound_title$distance)
+    title = 0
   ) %>%
     dplyr::mutate(score = 0.5 * .data$package + .data$topic + 0.1 * .data$title)
     # focus on topic, less on package, and least on title
@@ -85,10 +86,33 @@ score_toc <- function(toc, queries) {
   return(score)
 }
 
+score_toc <- function(toc, queries) {
+  N <- nrow(toc)
+  score <- rep(NA_integer_, N)
+
+  # Pre-filtering to drop phrases missing any characters in queries
+  # Package and Topic can be united by a space because
+  # the current implementation does not support space (` `) as a part of queries
+  prefilter <- rep(TRUE, N)
+  txt <- paste(toc$Package, toc$Topic)
+  for (
+    query in stringi::stri_replace_all_regex(unique(queries), "(.)", "$1.*")
+  ) {
+    prefilter[prefilter] <- stringi::stri_detect_regex(txt[prefilter], query)
+    if (!any(prefilter)) {
+      return(score)
+    }
+  }
+
+  score[prefilter] <- score_toc_filtered(toc[prefilter, ], queries)
+  return(score)
+}
+
 arrange <- function(df, queries) {
   if (length(queries) == 0L) return(df)
   df %>%
     dplyr::mutate(SCORE = score_toc(df, queries)) %>%
+    dplyr::filter(!is.na(.data$SCORE)) %>%
     dplyr::arrange(.data$SCORE) %>%
     dplyr::select(!"SCORE")
 }
@@ -146,12 +170,17 @@ server <- function(input, output) {
   toc <- create_toc()
   reactiveQueries <- shiny::reactive(parse_query(input$query))
   reactiveToc <- shiny::reactive(arrange(toc, reactiveQueries()))
-  reactiveTocViewer <- shiny::reactive(
+  reactiveTocViewer <- shiny::reactive(local({
+    toc_matched <- reactiveToc()
     reactable::reactable(
-      reactiveToc(), pagination = TRUE, defaultPageSize = 20,
-      selection = "single", defaultSelected = 1L, onClick = "select"
+      toc_matched,
+      pagination = TRUE,
+      defaultPageSize = 20,
+      selection = "single",
+      defaultSelected = if(nrow(toc_matched) != 0) 1L,
+      onClick = "select"
     )
-  )
+  }))
   reactiveSelection <- shiny::reactive({
     reactiveToc()  # avoids noisy refresh
     reactable::getReactableState("tocViewer", "selected")
