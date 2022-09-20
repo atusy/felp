@@ -86,6 +86,13 @@ score_toc_filtered <- function(toc, queries) {
   return(score)
 }
 
+detect <- function(package, topic, query, case_sensitive) {
+  o <- stringi::stri_opts_regex(case_insensitive = !case_sensitive)
+  p <- stringi::stri_detect_regex(package, query, opts_regex = o)
+  t <- stringi::stri_detect_regex(topic, query, opts_regex = o)
+  return(p | t)
+}
+
 score_toc <- function(toc, queries) {
   N <- nrow(toc)
   score <- rep(NA_integer_, N)
@@ -94,13 +101,18 @@ score_toc <- function(toc, queries) {
   # Package and Topic can be united by a space because
   # the current implementation does not support space (` `) as a part of queries
   prefilter <- rep(TRUE, N)
-  txt <- paste(toc$Package, toc$Topic)
+  unique_queries <- unique(queries)
+  case_sensitive <- stringi::stri_detect_regex(unique_queries, "[:upper:]")
+  prefilter_queries <- stringi::stri_replace_all_regex(unique_queries, "(.)", "$1.*")
+  package <- toc$Package
+  topic <- toc$Topic
   opts <- stringi::stri_opts_regex(case_insensitive = TRUE)
-  for (
-    query in stringi::stri_replace_all_regex(unique(queries), "(.)", "$1.*")
-  ) {
-    prefilter[prefilter] <- stringi::stri_detect_regex(
-      txt[prefilter], query, opts_regex = opts
+  for (i in seq_along(unique_queries)) {
+    prefilter[prefilter] = detect(
+      package[prefilter],
+      topic[prefilter],
+      prefilter_queries[i],
+      case_sensitive[i]
     )
     if (!any(prefilter)) {
       return(score)
