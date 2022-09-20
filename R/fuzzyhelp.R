@@ -98,7 +98,9 @@ score_toc <- function(toc, queries) {
   prefilter <- rep(TRUE, N)
   unique_queries <- unique(queries)
   case_sensitive <- stringi::stri_detect_regex(unique_queries, "[:upper:]")
-  prefilter_queries <- stringi::stri_replace_all_regex(unique_queries, "(.)", "$1.*")
+  prefilter_queries <- unique_queries %>%
+    stringi::stri_replace_all_regex("(.)", "\\\\$1.*") %>%
+    stringi::stri_replace_all_regex("\\\\(\\w)", "$1")
   package <- toc$Package
   topic <- toc$Topic
   for (i in seq_along(unique_queries)) {
