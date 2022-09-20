@@ -33,11 +33,15 @@ get_vignette <- function(topic, package) {
 }
 
 
-get_content <- function(x) {
-  if (NROW(x) == 0L) return("")
-  type <- x$Type[1L]
-  topic <- x$Topic[1L]
-  package <- x$Package[1L]
+get_content <- function(x, i) {
+  if (NROW(x) == 0L || length(i) == 0L) return("")
+  if (length(i) > 1L) {
+    warning("i should be an integer vector of the length equal to 1.")
+    i <- i[[1L]]
+  }
+  type <- x$Type[i]
+  topic <- x$Topic[i]
+  package <- x$Package[i]
   if (type == "vignette") return(get_vignette(topic, package))
   get_help(topic, package)
 }
@@ -202,7 +206,7 @@ server <- function(input, output) {
   })
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
-      srcdoc = get_content(reactiveToc()[reactiveSelection(), ]),
+      srcdoc = get_content(reactiveToc(), reactiveSelection()),
       style = "width: 100%; height: 100%;"
     )
   )
