@@ -58,35 +58,26 @@ create_toc <- function() {
   df
 }
 
+distmatrix <- function(x, y, case_sensitive) {
+  f <- function(x2, ignore.case) {
+    adist(x2, y, ignore.case = ignore.case, partial = TRUE, fixed = TRUE)
+  }
+  res <- matrix(0L, nrow = length(x), ncol = length(y))
+  res[case_sensitive, ] <- f(x[case_sensitive], ignore.case = FALSE)
+  res[!case_sensitive, ] <- f(x[!case_sensitive], ignore.case = TRUE)
+  return(res)
+}
+
 score_toc_filtered <- function(toc, queries) {
   unique_queries <- unique(queries)
-  dist_package <- stringdist::stringdistmatrix(toc$Package, unique_queries, method = "lv")
-  dist_topic <- stringdist::stringdistmatrix(toc$Topic, unique_queries, method = "lv")
-  #afound_title <- stringdist::afind(toc$Title, unique_queries)
+  case_sensitive <- stringi::stri_detect_regex(unique_queries, '[:upper:]')
+  dist_package <- distmatrix(unique_queries, toc$Package, case_sensitive)
+  dist_topic <- distmatrix(unique_queries, toc$Topic, case_sensitive)
+  dist <- dist_topic
+  loc <- dist_package < dist_topic
+  dist[loc] <- dist_package[loc]
 
-  score_df <- data.frame(
-    index = seq(NROW(toc)),
-    package = matrixStats::rowSums2(dist_package),
-    topic = matrixStats::rowSums2(dist_topic),
-    #title = matrixStats::rowSums2(afound_title$distance)
-    title = 0
-  ) %>%
-    dplyr::mutate(score = 0.5 * .data$package + .data$topic + 0.1 * .data$title)
-    # focus on topic, less on package, and least on title
-
-  if (length(queries) == 1L) return(score_df$score)
-
-  score <- score_df[["score"]]
-  idx <- utils::head(dplyr::arrange(score_df, .data$score)$index, 20)
-  idx_last <- utils::tail(idx, 1L)
-  tbl <- c(table(queries))
-  for (i in idx) {
-    p <- which.min(dist_package[i, ])
-    t <- which.min(dist_topic[i, ])
-    if (p == t && tbl[queries[p]] == 1L) {
-      score[i] <- score[idx_last]
-    }
-  }
+  score <- matrixStats::colSums2(dist)
   return(score)
 }
 
@@ -110,7 +101,6 @@ score_toc <- function(toc, queries) {
   prefilter_queries <- stringi::stri_replace_all_regex(unique_queries, "(.)", "$1.*")
   package <- toc$Package
   topic <- toc$Topic
-  opts <- stringi::stri_opts_regex(case_insensitive = TRUE)
   for (i in seq_along(unique_queries)) {
     prefilter[prefilter] = detect(
       package[prefilter],
@@ -123,6 +113,7 @@ score_toc <- function(toc, queries) {
     }
   }
 
+  # Calculate and return score for filtered items
   score[prefilter] <- score_toc_filtered(toc[prefilter, ], queries)
   return(score)
 }
@@ -132,7 +123,10 @@ arrange <- function(df, queries) {
   df %>%
     dplyr::mutate(SCORE = score_toc(df, queries)) %>%
     dplyr::filter(!is.na(.data$SCORE)) %>%
-    dplyr::arrange(.data$SCORE) %>%
+    dplyr::arrange(
+      .data$SCORE,
+      stringi::stri_length(paste0(.data$Package, .data$Topic))
+    ) %>%
     dplyr::select(!"SCORE")
 }
 
