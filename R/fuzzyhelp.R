@@ -190,6 +190,7 @@ server <- function(input, output) {
     reactable::reactable(
       toc_matched,
       pagination = TRUE,
+      showPagination = TRUE,
       defaultPageSize = 20,
       selection = "single",
       defaultSelected = if (nrow(toc_matched) != 0) 1L,
