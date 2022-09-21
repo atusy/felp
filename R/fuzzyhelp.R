@@ -177,7 +177,7 @@ create_ui <- function(query = "") {
 }
 
 parse_query <- function(string) {
-  queries <- stringr::str_split(string, "\\s+")[[1L]]
+  queries <- stringi::stri_split_fixed(string, " ")[[1L]]
   queries[queries != ""]
 }
 
