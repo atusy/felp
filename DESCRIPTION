@@ -34,8 +34,7 @@ Imports:
     rstudioapi,
     rlang,
     shiny,
-    stringdist,
-    stringr,
+    stringi,
     utils
 Suggests:
     knitr,

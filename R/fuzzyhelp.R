@@ -33,11 +33,15 @@ get_vignette <- function(topic, package) {
 }
 
 
-get_content <- function(x) {
-  if (NROW(x) == 0L) return("")
-  type <- x$Type[1L]
-  topic <- x$Topic[1L]
-  package <- x$Package[1L]
+get_content <- function(x, i) {
+  if (NROW(x) == 0L || length(i) == 0L) return("")
+  if (length(i) > 1L) {
+    warning("i should be an integer vector of the length equal to 1.")
+    i <- i[[1L]]
+  }
+  type <- x$Type[i]
+  topic <- x$Topic[i]
+  package <- x$Package[i]
   if (type == "vignette") return(get_vignette(topic, package))
   get_help(topic, package)
 }
@@ -54,34 +58,65 @@ create_toc <- function() {
   df
 }
 
-score_toc <- function(toc, queries) {
+distmatrix <- function(x, y, case_sensitive) {
+  f <- function(x2, ignore.case) {
+    adist(x2, y, ignore.case = ignore.case, partial = TRUE, fixed = TRUE)
+  }
+  res <- matrix(0L, nrow = length(x), ncol = length(y))
+  res[case_sensitive, ] <- f(x[case_sensitive], ignore.case = FALSE)
+  res[!case_sensitive, ] <- f(x[!case_sensitive], ignore.case = TRUE)
+  return(res)
+}
+
+score_toc_filtered <- function(toc, queries) {
   unique_queries <- unique(queries)
-  dist_package <- stringdist::stringdistmatrix(toc$Package, unique_queries, method = "lv")
-  dist_topic <- stringdist::stringdistmatrix(toc$Topic, unique_queries, method = "lv")
-  afound_title <- stringdist::afind(toc$Title, unique_queries)
+  case_sensitive <- stringi::stri_detect_regex(unique_queries, '[:upper:]')
+  dist_package <- distmatrix(unique_queries, toc$Package, case_sensitive)
+  dist_topic <- distmatrix(unique_queries, toc$Topic, case_sensitive)
+  dist <- dist_topic
+  loc <- dist_package < dist_topic
+  dist[loc] <- dist_package[loc]
 
-  score_df <- data.frame(
-    index = seq(NROW(toc)),
-    package = matrixStats::rowSums2(dist_package),
-    topic = matrixStats::rowSums2(dist_topic),
-    title = matrixStats::rowSums2(afound_title$distance)
-  ) %>%
-    dplyr::mutate(score = 0.5 * .data$package + .data$topic + 0.1 * .data$title)
-    # focus on topic, less on package, and least on title
+  score <- matrixStats::colSums2(dist)
+  return(score)
+}
 
-  if (length(queries) == 1L) return(score_df$score)
+detect <- function(package, topic, query, case_sensitive) {
+  o <- stringi::stri_opts_regex(case_insensitive = !case_sensitive)
+  p <- stringi::stri_detect_regex(package, query, opts_regex = o)
+  t <- stringi::stri_detect_regex(topic, query, opts_regex = o)
+  return(p | t)
+}
 
-  score <- score_df[["score"]]
-  idx <- utils::head(dplyr::arrange(score_df, .data$score)$index, 20)
-  idx_last <- utils::tail(idx, 1L)
-  tbl <- c(table(queries))
-  for (i in idx) {
-    p <- which.min(dist_package[i, ])
-    t <- which.min(dist_topic[i, ])
-    if (p == t && tbl[queries[p]] == 1L) {
-      score[i] <- score[idx_last]
+score_toc <- function(toc, queries) {
+  N <- nrow(toc)
+  score <- rep(NA_integer_, N)
+
+  # Pre-filtering to drop phrases missing any characters in queries
+  # Package and Topic can be united by a space because
+  # the current implementation does not support space (` `) as a part of queries
+  prefilter <- rep(TRUE, N)
+  unique_queries <- unique(queries)
+  case_sensitive <- stringi::stri_detect_regex(unique_queries, "[:upper:]")
+  prefilter_queries <- unique_queries %>%
+    stringi::stri_replace_all_regex("(.)", "\\\\$1.*") %>%
+    stringi::stri_replace_all_regex("\\\\(\\w)", "$1")
+  package <- toc$Package
+  topic <- toc$Topic
+  for (i in seq_along(unique_queries)) {
+    prefilter[prefilter] = detect(
+      package[prefilter],
+      topic[prefilter],
+      prefilter_queries[i],
+      case_sensitive[i]
+    )
+    if (!any(prefilter)) {
+      return(score)
     }
   }
+
+  # Calculate and return score for filtered items
+  score[prefilter] <- score_toc_filtered(toc[prefilter, ], queries)
   return(score)
 }
 
@@ -89,7 +124,11 @@ arrange <- function(df, queries) {
   if (length(queries) == 0L) return(df)
   df %>%
     dplyr::mutate(SCORE = score_toc(df, queries)) %>%
-    dplyr::arrange(.data$SCORE) %>%
+    dplyr::filter(!is.na(.data$SCORE)) %>%
+    dplyr::arrange(
+      .data$SCORE,
+      stringi::stri_length(paste0(.data$Package, .data$Topic))
+    ) %>%
     dplyr::select(!"SCORE")
 }
 
@@ -138,7 +177,7 @@ create_ui <- function(query = "") {
 }
 
 parse_query <- function(string) {
-  queries <- stringr::str_split(string, "\\s+")[[1L]]
+  queries <- stringi::stri_split_fixed(string, " ")[[1L]]
   queries[queries != ""]
 }
 
@@ -146,19 +185,25 @@ server <- function(input, output) {
   toc <- create_toc()
   reactiveQueries <- shiny::reactive(parse_query(input$query))
   reactiveToc <- shiny::reactive(arrange(toc, reactiveQueries()))
-  reactiveTocViewer <- shiny::reactive(
+  reactiveTocViewer <- shiny::reactive(local({
+    toc_matched <- reactiveToc()
     reactable::reactable(
-      reactiveToc(), pagination = TRUE, defaultPageSize = 20,
-      selection = "single", defaultSelected = 1L, onClick = "select"
+      toc_matched,
+      pagination = TRUE,
+      showPagination = TRUE,
+      defaultPageSize = 20,
+      selection = "single",
+      defaultSelected = if (nrow(toc_matched) != 0) 1L,
+      onClick = "select"
     )
-  )
+  }))
   reactiveSelection <- shiny::reactive({
     reactiveToc()  # avoids noisy refresh
     reactable::getReactableState("tocViewer", "selected")
   })
   reactiveHelp <- shiny::reactive(
     htmltools::tags$iframe(
-      srcdoc = get_content(reactiveToc()[reactiveSelection(), ]),
+      srcdoc = get_content(reactiveToc(), reactiveSelection()),
       style = "width: 100%; height: 100%;"
     )
   )
@@ -174,12 +219,7 @@ server <- function(input, output) {
     package <- selection$Package[1L]
     if (rstudioapi::isAvailable()) {
       rstudioapi::sendToConsole(
-        sprintf(
-          '%s(%s, package = %s)',
-          type,
-          if (type == "help") topic else sprintf('"%s"', topic),
-          if (type == "help") package else sprintf('"%s"', package)
-        ),
+        sprintf('%s("%s", package = "%s")', type, topic, package),
         execute = TRUE
       )
     } else {
