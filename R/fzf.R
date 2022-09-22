@@ -233,9 +233,9 @@ fzf_one <- function(
   }
 
   # calc
-  results <- purrr::map_dfr(
+  results <- dplyr::bind_rows(lapply(
     query_chars_list, function(x) fzf_core(target_chars, x, must_match)
-  )
+  ))
 
   # summarize
   remove_na <- !must_match
@@ -276,12 +276,12 @@ fzf <- function(
   queries_chars_list <- stringi::stri_split_boundaries(
     queries, type = "character"
   )
-  purrr::map_dfr(
+  dplyr::bind_rows(lapply(
     targets,
     fzf_one,
     query_chars_list = queries_chars_list,
     must_match = must_match,
     case_sensitive = case_sensitive,
     ...
-  )
+  ))
 }
