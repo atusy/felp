@@ -85,7 +85,7 @@ calc_bonus_matrix <- function(match_matrix, target_chars) {
 #' unmatch:   T  F  T  F  T  T  T
 #' locals:   -1  0 -3  0 -3 -1 -2
 #' cumsum:   -1 -1 -4 -4 -7 -8 -9
-#' resetter: NA  1  1  4  4  4  4
+#' resetter: NA -1 -1 -4 -4 -4 -4
 #' penalty:  NA  0 -3  0 -3 -4 -5
 #' ```
 #'
