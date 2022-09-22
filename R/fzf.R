@@ -3,33 +3,28 @@ char_unicode_patterns <- c(
   lower = "[:lower:]",
   upper = "[:upper:]",
   number = "[:number:]",
-  delimiter = "[/,:;|]",
-  non_word = "."
+  delimiter = "[/,:;|]"
 )
 
-classify_char <- function(x, patterns = char_unicode_patterns) {
-  matched <- stringi::stri_detect_regex(x, patterns)
-  names(patterns)[matched][1L]
-}
-
 classify_chars <- function(x, patterns = char_unicode_patterns) {
-  vapply(x, classify_char, NA_character_)
+  lapply(patterns, function(p) stringi::stri_detect_regex(x, p))
 }
 
 #' Calculate available bonuses from 2-grams
 #' @noRd
 calc_paired_bonus <- function(target_chars) {
   cur <- classify_chars(target_chars)
-  pre <- dplyr::lag(cur, default = "_unk_")
-  is_white <- cur == "white"
-  is_non_word <- cur == "non_word"
+  n <- length(target_chars)
+  pre <- lapply(cur, function(x) c(FALSE, x[-n]))
+  is_white <- cur[["white"]]
+  is_non_word <- !Reduce(`|`, cur)
   bonus <- (
     (!(is_white | is_non_word)) * (
-      10L * (pre == "white") +
-        9L * (pre == "delimiter") +
-        8L * (pre == "non_word")
+      10L * pre[["white"]] +
+        9L * pre[["delimiter"]] +
+        8L * c(FALSE, is_non_word[-n])
     ) +
-      (7L * (paste(pre, cur) %in% c("lower upper", "number number"))) +
+      (7L * ((pre[["lower"]] & cur[["upper"]]) | (pre[["number"]] & cur[["number"]]))) +
       (8L * is_non_word) +
       (10L * is_white)
   )
