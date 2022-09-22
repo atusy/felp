@@ -156,7 +156,7 @@ eval_score <- function(score) {
   begin <- which(selected[1L, ])
 
   # Evaluation
-  c(
+  list(
     score = max(row_maxs),
     length = ncol(score),
     begin = begin[[length(begin)]],
@@ -170,7 +170,7 @@ eval_score <- function(score) {
 #' missing except for the length. This function is used when fuzzy match does
 #' not allow omission or mismatch, which is the default behavior of `fzf`.
 eval_nomatch <- function(target_chars) {
-  c(
+  list(
     score = NA_integer_,
     length = length(target_chars),
     begin = NA_integer_,
@@ -233,9 +233,9 @@ fzf_one <- function(
   }
 
   # calc
-  results <- dplyr::bind_rows(lapply(
+  results <- data.table::rbindlist(lapply(
     query_chars_list, function(x) fzf_core(target_chars, x, must_match)
-  ))
+  ), use.names = FALSE)
 
   # summarize
   remove_na <- !must_match
@@ -276,12 +276,12 @@ fzf <- function(
   queries_chars_list <- stringi::stri_split_boundaries(
     queries, type = "character"
   )
-  dplyr::bind_rows(lapply(
+  data.table::rbindlist(lapply(
     targets,
     fzf_one,
     query_chars_list = queries_chars_list,
     must_match = must_match,
     case_sensitive = case_sensitive,
     ...
-  ))
+  ), use.names = FALSE)
 }
