@@ -61,10 +61,24 @@ calc_match_matrix <- function(
 #' Unmatched ones yield `NA`.
 calc_bonus_matrix <- function(match_matrix, target_chars) {
   base <- 16L
-  mult <- match_matrix
-  mult[match_matrix[, 1L], 1L] <- 2L
-  mult[!match_matrix] <- NA_integer_  # for the efficient calculation
-  bonus <- t(t(mult * base) + calc_paired_bonus(target_chars))
+
+  # matches gain the base bonus
+  bonus <- match_matrix * base
+
+  # head matches double the base bonus
+  bonus[, 1L] <- bonus[, 1L] * 2L
+
+  # continuous matches gain +4 as a bonus
+  prev <- match_matrix[-1L, -1L]
+  curr <- match_matrix[-nrow(match_matrix), -ncol(match_matrix)]
+  cont <- prev & curr
+  bonus[-1L, -1L][cont] <- bonus[-1L, -1L][cont] + 4L
+
+  # extra bonuses from the relationships with the matches and their preceding
+  bonus[bonus == 0L] <- NA_integer_  # for the efficient calculation
+  bonus <- t(t(bonus) + calc_paired_bonus(target_chars))
+
+  # return
   bonus
 }
 
