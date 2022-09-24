@@ -107,6 +107,11 @@ score_toc <- function(toc, queries) {
     }
   }
 
+  if (all(stringi::stri_length(unique_queries) == 1L)) {
+    score[prefilter] = 0L
+    return(score)
+  }
+
   # Calculate and return score for filtered items
   score[prefilter] <- score_toc_filtered(toc[prefilter, ], queries)
   return(score)
