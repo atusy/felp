@@ -70,15 +70,7 @@ distmatrix <- function(x, y, case_sensitive) {
 
 score_toc_filtered <- function(toc, queries) {
   unique_queries <- unique(queries)
-  case_sensitive <- stringi::stri_detect_regex(unique_queries, '[:upper:]')
-  dist_package <- distmatrix(unique_queries, toc$Package, case_sensitive)
-  dist_topic <- distmatrix(unique_queries, toc$Topic, case_sensitive)
-  dist <- dist_topic
-  loc <- dist_package < dist_topic
-  dist[loc] <- dist_package[loc]
-
-  score <- matrixStats::colSums2(dist)
-  return(score)
+  - fzf(paste(toc$Package, toc$Topic, toc$Title), unique_queries)$score
 }
 
 detect <- function(package, topic, query, case_sensitive) {
