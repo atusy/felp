@@ -69,8 +69,7 @@ distmatrix <- function(x, y, case_sensitive) {
 }
 
 score_toc_filtered <- function(toc, queries) {
-  unique_queries <- unique(queries)
-  - fzf(paste(toc$Package, toc$Topic, toc$Title), unique_queries)$score
+  -fzf(paste(toc$Package, toc$Topic), queries)$score
 }
 
 detect <- function(package, topic, query, case_sensitive) {
@@ -113,7 +112,7 @@ score_toc <- function(toc, queries) {
   }
 
   # Calculate and return score for filtered items
-  score[prefilter] <- score_toc_filtered(toc[prefilter, ], queries)
+  score[prefilter] <- score_toc_filtered(toc[prefilter, ], unique_queries)
   return(score)
 }
 
