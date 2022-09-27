@@ -235,7 +235,7 @@ split_chars <- function(x) {
 #' Fuzzy match on one target string
 #'
 #' @noRd
-fzf_one <- function(
+fzf_one_raw <- function(
     target,
     query_chars_list,
     must_match = TRUE,
@@ -254,7 +254,11 @@ fzf_one <- function(
     query_chars_list, function(x) fzf_core(target_chars, x, must_match)
   ), use.names = FALSE)
 
-  # summarize
+  return(results)
+}
+
+fzf_one <- function(target, query_chars_list, must_match = TRUE, ...) {
+  results <- fzf_one_raw(target, query_chars_list, must_match, ...)
   remove_na <- identical(must_match, FALSE)
   list(
     score = summarize(results[["score"]], sum, remove_na),
