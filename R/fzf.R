@@ -183,9 +183,9 @@ eval_score <- function(score) {
 #' The return is structurally same as that of `eval_score`, but values are
 #' missing except for the length. This function is used when fuzzy match does
 #' not allow omission or mismatch, which is the default behavior of `fzf`.
-eval_nomatch <- function(target_chars) {
+eval_nomatch <- function(target_chars, score = NA_integer_) {
   list(
-    score = NA_integer_,
+    score = score,
     length = length(target_chars),
     begin = NA_integer_,
     end = NA_integer_
@@ -197,17 +197,18 @@ eval_nomatch <- function(target_chars) {
 fzf_core <- function(
     target_chars, query_chars, must_match = TRUE, case_sensitive = FALSE
 ) {
+  noscore = if (is.logical(must_match)) NA_integer_ else must_match
   # Early return for blank target or query
   if (0L %in% c(length(target_chars), length(query_chars))) {
-    return(eval_nomatch(target_chars))
+    return(eval_nomatch(target_chars, noscore))
   }
 
   # Test match
   matched <- calc_match_matrix(target_chars, query_chars, case_sensitive)
 
   # Early return when omission or mismatch happens despite of `must_match`
-  if (must_match && (0L %in% rowSums(matched))) {
-    return(eval_nomatch(target_chars))
+  if (!identical(must_match, FALSE) && (0L %in% rowSums(matched))) {
+    return(eval_nomatch(target_chars, noscore))
   }
 
   # Calculate and evaluate score
@@ -252,7 +253,7 @@ fzf_one <- function(
   ), use.names = FALSE)
 
   # summarize
-  remove_na <- !must_match
+  remove_na <- identical(must_match, FALSE)
   list(
     score = summarize(results[["score"]], sum, remove_na),
     length = results[1L, "length"][[1L]],
