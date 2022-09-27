@@ -68,15 +68,42 @@ distmatrix <- function(x, y, case_sensitive) {
   return(res)
 }
 
-score_toc_filtered <- function(toc, queries) {
-  -fzf(paste(toc$Package, toc$Topic), queries)$score
+adist_fzf_one <- function(target, query_chars_list) {
+  target_chars <- split_chars(target)[[1L]]
+  vapply(
+    query_chars_list,
+    function(x) fzf_core(target_chars, x, must_match = 0L)$score,
+    NA_integer_
+  )
 }
 
-detect <- function(package, topic, query, case_sensitive) {
+adist_fzf <- function(targets, query_chars_list) {
+  unique_targets <- unique(targets)
+  res <- do.call(
+    rbind,
+    setNames(lapply(unique_targets, adist_fzf_one, query_chars_list), unique_targets)[targets]
+  )
+  return(res)
+}
+
+score_toc_filtered <- function(toc, queries) {
+  query_chars_list <- split_chars(queries)
+  score <- adist_fzf(toc$Package, query_chars_list)
+  topic <- adist_fzf(toc$Topic, query_chars_list)
+  right <- score < topic
+  score[right] <- topic[right]
+  title <- adist_fzf(toc$Title, query_chars_list) / 2L
+  right <- score < title
+  score[right] <- title[right]
+  return(-rowSums(score))
+}
+
+detect <- function(package, topic, title, query, case_sensitive) {
   o <- stringi::stri_opts_regex(case_insensitive = !case_sensitive)
-  p <- stringi::stri_detect_regex(package, query, opts_regex = o)
-  t <- stringi::stri_detect_regex(topic, query, opts_regex = o)
-  return(p | t)
+  d <- stringi::stri_detect_regex(package, query, opts_regex = o)
+  d[!d] <- stringi::stri_detect_regex(topic[!d], query, opts_regex = o)
+  d[!d] <- stringi::stri_detect_regex(title[!d], query, opts_regex = o)
+  return(d)
 }
 
 score_toc <- function(toc, queries) {
@@ -94,10 +121,12 @@ score_toc <- function(toc, queries) {
     stringi::stri_replace_all_regex("\\\\(\\w)", "$1")
   package <- toc$Package
   topic <- toc$Topic
+  title <- toc$Title
   for (i in seq_along(unique_queries)) {
     prefilter[prefilter] = detect(
       package[prefilter],
       topic[prefilter],
+      title[prefilter],
       prefilter_queries[i],
       case_sensitive[i]
     )
