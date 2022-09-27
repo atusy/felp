@@ -228,6 +228,10 @@ summarize <- function(x, fun, remove_na) {
   fun(x, na.rm = remove_na && !all(is.na(x)))[[1L]]  # [[1L]] ensures un-named
 }
 
+split_chars <- function(x) {
+  stringi::stri_split_boundaries(x, type = "character")
+}
+
 #' Fuzzy match on one target string
 #'
 #' @noRd
@@ -238,9 +242,7 @@ fzf_one <- function(
     ...
 ) {
   # prep
-  target_chars <- stringi::stri_split_boundaries(
-    target, type = "character"
-  )[[1L]]
+  target_chars <- split_chars(target)[[1L]]
 
   # early return if target is blank
   if (length(target_chars) == 0L) {
@@ -288,9 +290,7 @@ fzf_one <- function(
 fzf <- function(
     targets, queries, must_match = TRUE, case_sensitive = FALSE, ...
 ) {
-  queries_chars_list <- stringi::stri_split_boundaries(
-    queries, type = "character"
-  )
+  queries_chars_list <- split_chars(queries)
   data.table::rbindlist(lapply(
     targets,
     fzf_one,
