@@ -52,11 +52,10 @@ adist_fzf_one <- function(target, query_chars_list) {
 
 adist_fzf <- function(targets, query_chars_list) {
   unique_targets <- unique(targets)
-  res <- do.call(
-    rbind,
-    setNames(lapply(unique_targets, adist_fzf_one, query_chars_list), unique_targets)[targets]
+  names(unique_targets) <- unique_targets
+  do.call(
+    rbind, lapply(unique_targets, adist_fzf_one, query_chars_list)[targets]
   )
-  return(res)
 }
 
 score_toc_filtered <- function(toc, queries) {
