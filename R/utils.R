@@ -1,4 +1,4 @@
-getHelpFile <- function(...) {
+get_help_file <- function(...) {
   get(".getHelpFile", envir = asNamespace("utils"))(...)
 }
 
@@ -9,7 +9,7 @@ get_help <- function(topic, package, help_type = "html", ...) {
   file <- paths[1L]
   pkgname <- basename(dirname(dirname(file)))
   content <- paste(
-    utils::capture.output(conv(getHelpFile(file), package = pkgname)),
+    utils::capture.output(conv(get_help_file(file), package = pkgname)),
     collapse = "\n"
   )
   return(content)
