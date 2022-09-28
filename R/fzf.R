@@ -31,14 +31,7 @@ calc_paired_bonus <- function(target_chars) {
   bonus
 }
 
-#' Test if matched
-#'
-#' If not `case_sensitive`, then return the logical add of tests with
-#' `target_chars` in the input cases and lower cases.
-#' @noRd
-calc_match_matrix <- function(
-    target_chars, query_chars, case_sensitive = FALSE
-) {
+calc_match_matrix_core <- function(target_chars, query_chars) {
   target_matrix <- matrix(
     target_chars,
     ncol = length(target_chars),
@@ -47,19 +40,50 @@ calc_match_matrix <- function(
     dimnames = list(query_chars, target_chars)
   )
   match_matrix <- target_matrix == query_chars
+  return(match_matrix)
+}
 
-  if (case_sensitive) return(match_matrix)
-  match_matrix | calc_match_matrix(
-    stringi::stri_trans_tolower(target_chars),
-    query_chars,
-    case_sensitive = TRUE
-  )
+#' Test if matched
+#'
+#' If not `case_sensitive`, then return the logical add of tests with
+#' `target_chars` in the input cases and lower cases.
+#' @noRd
+calc_match_matrix <- function(
+    target_chars, query_chars, case_sensitive = FALSE, partial = TRUE
+) {
+  match_matrix <- calc_match_matrix_core(target_chars, query_chars)
+
+  # if case insensitive, compare with lower cases of target_chars
+  if (!case_sensitive) {
+    lower <- stringi::stri_trans_tolower(target_chars)
+    insensitive <- lower != target_chars
+    if (any(insensitive)) {
+      match_matrix[, insensitive] <- match_matrix[, insensitive] |
+        calc_match_matrix_core(lower[insensitive], query_chars)
+    }
+  }
+
+  # if possible, reduce the size of match_matrix for efficiency
+  # 1 2 3 4 5     2 3 4 5
+  # F F T F F     F T F F
+  # F F F T F ->  F F T F
+  # F F F F F     F F F F
+  if (!partial) return(match_matrix)
+
+  colanys <- matrixStats::colAnys(match_matrix)
+  if (!any(colanys)) return(match_matrix)
+
+  idx <- which(colanys)
+  left <- max(1L, idx[1L] - 1L)
+  right <- min(ncol(match_matrix), idx[length(idx)] + 1L)
+  return(match_matrix[, left:right, drop = FALSE])
 }
 
 #' Calculate bonus for each matches
 #'
 #' Unmatched ones yield `NA`.
-calc_bonus_matrix <- function(match_matrix, target_chars) {
+calc_bonus_matrix <- function(match_matrix,
+                              target_chars = colnames(match_matrix)) {
   base <- 16L
 
   # matches gain the base bonus
@@ -212,7 +236,7 @@ fzf_core <- function(
   }
 
   # Calculate and evaluate score
-  bonus <- calc_bonus_matrix(matched, target_chars)
+  bonus <- calc_bonus_matrix(matched)
   penalty <- calc_penalty_matrix(matched)
   score <- calc_score_matrix(bonus, penalty)
   eval_score(score)
