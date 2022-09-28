@@ -95,7 +95,7 @@ score_toc <- function(toc, queries) {
   topic <- toc$Topic
   title <- toc$Title
   for (i in seq_along(unique_queries)) {
-    prefilter[prefilter] = detect(
+    prefilter[prefilter] <- detect(
       package[prefilter],
       topic[prefilter],
       title[prefilter],
