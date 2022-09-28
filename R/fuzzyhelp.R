@@ -54,7 +54,7 @@ adist_fzf <- function(targets, query_chars_list) {
   unique_targets <- unique(targets)
   names(unique_targets) <- unique_targets
   do.call(
-    rbind, lapply(unique_targets, adist_fzf_one, query_chars_list)[targets]
+    cbind, lapply(unique_targets, adist_fzf_one, query_chars_list)[targets]
   )
 }
 
@@ -67,7 +67,7 @@ score_toc_filtered <- function(toc, queries) {
   title <- adist_fzf(toc$Title, query_chars_list) / 2L
   right <- score < title
   score[right] <- title[right]
-  return(-rowSums(score))
+  return(-colSums(score))
 }
 
 detect <- function(package, topic, title, query, case_sensitive) {
