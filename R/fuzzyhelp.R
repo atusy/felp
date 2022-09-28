@@ -68,13 +68,15 @@ distmatrix <- function(x, y, case_sensitive) {
   return(res)
 }
 
+fzf_score <- function(query_chars, target_chars) {
+  res <- fzf_core(target_chars, query_chars, must_match = 0L)
+  # y$score is integer, so adding 0.1 / y$length can be a tiebreak
+  res$score + 0.1 / res$length
+}
+
 adist_fzf_one <- function(target, query_chars_list) {
   target_chars <- split_chars(target)[[1L]]
-  vapply(
-    query_chars_list,
-    function(x) fzf_core(target_chars, x, must_match = 0L)$score,
-    NA_integer_
-  )
+  vapply(query_chars_list, fzf_score, NA_real_, target_chars = target_chars)
 }
 
 adist_fzf <- function(targets, query_chars_list) {
@@ -152,7 +154,8 @@ arrange <- function(df, queries) {
     dplyr::filter(!is.na(.data$SCORE)) %>%
     dplyr::arrange(
       .data$SCORE,
-      stringi::stri_length(paste0(.data$Package, .data$Topic))
+      .data$Package,
+      .data$Topic,
     ) %>%
     dplyr::select(!"SCORE")
 }
