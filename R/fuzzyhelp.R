@@ -30,12 +30,12 @@ create_toc <- function() {
 }
 
 distmatrix <- function(x, y, case_sensitive) {
-  f <- function(x2, ignore.case) {
-    adist(x2, y, ignore.case = ignore.case, partial = TRUE, fixed = TRUE)
+  adist2 <- function(x2, ignore_case) {
+    adist(x2, y, ignore.case = ignore_case, partial = TRUE, fixed = TRUE)
   }
   res <- matrix(0L, nrow = length(x), ncol = length(y))
-  res[case_sensitive, ] <- f(x[case_sensitive], ignore.case = FALSE)
-  res[!case_sensitive, ] <- f(x[!case_sensitive], ignore.case = TRUE)
+  res[case_sensitive, ] <- adist2(x[case_sensitive], ignore.case = FALSE)
+  res[!case_sensitive, ] <- adist2(x[!case_sensitive], ignore.case = TRUE)
   return(res)
 }
 
