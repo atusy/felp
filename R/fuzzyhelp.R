@@ -2,6 +2,8 @@
 #' @importFrom magrittr %>%
 NULL
 
+#' Get preview content for Shiny UI
+#' @noRd
 get_content <- function(x, i) {
   if (NROW(x) == 0L || length(i) == 0L) return("")
   if (length(i) > 1L) {
@@ -17,7 +19,8 @@ get_content <- function(x, i) {
   paste("Viewer not available for the type:", type)
 }
 
-
+#' Create ToC of help
+#' @noRd
 create_toc <- function() {
   db <- utils::hsearch_db()
   df <- db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
