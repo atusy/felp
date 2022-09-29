@@ -223,7 +223,7 @@ eval_nomatch <- function(target_chars, score = NA_integer_) {
 fzf_core <- function(
     target_chars, query_chars, must_match = TRUE, case_sensitive = FALSE
 ) {
-  noscore = if (is.logical(must_match)) NA_integer_ else must_match
+  noscore <- if (is.logical(must_match)) NA_integer_ else must_match
   # Early return for blank target or query
   if (0L %in% c(length(target_chars), length(query_chars))) {
     return(eval_nomatch(target_chars, noscore))
