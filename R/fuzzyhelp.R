@@ -88,13 +88,13 @@ detect <- function(package, topic, title, query, case_sensitive) {
 }
 
 score_toc <- function(toc, queries) {
-  N <- nrow(toc)
-  score <- rep(NA_integer_, N)
+  n <- nrow(toc)
+  score <- rep(NA_integer_, n)
 
   # Pre-filtering to drop phrases missing any characters in queries
   # Package and Topic can be united by a space because
   # the current implementation does not support space (` `) as a part of queries
-  prefilter <- rep(TRUE, N)
+  prefilter <- rep(TRUE, n)
   unique_queries <- unique(queries)
   case_sensitive <- stringi::stri_detect_regex(unique_queries, "[:upper:]")
   prefilter_queries <- unique_queries %>%
