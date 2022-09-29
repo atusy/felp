@@ -67,9 +67,11 @@ score_toc_filtered <- function(toc, queries) {
   topic <- adist_fzf(toc$Topic, query_chars_list)
   right <- score < topic
   score[right] <- topic[right]
-  title <- adist_fzf(toc$Title, query_chars_list) / 2L
-  right <- score < title
-  score[right] <- title[right]
+  if (isTRUE(getOption("fuzzyhelp.title"))) {
+    title <- adist_fzf(toc$Title, query_chars_list) / 2L
+    right <- score < title
+    score[right] <- title[right]
+  }
   return(-colSums(score))
 }
 
@@ -77,7 +79,11 @@ detect <- function(package, topic, title, query, case_sensitive) {
   o <- stringi::stri_opts_regex(case_insensitive = !case_sensitive)
   d <- stringi::stri_detect_regex(package, query, opts_regex = o)
   d[!d] <- stringi::stri_detect_regex(topic[!d], query, opts_regex = o)
-  d[!d] <- stringi::stri_detect_regex(title[!d], query, opts_regex = o)
+
+  if (isTRUE(getOption("fuzzyhelp.title"))) {
+    d[!d] <- stringi::stri_detect_regex(title[!d], query, opts_regex = o)
+  }
+
   return(d)
 }
 
