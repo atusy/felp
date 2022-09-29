@@ -13,19 +13,24 @@ calc_paired_bonus <- function(target_chars) {
   cur <- classify_chars(target_chars)
   n <- length(target_chars)
   pre <- rbind(FALSE, cur[-length(target_chars), , drop = FALSE])
-  is_white <- cur[, "white"]
-  is_non_word <- cur[, "non_word"]
-  bonus <- (
-    (!(is_white | is_non_word)) * (
-      10L * pre[, "white"] +
-        9L * pre[, "delimiter"] +
-        8L * c(FALSE, is_non_word[-n])
-    ) +
-      (7L * ((pre[, "lower"] & cur[, "upper"]) | (pre[, "number"] & cur[, "number"]))) +
-      (8L * is_non_word) +
-      (10L * is_white)
-  )
-  bonus
+  bonus <- integer(n)
+
+  # these 3 should be bonused if current is not white nor non_word
+  # but will ensure it later
+  bonus[pre[, "white"]] <- 10L
+  bonus[pre[, "delimiter"]] <- 9L
+  bonus[pre[, "non_word"]] <- 8L
+
+  # these 2 should happen after the above 3
+  bonus[cur[, "white"]] <- 10L
+  bonus[cur[, "non_word"]] <- 8L
+
+  # rest
+  bonus[pre[, "lower"] & cur[, "upper"]] <- 7L
+  bonus[pre[, "number"] & cur[, "number"]] <- 7L
+
+  # return
+  return(bonus)
 }
 
 calc_match_matrix_core <- function(target_chars, query_chars) {
