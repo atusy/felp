@@ -1,7 +1,9 @@
 classify_chars <- function(x) {
-  patterns <- "([:blank:]?)([:lower:]?)([:upper:]?)([:number:]?)([/,:;]?)"
+  patterns <- "([:blank:]?)([:lower:]?)([:upper:]?)([:number:]?)([/,:;]?)(.?)"
   res <- stringi::stri_match_first_regex(x, patterns)[, -1L, drop = FALSE] != ""
-  colnames(res) <- c("white", "lower", "upper", "number", "delimiter")
+  colnames(res) <- c(
+    "white", "lower", "upper", "number", "delimiter", "non_word"
+  )
   return(res)
 }
 
@@ -12,7 +14,7 @@ calc_paired_bonus <- function(target_chars) {
   n <- length(target_chars)
   pre <- rbind(FALSE, cur[-length(target_chars), , drop = FALSE])
   is_white <- cur[, "white"]
-  is_non_word <- !matrixStats::rowAnys(cur)
+  is_non_word <- cur[, "non_word"]
   bonus <- (
     (!(is_white | is_non_word)) * (
       10L * pre[, "white"] +
