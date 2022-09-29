@@ -117,7 +117,7 @@ score_toc <- function(toc, queries) {
   }
 
   if (all(stringi::stri_length(unique_queries) == 1L)) {
-    score[prefilter] = 0L
+    score[prefilter] <- 0L
     return(score)
   }
 
