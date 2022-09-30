@@ -191,7 +191,7 @@ eval_score <- function(score) {
   # 00 00 00 29 26 25 24 -> 00 00 00 29 26 25 00
   # 00 00 00 00 00 42 39    00 00 00 00 00 42 39
   backtrace <- score
-  backtrace[-nrow(score), -1L][score[-1L, -ncol(score)] > 0] = 0L
+  backtrace[-nrow(score), -1L][score[-1L, -ncol(score)] > 0] <- 0L
 
   # Intermediate evaluation
   row_maxs <- matrixStats::rowMaxs(backtrace)
