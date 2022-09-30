@@ -4,10 +4,14 @@
 \alias{fuzzyhelp}
 \title{Fuzzily Search Help and View the Selection}
 \usage{
-fuzzyhelp(query = "")
+fuzzyhelp(query = "", method = getOption("fuzzyhelp.method", "fzf"))
 }
 \arguments{
 \item{query}{An initial query to search for the help system.}
+
+\item{method}{A fuzzy match method to use. Choices are "fzf" and "lv"
+(levenstein). The method "lv" is faster but can be less accurate. The
+default value can be tweaked by \code{options(fuzzyhelp.method = "lv")}.}
 }
 \description{
 Users no more have to afraid of exact name of the object they need help.
