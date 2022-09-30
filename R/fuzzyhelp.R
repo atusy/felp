@@ -57,19 +57,41 @@ score_matrix <- function(targets, query_chars_list, ...) {
   )
 }
 
-score_toc_filtered <- function(toc, queries) {
-  query_chars_list <- split_chars(queries)
-  score <- score_matrix(toc$Package, query_chars_list, extra_bonus = FALSE)
-  topic <- score_matrix(toc$Topic, query_chars_list, extra_bonus = FALSE)
-  right <- score < topic
-  score[right] <- topic[right]
-  if (isTRUE(getOption("fuzzyhelp.title"))) {
-    title <- score_matrix(toc$Title, query_chars_list, extra_bonus = TRUE) / 2L
-    right <- score < title
-    score[right] <- title[right]
+adist2 <- function(x, y, case_sensitive) {
+  f <- function(x2, case_insensitive) {
+    adist(x2, y, ignore.case = case_insensitive, partial = TRUE, fixed = TRUE)
   }
-  return(-colSums(score))
+  res <- matrix(0L, nrow = length(x), ncol = length(y))
+  res[case_sensitive, ] <- f(x[case_sensitive], ignore.case = FALSE)
+  res[!case_sensitive, ] <- f(x[!case_sensitive], ignore.case = TRUE)
+  return(res)
 }
+
+score_toc_filtered <- list(
+  fzf = function(toc, queries) {
+    query_chars_list <- split_chars(queries)
+    score <- score_matrix(toc$Package, query_chars_list, extra_bonus = FALSE)
+    topic <- score_matrix(toc$Topic, query_chars_list, extra_bonus = FALSE)
+    right <- score < topic
+    score[right] <- topic[right]
+    if (isTRUE(getOption("fuzzyhelp.title"))) {
+      title <- score_matrix(toc$Title, query_chars_list, extra_bonus = TRUE) / 2L
+      right <- score < title
+      score[right] <- title[right]
+    }
+    return(-colSums(score))
+  },
+  lv = function(toc, queries) {
+    res <- adist(toc$Package, queries)
+    topic <- adist(toc$Topic, queries)
+    right <- res > topic
+    res[right] <- topic[right]
+    len_package <- stringi::stri_length(toc$Package)
+    len_topic <- stringi::stri_length(toc$Topic)
+    tiebreak <- 0.1 / dplyr::if_else(right, len_package, len_topic)
+    return(res - tiebreak)
+  }
+)
 
 detect <- function(package, topic, title, query, case_sensitive) {
   o <- stringi::stri_opts_regex(case_insensitive = !case_sensitive)
@@ -83,9 +105,10 @@ detect <- function(package, topic, title, query, case_sensitive) {
   return(d)
 }
 
-score_toc <- function(toc, queries) {
+score_toc <- function(toc, queries, method = c("fzf", "lv")) {
   n <- nrow(toc)
   score <- rep(NA_integer_, n)
+  method <- match.arg(method)
 
   # Pre-filtering to drop phrases missing any characters in queries
   # Package and Topic can be united by a space because
@@ -118,14 +141,16 @@ score_toc <- function(toc, queries) {
   }
 
   # Calculate and return score for filtered items
-  score[prefilter] <- score_toc_filtered(toc[prefilter, ], unique_queries)
+  score[prefilter] <- score_toc_filtered[[method]](
+    toc[prefilter, ], unique_queries
+  )
   return(score)
 }
 
-search_toc <- function(df, queries) {
+search_toc <- function(df, queries, ...) {
   if (length(queries) == 0L) return(df)
   df %>%
-    dplyr::mutate(SCORE = score_toc(df, queries)) %>%
+    dplyr::mutate(SCORE = score_toc(df, queries, ...)) %>%
     dplyr::filter(!is.na(.data$SCORE)) %>%
     dplyr::arrange(
       .data$SCORE,
@@ -184,51 +209,54 @@ parse_query <- function(string) {
   queries[queries != ""]
 }
 
-server <- function(input, output) {
-  toc <- create_toc()
-  reactiveQueries <- shiny::reactive(parse_query(input$query))
-  reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries()))
-  reactiveTocViewer <- shiny::reactive(local({
-    toc_matched <- reactiveToc()
-    reactable::reactable(
-      toc_matched,
-      pagination = TRUE,
-      showPagination = TRUE,
-      defaultPageSize = 20,
-      selection = "single",
-      defaultSelected = if (nrow(toc_matched) != 0) 1L,
-      onClick = "select"
-    )
-  }))
-  reactiveSelection <- shiny::reactive({
-    reactiveToc()  # avoids noisy refresh
-    reactable::getReactableState("tocViewer", "selected")
-  })
-  reactiveHelp <- shiny::reactive(
-    htmltools::tags$iframe(
-      srcdoc = get_content(reactiveToc(), reactiveSelection()),
-      style = "width: 100%; height: 100%;"
-    )
-  )
-
-  output$tocViewer <- reactable::renderReactable(reactiveTocViewer())
-  output$helpViewer <- shiny::renderUI(reactiveHelp())
-
-  shiny::observeEvent(input$done, {
-    shiny::stopApp()
-    selection <- reactiveToc()[reactiveSelection(), ]
-    type <- selection$Type[1L]
-    topic <- selection$Topic[1L]
-    package <- selection$Package[1L]
-    if (rstudioapi::isAvailable()) {
-      rstudioapi::sendToConsole(
-        sprintf('%s("%s", package = "%s")', type, topic, package),
-        execute = TRUE
+create_server <- function(method = c("fzf", "lv")) {
+  method <- match.arg(method)
+  function(input, output) {
+    toc <- create_toc()
+    reactiveQueries <- shiny::reactive(parse_query(input$query))
+    reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries()))
+    reactiveTocViewer <- shiny::reactive(local({
+      toc_matched <- reactiveToc()
+      reactable::reactable(
+        toc_matched,
+        pagination = TRUE,
+        showPagination = TRUE,
+        defaultPageSize = 20,
+        selection = "single",
+        defaultSelected = if (nrow(toc_matched) != 0) 1L,
+        onClick = "select"
       )
-    } else {
-      getNamespace("utils")[[type]]((topic), (package))
-    }
-  })
+    }))
+    reactiveSelection <- shiny::reactive({
+      reactiveToc()  # avoids noisy refresh
+      reactable::getReactableState("tocViewer", "selected")
+    })
+    reactiveHelp <- shiny::reactive(
+      htmltools::tags$iframe(
+        srcdoc = get_content(reactiveToc(), reactiveSelection()),
+        style = "width: 100%; height: 100%;"
+      )
+    )
+
+    output$tocViewer <- reactable::renderReactable(reactiveTocViewer())
+    output$helpViewer <- shiny::renderUI(reactiveHelp())
+
+    shiny::observeEvent(input$done, {
+      shiny::stopApp()
+      selection <- reactiveToc()[reactiveSelection(), ]
+      type <- selection$Type[1L]
+      topic <- selection$Topic[1L]
+      package <- selection$Package[1L]
+      if (rstudioapi::isAvailable()) {
+        rstudioapi::sendToConsole(
+          sprintf('%s("%s", package = "%s")', type, topic, package),
+          execute = TRUE
+        )
+      } else {
+        getNamespace("utils")[[type]]((topic), (package))
+      }
+    })
+  }
 }
 
 #' Fuzzily Search Help and View the Selection
@@ -240,6 +268,10 @@ server <- function(input, output) {
 #' The "Done" button will also hook `help` function on the selection.
 #'
 #' @param query An initial query to search for the help system.
+#' @param method A fuzzy match method to use. Choices are "fzf" and "lv"
+#'  (levenstein). The method "lv" is faster but can be less accurate. The
+#'  default value can be tweaked by `options(fuzzyhelp.method = "lv")`.
+#'
 #' @note
 #' The fuzzy match algorithm is experimental, and may change in the future.
 #'
@@ -251,4 +283,9 @@ server <- function(input, output) {
 #' }
 #'
 #' @export
-fuzzyhelp <- function(query = "") shiny::runGadget(create_ui(query), server)
+fuzzyhelp <- function(
+  query = "",
+  method = getOption("fuzzyhelp.method", "fzf")
+) {
+  shiny::runGadget(create_ui(query), create_server(method))
+}
