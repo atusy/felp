@@ -23,52 +23,42 @@ get_content <- function(x, i) {
 #' @noRd
 create_toc <- function() {
   db <- utils::hsearch_db()
-  df <- db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
-    dplyr::left_join(db$Aliases[c("Package", "Alias", "ID")], by = c("Package", "ID")) %>%
+  db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
+    dplyr::left_join(
+      db$Aliases[c("Package", "Alias", "ID")], by = c("Package", "ID")
+    ) %>%
     dplyr::select(!c("ID", "Topic")) %>%
     dplyr::relocate("Package", "Alias", "Title", "Type") %>%
-    dplyr::rename(Topic = .data$Alias) %>%
-    identity()
-  df
+    dplyr::rename(Topic = .data$Alias)
 }
 
-distmatrix <- function(x, y, case_sensitive) {
-  adist2 <- function(x2, ignore_case) {
-    adist(x2, y, ignore.case = ignore_case, partial = TRUE, fixed = TRUE)
-  }
-  res <- matrix(0L, nrow = length(x), ncol = length(y))
-  res[case_sensitive, ] <- adist2(x[case_sensitive], FALSE)
-  res[!case_sensitive, ] <- adist2(x[!case_sensitive], TRUE)
-  return(res)
-}
-
-fzf_score <- function(query_chars, target_chars) {
+score_one <- function(query_chars, target_chars) {
   res <- fzf_core(target_chars, query_chars, must_match = 0L)
   # y$score is integer, so adding 0.1 / y$length can be a tiebreak
   res$score + 0.1 / res$length
 }
 
-adist_fzf_one <- function(target, query_chars_list) {
+score_vec <- function(target, query_chars_list) {
   target_chars <- split_chars(target)[[1L]]
-  vapply(query_chars_list, fzf_score, NA_real_, target_chars = target_chars)
+  vapply(query_chars_list, score_one, NA_real_, target_chars = target_chars)
 }
 
-adist_fzf <- function(targets, query_chars_list) {
+score_matrix <- function(targets, query_chars_list) {
   unique_targets <- unique(targets)
   names(unique_targets) <- unique_targets
   do.call(
-    cbind, lapply(unique_targets, adist_fzf_one, query_chars_list)[targets]
+    cbind, lapply(unique_targets, score_vec, query_chars_list)[targets]
   )
 }
 
 score_toc_filtered <- function(toc, queries) {
   query_chars_list <- split_chars(queries)
-  score <- adist_fzf(toc$Package, query_chars_list)
-  topic <- adist_fzf(toc$Topic, query_chars_list)
+  score <- score_matrix(toc$Package, query_chars_list)
+  topic <- score_matrix(toc$Topic, query_chars_list)
   right <- score < topic
   score[right] <- topic[right]
   if (isTRUE(getOption("fuzzyhelp.title"))) {
-    title <- adist_fzf(toc$Title, query_chars_list) / 2L
+    title <- score_matrix(toc$Title, query_chars_list) / 2L
     right <- score < title
     score[right] <- title[right]
   }
@@ -126,7 +116,7 @@ score_toc <- function(toc, queries) {
   return(score)
 }
 
-arrange <- function(df, queries) {
+search_toc <- function(df, queries) {
   if (length(queries) == 0L) return(df)
   df %>%
     dplyr::mutate(SCORE = score_toc(df, queries)) %>%
@@ -191,7 +181,7 @@ parse_query <- function(string) {
 server <- function(input, output) {
   toc <- create_toc()
   reactiveQueries <- shiny::reactive(parse_query(input$query))
-  reactiveToc <- shiny::reactive(arrange(toc, reactiveQueries()))
+  reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries()))
   reactiveTocViewer <- shiny::reactive(local({
     toc_matched <- reactiveToc()
     reactable::reactable(
