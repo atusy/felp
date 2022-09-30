@@ -32,33 +32,39 @@ create_toc <- function() {
     dplyr::rename(Topic = .data$Alias)
 }
 
-score_one <- function(query_chars, target_chars) {
-  res <- fzf_core(target_chars, query_chars, must_match = 0L)
+score_one <- function(query_chars, target_chars, extra_bonus = FALSE) {
+  res <- fzf_core(
+    target_chars, query_chars, must_match = 0L, extra_bonus = extra_bonus
+  )
   # y$score is integer, so adding 0.1 / y$length can be a tiebreak
   res$score + 0.1 / res$length
 }
 
-score_vec <- function(target, query_chars_list) {
+score_vec <- function(target, query_chars_list, ...) {
   target_chars <- split_chars(target)[[1L]]
-  vapply(query_chars_list, score_one, NA_real_, target_chars = target_chars)
+  vapply(
+    query_chars_list, score_one, NA_real_,
+    target_chars = target_chars, ...
+  )
 }
 
-score_matrix <- function(targets, query_chars_list) {
+score_matrix <- function(targets, query_chars_list, ...) {
   unique_targets <- unique(targets)
   names(unique_targets) <- unique_targets
   do.call(
-    cbind, lapply(unique_targets, score_vec, query_chars_list)[targets]
+    cbind,
+    lapply(unique_targets, score_vec, query_chars_list, ...)[targets]
   )
 }
 
 score_toc_filtered <- function(toc, queries) {
   query_chars_list <- split_chars(queries)
-  score <- score_matrix(toc$Package, query_chars_list)
-  topic <- score_matrix(toc$Topic, query_chars_list)
+  score <- score_matrix(toc$Package, query_chars_list, extra_bonus = FALSE)
+  topic <- score_matrix(toc$Topic, query_chars_list, extra_bonus = FALSE)
   right <- score < topic
   score[right] <- topic[right]
   if (isTRUE(getOption("fuzzyhelp.title"))) {
-    title <- score_matrix(toc$Title, query_chars_list) / 2L
+    title <- score_matrix(toc$Title, query_chars_list, extra_bonus = TRUE) / 2L
     right <- score < title
     score[right] <- title[right]
   }

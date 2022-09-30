@@ -85,7 +85,8 @@ calc_match_matrix <- function(
 #'
 #' Unmatched ones yield `NA`.
 calc_bonus_matrix <- function(match_matrix,
-                              target_chars = colnames(match_matrix)) {
+                              target_chars = colnames(match_matrix),
+                              extra = TRUE) {
   base <- 16L
 
   # matches gain the base bonus
@@ -101,8 +102,10 @@ calc_bonus_matrix <- function(match_matrix,
   bonus[-1L, -1L][cont] <- bonus[-1L, -1L][cont] + 4L
 
   # extra bonuses from the relationships with the matches and their preceding
-  bonus[bonus == 0L] <- NA_integer_  # for the efficient calculation
-  bonus <- t(t(bonus) + calc_paired_bonus(target_chars))
+  if (extra) {
+    bonus[bonus == 0L] <- NA_integer_  # for the efficient calculation
+    bonus <- t(t(bonus) + calc_paired_bonus(target_chars))
+  }
 
   # return
   bonus
@@ -221,7 +224,8 @@ eval_nomatch <- function(target_chars, score = NA_integer_) {
 #' The core algorithm of fuzzy match
 #' @noRd
 fzf_core <- function(
-    target_chars, query_chars, must_match = TRUE, case_sensitive = FALSE
+  target_chars, query_chars, must_match = TRUE, case_sensitive = FALSE,
+  extra_bonus = TRUE
 ) {
   noscore <- if (is.logical(must_match)) NA_integer_ else must_match
   # Early return for blank target or query
@@ -238,7 +242,7 @@ fzf_core <- function(
   }
 
   # Calculate and evaluate score
-  bonus <- calc_bonus_matrix(matched)
+  bonus <- calc_bonus_matrix(matched, extra = extra_bonus)
   penalty <- calc_penalty_matrix(matched)
   score <- calc_score_matrix(bonus, penalty)
   eval_score(score)
