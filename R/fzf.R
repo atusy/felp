@@ -101,9 +101,11 @@ calc_bonus_matrix <- function(match_matrix,
   cont <- prev & curr
   bonus[-1L, -1L][cont] <- bonus[-1L, -1L][cont] + 4L
 
+  # for the efficient calculation
+  bonus[bonus == 0L] <- NA_integer_
+
   # extra bonuses from the relationships with the matches and their preceding
   if (extra) {
-    bonus[bonus == 0L] <- NA_integer_  # for the efficient calculation
     bonus <- t(t(bonus) + calc_paired_bonus(target_chars))
   }
 

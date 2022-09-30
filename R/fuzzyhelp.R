@@ -214,7 +214,7 @@ create_server <- function(method = c("fzf", "lv")) {
   function(input, output) {
     toc <- create_toc()
     reactiveQueries <- shiny::reactive(parse_query(input$query))
-    reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries()))
+    reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries(), method = method))
     reactiveTocViewer <- shiny::reactive(local({
       toc_matched <- reactiveToc()
       reactable::reactable(
