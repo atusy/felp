@@ -140,7 +140,9 @@ calc_penalty_matrix <- function(match_matrix) {
   cumsums <- matrixStats::rowCumsums(locals)
   resetter <- cumsums * match_matrix
   resetter[unmatch] <- NA_integer_
-  resetter <- matrix(fillna(rbind(1L, t(resetter))), ncol = ncol(resetter) + 1, byrow = TRUE)[, -1]
+  resetter <- matrix(
+    fillna(rbind(1L, t(resetter))), ncol = ncol(resetter) + 1, byrow = TRUE
+  )[, -1]
   resetter[resetter == 1L] = NA_integer_
   penalty <- cumsums - resetter
   penalty
