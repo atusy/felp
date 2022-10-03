@@ -33,6 +33,27 @@ calc_paired_bonus <- function(target_chars) {
   return(bonus)
 }
 
+filter_match_matrix <- function(x) {
+  nc <- ncol(x)
+  nr <- nrow(x)
+  if (nc == 1L || nr == 1L) {
+    return(x)
+  }
+  for (i in seq(nr - 1L)) {
+    idx <- which(x[i, ])[1L]
+    if (!is.na(idx)) {
+      x[(i + 1L):nr, 1L:idx] <- FALSE
+    }
+  }
+  for (i in seq(nr, 2L)) {
+    idx <- rev(which(x[i, ]))[1L]
+    if (!is.na(idx)) {
+      x[1L:(i - 1L), idx:nc] <- FALSE
+    }
+  }
+  return(x)
+}
+
 calc_match_matrix_core <- function(target_chars, query_chars) {
   target_matrix <- matrix(
     target_chars,
@@ -53,7 +74,9 @@ calc_match_matrix_core <- function(target_chars, query_chars) {
 calc_match_matrix <- function(
     target_chars, query_chars, case_sensitive = FALSE, partial = TRUE
 ) {
-  match_matrix <- calc_match_matrix_core(target_chars, query_chars)
+  match_matrix <- filter_match_matrix(calc_match_matrix_core(
+    target_chars, query_chars
+  ))
 
   # if case insensitive, compare with lower cases of target_chars
   if (!case_sensitive) {
