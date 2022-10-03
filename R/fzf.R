@@ -212,7 +212,7 @@ calc_score_matrix <- function(bonus, penalty) {
 #' end: index of the last match
 #'
 #' @noRd
-eval_score <- function(score) {
+eval_score <- function(score, n) {
   # Ignore some cells by filling zeros:
   # 00 16 13 12 11 10 09    00 16 13 12 00 00 00
   # 00 00 00 29 26 25 24 -> 00 00 00 29 26 25 00
@@ -228,7 +228,7 @@ eval_score <- function(score) {
   # Evaluation
   list(
     score = max(row_maxs),
-    length = ncol(score),
+    length = n,
     begin = begin[[length(begin)]],
     end = which(selected[nrow(score), ])[[1L]]
   )
@@ -272,7 +272,7 @@ fzf_core <- function(
   bonus <- calc_bonus_matrix(matched, extra = extra_bonus)
   penalty <- calc_penalty_matrix(matched)
   score <- calc_score_matrix(bonus, penalty)
-  eval_score(score)
+  eval_score(score, n = length(target_chars))
 }
 
 #' Summarize
