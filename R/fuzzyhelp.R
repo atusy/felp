@@ -33,17 +33,17 @@ create_toc <- function() {
 }
 
 score_one <- function(query_chars, target_chars, extra_bonus = FALSE) {
-  res <- fzf_core(
+  fzf_core(
     target_chars, query_chars, must_match = 0L, extra_bonus = extra_bonus
-  )
-  # y$score is integer, so adding 0.1 / y$length can be a tiebreak
-  res$score + 0.1 / res$length
+  )$score
 }
 
 score_vec <- function(target, query_chars_list, ...) {
   target_chars <- split_chars(target)[[1L]]
-  vapply(
-    query_chars_list, score_one, NA_real_,
+  tiebreak <- 0.1 / length(target_chars)
+  # as score_one returns integer, tiebreak works as tiebreak
+  tiebreak + vapply(
+    query_chars_list, score_one, NA_integer_,
     target_chars = target_chars, ...
   )
 }
