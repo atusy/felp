@@ -59,7 +59,9 @@ score_matrix <- function(targets, query_chars_list, ...) {
 
 adist2 <- function(x, y, case_sensitive) {
   f <- function(x2, case_insensitive) {
-    adist(x2, y, ignore.case = case_insensitive, partial = TRUE, fixed = TRUE)
+    utils::adist(
+      x2, y, ignore.case = case_insensitive, partial = TRUE, fixed = TRUE
+    )
   }
   res <- matrix(0L, nrow = length(x), ncol = length(y))
   res[case_sensitive, ] <- f(x[case_sensitive], ignore.case = FALSE)
@@ -82,8 +84,8 @@ score_toc_filtered <- list(
     return(-colSums(score))
   },
   lv = function(toc, queries) {
-    res <- adist(toc$Package, queries)
-    topic <- adist(toc$Topic, queries)
+    res <- adist2(toc$Package, queries)
+    topic <- adist2(toc$Topic, queries)
     right <- res > topic
     res[right] <- topic[right]
     len_package <- stringi::stri_length(toc$Package)
