@@ -40,9 +40,7 @@ score_one <- function(query_chars, target_chars, extra_bonus = FALSE) {
 
 score_vec <- function(target, query_chars_list, ...) {
   target_chars <- split_chars(target)[[1L]]
-  tiebreak <- 0.1 / length(target_chars)
-  # as score_one returns integer, tiebreak works as tiebreak
-  tiebreak + vapply(
+  vapply(
     query_chars_list, score_one, NA_integer_,
     target_chars = target_chars, ...
   )
@@ -50,11 +48,80 @@ score_vec <- function(target, query_chars_list, ...) {
 
 score_matrix <- function(targets, query_chars_list, ...) {
   unique_targets <- unique(targets)
-  names(unique_targets) <- unique_targets
-  do.call(
-    cbind,
-    lapply(unique_targets, score_vec, query_chars_list, ...)[targets]
+  n <- lengths(query_chars_list)
+  score <- matrix(
+    0L, length(query_chars_list), length(unique_targets),
+    dimnames = list(NULL, unique_targets)
   )
+  # as score_one returns integer, tiebreak works as tiebreak
+  tiebreak <- matrix(
+    0.1 / stringi::stri_length(unique_targets),
+    length(query_chars_list), length(unique_targets),
+    dimnames = list(NULL, unique_targets), byrow = TRUE
+  )
+
+  single <- n == 1L
+  if (any(single)) {
+    score[single, ] <- local({
+      queries <- query_chars_list[single]
+      s <- matrix(
+        substr(unique_targets, 1L, 1L), sum(single), length(unique_targets),
+        byrow = TRUE
+      )
+      16L + 16L * (s == queries)
+    })
+  }
+
+  double <- n == 2L
+  if (any(double)) {
+    score[double, ] <- local({
+      queries <- query_chars_list[double]
+      do.call(
+        rbind,
+        lapply(queries, function(x) {
+          query <- paste(x, collapse = "")
+          s <- rep(NA_integer_, length(unique_targets))
+          fmatch_abs <- stringi::stri_startswith_fixed(unique_targets, query)
+          s[fmatch_abs] <- 52L
+          pmatch_abs <- stringi::stri_detect_fixed(
+            unique_targets[!fmatch_abs], query
+          )
+          s[!fmatch_abs][pmatch_abs] <- 36L
+
+          fzy <- is.na(s)
+          s_fmatch_fzy <- 48L - stringi::stri_length(
+            stringi::stri_extract_first_regex(
+              unique_targets[fzy],
+              paste0("^", x[[1L]], ".*?", x[[2L]])
+            )
+          )
+          s_pmatch_fzy <- 32L - vapply(
+            stringi::stri_match_all_regex(
+              unique_targets[fzy],
+              paste0(".", x[[1L]], ".*?", x[[2L]])
+            ),
+            function(x) min(stringi::stri_length(x) - 1L),
+            NA_integer_
+          )
+          s[fzy] <- dplyr::if_else(
+            s_fmatch_fzy > s_pmatch_fzy, s_fmatch_fzy, s_pmatch_fzy
+          )
+          s
+        })
+      )
+    })
+  }
+
+  long <- !(single | double)
+  if (any(long)) {
+    score[long, ] <- do.call(
+      cbind, lapply(unique_targets, score_vec, query_chars_list[long], ...)
+    )
+  }
+
+  score[is.na(score)] <- 0L
+  score <- score + tiebreak
+  score[, targets, drop = FALSE]
 }
 
 adist2 <- function(x, y, case_sensitive) {
@@ -135,11 +202,6 @@ score_toc <- function(toc, queries, method = c("fzf", "lv")) {
     if (!any(prefilter)) {
       return(score)
     }
-  }
-
-  if (all(stringi::stri_length(unique_queries) == 1L)) {
-    score[prefilter] <- 0L
-    return(score)
   }
 
   # Calculate and return score for filtered items
