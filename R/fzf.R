@@ -202,6 +202,12 @@ calc_score_matrix <- function(bonus, penalty) {
   s[-1L, , drop = FALSE]  # remove initial scores while keeping the matrix type
 }
 
+last_non_zero <- function(x) {
+  non_zero <- x != 0
+  y <- c(0L, x[non_zero])
+  return(y[length(y)])
+}
+
 #' Evaluate score
 #'
 #' @return
@@ -228,7 +234,7 @@ eval_score <- function(score, n) {
 
   # Evaluation
   list(
-    score = max(row_maxs),
+    score = last_non_zero(row_maxs),
     length = n,
     begin = begin[[length(begin)]],
     end = which(selected[nrow(score), ])[[1L]]
