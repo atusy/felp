@@ -263,8 +263,11 @@ fzf_core <- function(
   extra_bonus = TRUE
 ) {
   noscore <- if (is.logical(must_match)) NA_integer_ else must_match
+  n_target_chars <- length(target_chars)
+  n_query_chars <- length(query_chars)
+
   # Early return for blank target or query
-  if (0L %in% c(length(target_chars), length(query_chars))) {
+  if (n_target_chars == 0L || n_query_chars == 0L) {
     return(eval_nomatch(target_chars, noscore))
   }
 
@@ -280,7 +283,7 @@ fzf_core <- function(
   bonus <- calc_bonus_matrix(matched, extra = extra_bonus)
   penalty <- calc_penalty_matrix(matched)
   score <- calc_score_matrix(bonus, penalty)
-  eval_score(score, n = length(target_chars))
+  eval_score(score, n = n_target_chars)
 }
 
 #' Summarize
