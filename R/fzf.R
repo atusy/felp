@@ -107,6 +107,7 @@ calc_match_matrix <- function(
 #' Calculate bonus for each matches
 #'
 #' Unmatched ones yield `NA`.
+#' @noRd
 calc_bonus_matrix <- function(match_matrix,
                               target_chars = colnames(match_matrix),
                               extra = TRUE) {
@@ -239,6 +240,7 @@ eval_score <- function(score, n) {
 #' The return is structurally same as that of `eval_score`, but values are
 #' missing except for the length. This function is used when fuzzy match does
 #' not allow omission or mismatch, which is the default behavior of `fzf`.
+#' @noRd
 eval_nomatch <- function(target_chars, score = NA_integer_) {
   list(
     score = score,
