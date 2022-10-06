@@ -339,7 +339,10 @@ create_server <- function(method = c("fzf", "lv")) {
 #'  default value can be tweaked by `options(fuzzyhelp.method = "lv")`.
 #'
 #' @note
-#' The fuzzy match algorithm is experimental, and may change in the future.
+#' The default fuzzy match algorithm is a simplified version of
+#' <https://github.com/junegunn/fzf>. The implementation in this package
+#' excludes bonuses from relationship with matched characters and their
+#' previous characters.
 #'
 #' @return NULL
 #'
