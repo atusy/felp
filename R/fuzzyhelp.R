@@ -153,13 +153,6 @@ score_toc_filtered <- list(
     topic <- score_matrix(toc$Topic, query_chars_list, extra_bonus = FALSE)
     right <- score < topic
     score[right] <- topic[right]
-    if (isTRUE(getOption("fuzzyhelp.title"))) {
-      title <- score_matrix(
-        toc$Title, query_chars_list, extra_bonus = TRUE
-      ) / 2L
-      right <- score < title
-      score[right] <- title[right]
-    }
     return(-colSums(score))
   },
   lv = function(toc, queries) {
@@ -174,14 +167,10 @@ score_toc_filtered <- list(
   }
 )
 
-detect <- function(package, topic, title, query, case_sensitive) {
+detect <- function(package, topic, query, case_sensitive) {
   o <- stringi::stri_opts_regex(case_insensitive = !case_sensitive)
   d <- stringi::stri_detect_regex(package, query, opts_regex = o)
   d[!d] <- stringi::stri_detect_regex(topic[!d], query, opts_regex = o)
-
-  if (isTRUE(getOption("fuzzyhelp.title"))) {
-    d[!d] <- stringi::stri_detect_regex(title[!d], query, opts_regex = o)
-  }
 
   return(d)
 }
@@ -202,12 +191,10 @@ score_toc <- function(toc, queries, method = c("fzf", "lv")) {
     stringi::stri_replace_all_regex("\\\\(\\w)", "$1")
   package <- toc$Package
   topic <- toc$Topic
-  title <- toc$Title
   for (i in seq_along(unique_queries)) {
     prefilter[prefilter] <- detect(
       package[prefilter],
       topic[prefilter],
-      title[prefilter],
       prefilter_queries[i],
       case_sensitive[i]
     )
