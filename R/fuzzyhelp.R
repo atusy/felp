@@ -154,7 +154,9 @@ score_toc_filtered <- list(
     right <- score < topic
     score[right] <- topic[right]
     if (isTRUE(getOption("fuzzyhelp.title"))) {
-      title <- score_matrix(toc$Title, query_chars_list, extra_bonus = TRUE) / 2L
+      title <- score_matrix(
+        toc$Title, query_chars_list, extra_bonus = TRUE
+      ) / 2L
       right <- score < title
       score[right] <- title[right]
     }
@@ -247,7 +249,10 @@ create_ui <- function(query = "") {
       reactable::reactableOutput("tocViewer", width = "100%", height = "200px"),
       htmltools::tags$div(
         id = "bar",
-        style = "width: 100%; height: 8px; cursor: row-resize; background-color: transparent;",
+        style = paste(
+          "width: 100%; height: 8px; cursor: row-resize;",
+          "background-color: transparent;",
+        ),
         draggable = "true"
       ),
       shiny::uiOutput("helpViewer"),
