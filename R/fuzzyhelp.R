@@ -89,22 +89,32 @@ score_matrix <- function(targets, query_chars_list, ...) {
           s[!fmatch_abs][pmatch_abs] <- 36L
 
           fzy <- is.na(s)
-          s_fmatch_fzy <- 48L - stringi::stri_length(
-            stringi::stri_extract_first_regex(
-              unique_targets[fzy],
-              paste0("^", x[[1L]], ".*?", x[[2L]])
-            )
+          pattern_base <- paste0(x[[1L]], ".*?", x[[2L]])
+          pattern_fmatch_fzy <- paste0("^", pattern_base)
+          pattern_pmatch_fzy <- paste0(".", pattern_base)
+          phrase_fmatch_fzy <- stringi::stri_extract_first_regex(
+            unique_targets[fzy], pattern_fmatch_fzy
           )
-          s_pmatch_fzy <- 32L - vapply(
+          phrase_fmatch_fzy_alt <- stringi::stri_extract_first_regex(
+            phrase_fmatch_fzy, pattern_pmatch_fzy
+          )
+          need_alt <- !is.na(phrase_fmatch_fzy_alt)
+          phrase_fmatch_fzy[need_alt] <- phrase_fmatch_fzy_alt[need_alt]
+          score_fmatch_fzy <- (
+            48L - 16L * need_alt - stringi::stri_length(phrase_fmatch_fzy)
+          )
+          score_fmatch_fzy[is.na(score_fmatch_fzy)] <- 0L
+          score_pmatch_fzy <- 32L - vapply(
             stringi::stri_match_all_regex(
-              unique_targets[fzy],
-              paste0(".", x[[1L]], ".*?", x[[2L]])
+              unique_targets[fzy], pattern_pmatch_fzy
             ),
             function(x) min(stringi::stri_length(x) - 1L),
             NA_integer_
           )
+          score_pmatch_fzy[is.na(score_pmatch_fzy)] <- 0L
           s[fzy] <- dplyr::if_else(
-            s_fmatch_fzy > s_pmatch_fzy, s_fmatch_fzy, s_pmatch_fzy
+            score_fmatch_fzy > score_pmatch_fzy,
+            score_fmatch_fzy, score_pmatch_fzy
           )
           s
         })
