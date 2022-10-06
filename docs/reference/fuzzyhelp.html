@@ -81,7 +81,10 @@ default value can be tweaked by <code>options(fuzzyhelp.method = "lv")</code>.</
 </dl></div>
     <div id="note">
     <h2>Note</h2>
-    <p>The fuzzy match algorithm is experimental, and may change in the future.</p>
+    <p>The default fuzzy match algorithm is a simplified version of
+<a href="https://github.com/junegunn/fzf" class="external-link">https://github.com/junegunn/fzf</a>. The implementation in this package
+excludes bonuses from relationship with matched characters and their
+previous characters.</p>
     </div>
 
     <div id="ref-examples">

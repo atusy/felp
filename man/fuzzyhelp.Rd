@@ -21,7 +21,10 @@ Click "Done" or "Cancel" to close the widget.
 The "Done" button will also hook \code{help} function on the selection.
 }
 \note{
-The fuzzy match algorithm is experimental, and may change in the future.
+The default fuzzy match algorithm is a simplified version of
+\url{https://github.com/junegunn/fzf}. The implementation in this package
+excludes bonuses from relationship with matched characters and their
+previous characters.
 }
 \examples{
 if (FALSE) {
