@@ -238,7 +238,7 @@ create_ui <- function(query = "") {
         id = "bar",
         style = paste(
           "width: 100%; height: 8px; cursor: row-resize;",
-          "background-color: transparent;",
+          "background-color: transparent;"
         ),
         draggable = "true"
       ),
