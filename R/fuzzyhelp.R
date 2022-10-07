@@ -282,7 +282,15 @@ create_server <- function(method = c("fzf", "lv")) {
     reactiveQueries <- shiny::reactive(parse_query(input$query))
     reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries(), method = method))
     reactiveTocViewer <- shiny::reactive(local({
-      toc_matched <- reactiveToc()
+      toc_matched <- dplyr::mutate(
+        reactiveToc(),
+        Title = dplyr::if_else(
+          .data$Type == "help",
+          .data$Title,
+          sprintf("%s (%s)", .data$Title, .data$Type)
+        ),
+        Type = NULL
+      )
       reactable::reactable(
         toc_matched,
         pagination = TRUE,
