@@ -64,7 +64,7 @@ The "Done" button will also hook <code>help</code> function on the selection.</p
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fuzzyhelp</span><span class="op">(</span>query <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fuzzyhelp</span><span class="op">(</span>query <span class="op">=</span> <span class="st">""</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"fuzzyhelp.method"</span>, <span class="st">"fzf"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,10 +72,19 @@ The "Done" button will also hook <code>help</code> function on the selection.</p
     <dl><dt>query</dt>
 <dd><p>An initial query to search for the help system.</p></dd>
 
+
+<dt>method</dt>
+<dd><p>A fuzzy match method to use. Choices are "fzf" and "lv"
+(levenstein). The method "lv" is faster but can be less accurate. The
+default value can be tweaked by <code>options(fuzzyhelp.method = "lv")</code>.</p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
-    <p>The fuzzy match algorithm is experimental, and may change in the future.</p>
+    <p>The default fuzzy match algorithm is a simplified version of
+<a href="https://github.com/junegunn/fzf" class="external-link">https://github.com/junegunn/fzf</a>. The implementation in this package
+excludes bonuses from relationship with matched characters and their
+previous characters.</p>
     </div>
 
     <div id="ref-examples">

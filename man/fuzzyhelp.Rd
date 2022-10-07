@@ -4,10 +4,14 @@
 \alias{fuzzyhelp}
 \title{Fuzzily Search Help and View the Selection}
 \usage{
-fuzzyhelp(query = "")
+fuzzyhelp(query = "", method = getOption("fuzzyhelp.method", "fzf"))
 }
 \arguments{
 \item{query}{An initial query to search for the help system.}
+
+\item{method}{A fuzzy match method to use. Choices are "fzf" and "lv"
+(levenstein). The method "lv" is faster but can be less accurate. The
+default value can be tweaked by \code{options(fuzzyhelp.method = "lv")}.}
 }
 \description{
 Users no more have to afraid of exact name of the object they need help.
@@ -17,7 +21,10 @@ Click "Done" or "Cancel" to close the widget.
 The "Done" button will also hook \code{help} function on the selection.
 }
 \note{
-The fuzzy match algorithm is experimental, and may change in the future.
+The default fuzzy match algorithm is a simplified version of
+\url{https://github.com/junegunn/fzf}. The implementation in this package
+excludes bonuses from relationship with matched characters and their
+previous characters.
 }
 \examples{
 if (FALSE) {

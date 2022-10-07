@@ -25,7 +25,13 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/calc_bonus_matrix.html</loc>
+  </url>
+  <url>
     <loc>/reference/dummy.html</loc>
+  </url>
+  <url>
+    <loc>/reference/eval_nomatch.html</loc>
   </url>
   <url>
     <loc>/reference/felp.html</loc>

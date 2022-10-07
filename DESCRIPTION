@@ -25,6 +25,7 @@ RoxygenNote: 7.2.1
 Imports:
     prettycode,
     curl,
+    data.table,
     dplyr,
     htmltools,
     magrittr,
