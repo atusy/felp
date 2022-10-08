@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2019 YASUMOTO Atsushi
+Copyright (c) 2019-2022 YASUMOTO Atsushi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
