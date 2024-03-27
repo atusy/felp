@@ -308,7 +308,23 @@ create_server <- function(method = c("fzf", "lv")) {
     reactiveHelp <- shiny::reactive(
       htmltools::tags$iframe(
         srcdoc = get_content(reactiveToc(), reactiveSelection()),
-        style = "width: 100%; height: 100%;"
+        style = "width: 100%; height: 100%;",
+        id = "helpViewer",
+        onload = "(function(){
+          // replace anchors to avoid nesting shiny widgets
+          const pattern = document.baseURI + '#';
+          const iframe = document.querySelector('#helpViewer iframe');
+          Array.from(iframe.contentDocument.querySelectorAll('a'))
+            .filter(a => a.href.startsWith(pattern))
+            .map(a => {
+              const id = a.href.slice(pattern.length);
+              a.href = 'javascript:void(0)';
+              a.onclick = function() {
+                const top = iframe.contentDocument.getElementById(id).offsetTop;
+                iframe.contentWindow.scrollTo({ top: top, behavior: 'smooth' });
+              }
+            });
+        })();"
       )
     )
 
