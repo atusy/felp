@@ -1,3 +1,9 @@
+# felp 0.3.0.9999
+
+- Fixed wrong behaviors of anchors in the HTML help in the UI of the `fuzzyhelp` function.
+  A click on a anchor should not cause nesting of the UI when href of the anchor is an ID.
+  Instead, the click should scroll the window to show the element with the corresponding ID.
+
 # felp 0.3.0
 
 - Added `fuzzyhelp` function which launches Shiny Gadget to search help topics fuzzily, and preview the result. Done button will also launch `help` function. 
