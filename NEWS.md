@@ -1,5 +1,7 @@
 # felp 0.3.0.9999
 
+- Support `fuzzyhelp` to run Shiny App in background without blocking user terminal.
+  The new behavior is enabled by default and can be disabled by passing `FALSE` to the `background` argument or to the `fuzzyhelp.background` option.
 - Fixed wrong behaviors of anchors in the HTML help in the UI of the `fuzzyhelp` function.
   A click on a anchor should not cause nesting of the UI when href of the anchor is an ID.
   Instead, the click should scroll the window to show the element with the corresponding ID.
