@@ -5,7 +5,9 @@ NULL
 #' Get preview content for Shiny UI
 #' @noRd
 get_content <- function(x, i) {
-  if (NROW(x) == 0L || length(i) == 0L) return("")
+  if (NROW(x) == 0L || length(i) == 0L) {
+    return("")
+  }
   if (length(i) > 1L) {
     warning("i should be an integer vector of the length equal to 1.")
     i <- i[[1L]]
@@ -13,9 +15,15 @@ get_content <- function(x, i) {
   type <- x$Type[i]
   topic <- x$Topic[i]
   package <- x$Package[i]
-  if (type == "help") return(get_help(topic, package))
-  if (type == "vignette") return(get_vignette(topic, package))
-  if (type == "demo") return('Press "Done" to see demo.')
+  if (type == "help") {
+    return(get_help(topic, package))
+  }
+  if (type == "vignette") {
+    return(get_vignette(topic, package))
+  }
+  if (type == "demo") {
+    return('Press "Done" to see demo.')
+  }
   paste("Viewer not available for the type:", type)
 }
 
@@ -25,7 +33,8 @@ create_toc <- function() {
   db <- utils::hsearch_db()
   db$Base[c("Topic", "ID", "Package", "Title", "Type")] %>%
     dplyr::left_join(
-      db$Aliases[c("Package", "Alias", "ID")], by = c("Package", "ID")
+      db$Aliases[c("Package", "Alias", "ID")],
+      by = c("Package", "ID")
     ) %>%
     dplyr::select(!c("ID", "Topic")) %>%
     dplyr::relocate("Package", "Alias", "Title", "Type") %>%
@@ -34,7 +43,8 @@ create_toc <- function() {
 
 score_one <- function(query_chars, target_chars, extra_bonus = FALSE) {
   fzf_core(
-    target_chars, query_chars, must_match = 0L, extra_bonus = extra_bonus
+    target_chars, query_chars,
+    must_match = 0L, extra_bonus = extra_bonus
   )$score
 }
 
@@ -137,7 +147,8 @@ score_matrix <- function(targets, query_chars_list, ...) {
 adist2 <- function(x, y, case_sensitive) {
   f <- function(x2, case_insensitive) {
     utils::adist(
-      x2, y, ignore.case = case_insensitive, partial = TRUE, fixed = TRUE
+      x2, y,
+      ignore.case = case_insensitive, partial = TRUE, fixed = TRUE
     )
   }
   res <- matrix(0L, nrow = length(x), ncol = length(y))
@@ -211,7 +222,9 @@ score_toc <- function(toc, queries, method = c("fzf", "lv")) {
 }
 
 search_toc <- function(df, queries, ...) {
-  if (length(queries) == 0L) return(df)
+  if (length(queries) == 0L) {
+    return(df)
+  }
   df %>%
     dplyr::mutate(SCORE = score_toc(df, queries, ...)) %>%
     dplyr::filter(!is.na(.data$SCORE)) %>%
@@ -302,7 +315,7 @@ create_server <- function(method = c("fzf", "lv")) {
       )
     }))
     reactiveSelection <- shiny::reactive({
-      reactiveToc()  # avoids noisy refresh
+      reactiveToc() # avoids noisy refresh
       reactable::getReactableState("tocViewer", "selected")
     })
     reactiveHelp <- shiny::reactive(
@@ -349,6 +362,8 @@ create_server <- function(method = c("fzf", "lv")) {
   }
 }
 
+.env <- new.env()
+
 #' Fuzzily Search Help and View the Selection
 #'
 #' Users no more have to afraid of exact name of the object they need help.
@@ -361,6 +376,9 @@ create_server <- function(method = c("fzf", "lv")) {
 #' @param method A fuzzy match method to use. Choices are "fzf" and "lv"
 #'  (levenstein). The method "lv" is faster but can be less accurate. The
 #'  default value can be tweaked by `options(fuzzyhelp.method = "lv")`.
+#' @param background Whether to run a shiny gadget in a background process.
+#'  The default value is `TRUE` and can be changed by
+#'  `option(fuzzyhelp.background = FALSE)`.
 #'
 #' @note
 #' The default fuzzy match algorithm is a simplified version of
@@ -377,8 +395,49 @@ create_server <- function(method = c("fzf", "lv")) {
 #'
 #' @export
 fuzzyhelp <- function(
-  query = "",
-  method = getOption("fuzzyhelp.method", "fzf")
-) {
-  shiny::runGadget(create_ui(query), create_server(method))
+    query = "",
+    method = getOption("fuzzyhelp.method", "fzf"),
+    background = getOption("fuzzyhelp.background", TRUE)) {
+  app <- create_ui(query)
+  server <- create_server(method)
+
+  # Create new gadget on foreground
+  if (!background) {
+    shiny::runGadget(app, server)
+    return(invisible(NULL))
+  }
+
+  # Prepare background execution
+  if (is.null(.env$fuzzyhelp_url)) {
+    .env$fuzzyhelp_url <- tempfile()
+  }
+
+  # Re-use existing gadget
+  if (
+    !is.null(.env$fuzzyhelp) &&
+      is.null(.env$fuzzyhelp$get_exit_status()) &&
+      file.exists(.env$fuzzyhelp_url)
+  ) {
+    url <- readLines(.env$fuzzyhelp_url)[1L]
+    if (url != "") {
+      shiny::paneViewer()(url)
+      return(.env$fuzzyhelp)
+    }
+  }
+
+  # Create new gadget on background
+  .env$fuzzyhelp <- callr::r_bg(
+    function(..., .env) {
+      viewer <- function(url) {
+        writeLines(url, .env$fuzzyhelp_url)
+        shiny::paneViewer()(url)
+      }
+      shiny::runGadget(..., viewer = viewer)
+    },
+    args = list(app = app, server = server, .env = .env),
+    env = Sys.getenv(),
+    package = TRUE
+  )
+
+  return(.env$fuzzyhelp)
 }
