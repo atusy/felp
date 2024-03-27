@@ -362,6 +362,8 @@ create_server <- function(method = c("fzf", "lv")) {
   }
 }
 
+.env <- new.env()
+
 #' Fuzzily Search Help and View the Selection
 #'
 #' Users no more have to afraid of exact name of the object they need help.
@@ -396,15 +398,46 @@ fuzzyhelp <- function(
     query = "",
     method = getOption("fuzzyhelp.method", "fzf"),
     background = getOption("fuzzyhelp.background", TRUE)) {
-  args <- list(app = create_ui(query), server = create_server(method))
+  app <- create_ui(query)
+  server <- create_server(method)
 
+  # Create new gadget on foreground
   if (!background) {
-    return(do.call(shiny::runGadget, args))
+    shiny::runGadget(app, server)
+    return(invisible(NULL))
   }
 
-  callr::r_bg(
-    function(...) shiny::runGadget(...),
-    args = args,
-    env = Sys.getenv()
+  # Prepare background execution
+  if (is.null(.env$fuzzyhelp_url)) {
+    .env$fuzzyhelp_url <- tempfile()
+  }
+
+  # Re-use existing gadget
+  if (
+    !is.null(.env$fuzzyhelp) &&
+      is.null(.env$fuzzyhelp$get_exit_status()) &&
+      file.exists(.env$fuzzyhelp_url)
+  ) {
+    url <- readLines(.env$fuzzyhelp_url)[1L]
+    if (url != "") {
+      shiny::paneViewer()(url)
+      return(.env$fuzzyhelp)
+    }
+  }
+
+  # Create new gadget on background
+  .env$fuzzyhelp <- callr::r_bg(
+    function(..., .env) {
+      viewer <- function(url) {
+        writeLines(url, .env$fuzzyhelp_url)
+        shiny::paneViewer()(url)
+      }
+      shiny::runGadget(..., viewer = viewer)
+    },
+    args = list(app = app, server = server, .env = .env),
+    env = Sys.getenv(),
+    package = TRUE
   )
+
+  return(.env$fuzzyhelp)
 }
