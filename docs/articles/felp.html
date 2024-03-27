@@ -131,146 +131,107 @@ by displaying structure of an object</li>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">felp</span><span class="op">?</span><span class="va">.</span> <span class="co"># and `felp(felp)` return source and document of `felp` function</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode text r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> [31mfunction [39m  [33m( [39mtopic, <span class="at">package =</span>  [34m [1mNULL [22m [39m, ... [33m) [39m </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> [33m{ [39m</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     [31mif [39m  [34m( [39m [36mmissing [39m [36m( [39mtopic [36m) [39m [34m) [39m </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         [36mreturn [39m [34m( [39m [36mdo.call [39m [36m( [39mhelp,  [36mlist [39m [33m( [39mpackage <span class="ot">=</span>  [36msubstitute [39m [34m( [39mpackage [34m) [39m, </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            ... [33m) [39m [36m) [39m [34m) [39m</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    t  [32m<span class="ot">&lt;-</span> [39m  [36mrev [39m [34m( [39m [36mas.character [39m [36m( [39m [36msubstitute [39m [33m( [39mtopic [33m) [39m [36m) [39m [34m) [39m</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    p  [32m<span class="ot">&lt;-</span> [39m  [36mc [39m [34m( [39m [36mas.character [39m [36m( [39m [36msubstitute [39m [33m( [39mpackage [33m) [39m [36m) [39m, t [36m[ [39m [34m2L [39m [36m] [39m [34m) [39m [34m[ [39m [34m1L [39m [34m] [39m</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     [31mif [39m  [34m( [39m [36mis.na [39m [36m( [39mp [36m) [39m [34m) [39m </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        p  [32m<span class="ot">&lt;-</span> [39m  [34m [1mNULL [22m [39m</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>     [36mstr [39m [34m( [39m [36mget [39m [36m( [39mt [33m[ [39m [34m1L [39m [33m] [39m, <span class="at">envir =</span>  [31mif [39m  [33m( [39m [36mis.null [39m [34m( [39mp [34m) [39m [33m) [39m </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         [36mparent.frame [39m [33m( [39m [33m) [39m</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>     [31melse [39m  [36masNamespace [39m [33m( [39mp [33m) [39m [36m) [39m [34m) [39m</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>     [36mtry [39m [34m( [39m [36mhelp [39m [36m( [39mt [33m[ [39m [34m1L [39m [33m] [39m, p [33m[ [39m [34m1L [39m [33m] [39m, ... [36m) [39m [34m) [39m</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a> [33m} [39m</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>felp<span class="sc">&gt;</span></span></code></pre></div>
-<pre><code>Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
-
-Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
-
-Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
-
-Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode text r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a> [<span class="dv">31</span>mfunction [<span class="dv">39</span>m  [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span>mtopic, <span class="at">package =</span>  [<span class="dv">34</span>m [<span class="dv">1</span>mNULL [<span class="dv">22</span>m [<span class="dv">39</span>m, ... [<span class="dv">33</span>m) [<span class="dv">39</span>m </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a> [<span class="dv">33</span>m{ [<span class="dv">39</span>m</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>     [<span class="dv">31</span>mif [<span class="dv">39</span>m  [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mmissing [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>mtopic [<span class="dv">36</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>         [<span class="dv">36</span>mreturn [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mdo.call [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>mhelp,  [<span class="dv">36</span>mlist [<span class="dv">39</span>m [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span><span class="at">mpackage =</span>  [<span class="dv">36</span>msubstitute [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>mpackage [<span class="dv">34</span>m) [<span class="dv">39</span>m, </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>            ... [<span class="dv">33</span>m) [<span class="dv">39</span>m [<span class="dv">36</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    t  [<span class="dv">32</span>m<span class="ot">&lt;-</span> [<span class="dv">39</span>m  [<span class="dv">36</span>mrev [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mas.character [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>msubstitute [<span class="dv">39</span>m [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span>mtopic [<span class="dv">33</span>m) [<span class="dv">39</span>m [<span class="dv">36</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    p  [<span class="dv">32</span>m<span class="ot">&lt;-</span> [<span class="dv">39</span>m  [<span class="dv">36</span>mc [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mas.character [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>msubstitute [<span class="dv">39</span>m [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span>mpackage [<span class="dv">33</span>m) [<span class="dv">39</span>m [<span class="dv">36</span>m) [<span class="dv">39</span>m, t [<span class="dv">36</span>m[ [<span class="dv">39</span>m [<span class="dv">34</span>m2L [<span class="dv">39</span>m [<span class="dv">36</span>m] [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m[ [<span class="dv">39</span>m [<span class="dv">34</span>m1L [<span class="dv">39</span>m [<span class="dv">34</span>m] [<span class="dv">39</span>m</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>     [<span class="dv">31</span>mif [<span class="dv">39</span>m  [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mis.na [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>mp [<span class="dv">36</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m </span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>        p  [<span class="dv">32</span>m<span class="ot">&lt;-</span> [<span class="dv">39</span>m  [<span class="dv">34</span>m [<span class="dv">1</span>mNULL [<span class="dv">22</span>m [<span class="dv">39</span>m</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>     [<span class="dv">36</span>mstr [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mget [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>mt [<span class="dv">33</span>m[ [<span class="dv">39</span>m [<span class="dv">34</span>m1L [<span class="dv">39</span>m [<span class="dv">33</span>m] [<span class="dv">39</span>m, <span class="at">envir =</span>  [<span class="dv">31</span>mif [<span class="dv">39</span>m  [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mis.null [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>mp [<span class="dv">34</span>m) [<span class="dv">39</span>m [<span class="dv">33</span>m) [<span class="dv">39</span>m </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>         [<span class="dv">36</span>mparent.frame [<span class="dv">39</span>m [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">33</span>m) [<span class="dv">39</span>m</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>     [<span class="dv">31</span>melse [<span class="dv">39</span>m  [<span class="dv">36</span>masNamespace [<span class="dv">39</span>m [<span class="dv">33</span><span class="fu">m</span>( [<span class="dv">39</span>mp [<span class="dv">33</span>m) [<span class="dv">39</span>m [<span class="dv">36</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>     [<span class="dv">36</span>mtry [<span class="dv">39</span>m [<span class="dv">34</span><span class="fu">m</span>( [<span class="dv">39</span>m [<span class="dv">36</span>mhelp [<span class="dv">39</span>m [<span class="dv">36</span><span class="fu">m</span>( [<span class="dv">39</span>mt [<span class="dv">33</span>m[ [<span class="dv">39</span>m [<span class="dv">34</span>m1L [<span class="dv">39</span>m [<span class="dv">33</span>m] [<span class="dv">39</span>m, p [<span class="dv">33</span>m[ [<span class="dv">39</span>m [<span class="dv">34</span>m1L [<span class="dv">39</span>m [<span class="dv">33</span>m] [<span class="dv">39</span>m, ... [<span class="dv">36</span>m) [<span class="dv">39</span>m [<span class="dv">34</span>m) [<span class="dv">39</span>m</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a> [<span class="dv">33</span>m} [<span class="dv">39</span>m</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="sc">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>felp<span class="sc">&gt;</span></span></code></pre></div>
 <div class="r-help-page">
 <div class="container">
+
 <table style="width: 100%;" class="table"><tr>
-<td>
-felp
-</td>
-<td style="text-align: right;">
-R Documentation
-</td>
+<td>felp</td>
+<td style="text-align: right;">R Documentation</td>
 </tr></table>
-<h3>
-Functional help which displays structure of an object in addition to
-help
-</h3>
-<h4>
-Description
-</h4>
-<p>
-Structure of object is returned by <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>. For a function,
-its source is returned instead of <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>.
+<h3 id="felp">Functional help which displays structure of an object in addition to help</h3>
+
+<h4>Description</h4>
+
+<p>Structure of object is returned by <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>.
+For a function, its source is returned instead of <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>.
 </p>
-<h4>
-Usage
-</h4>
-<pre class="r"><code class="language-R"><span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">topic</span>, package <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre>
-<h4>
-Arguments
-</h4>
+
+
+<h4>Usage</h4>
+
+<pre><code class="language-R"><span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">topic</span>, package <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre>
+
+
+<h4>Arguments</h4>
+
 <table class="table">
-<tr style="vertical-align: top;">
+<tr>
+<td><code id="felp_:_topic">topic</code></td>
 <td>
-<code>topic</code>
-</td>
-<td>
-<p>
-usually, a name or character string specifying the topic for which help
-is sought. A character string (enclosed in explicit single or double
-quotes) is always taken as naming a topic.
+<p>usually, a name or character string specifying the
+topic for which help is sought.  A character string (enclosed in
+explicit single or double quotes) is always taken as naming a topic.
 </p>
-<p>
-If the value of <code>topic</code> is a length-one character vector the
-topic is taken to be the value of the only element. Otherwise
-<code>topic</code> must be a name or a reserved word (if syntactically
-valid) or character string.
+<p>If the value of <code>topic</code> is a length-one
+character vector the topic is taken to be the value of the only
+element.  Otherwise <code>topic</code> must be a name or a reserved
+word (if syntactically valid) or character string.
 </p>
-<p>
-See ‘Details’ for what happens if this is omitted.
+<p>See ‘Details’ for what happens if this is omitted.
 </p>
 </td>
 </tr>
-<tr style="vertical-align: top;">
+<tr>
+<td><code id="felp_:_package">package</code></td>
 <td>
-<code>package</code>
-</td>
-<td>
-<p>
-a name or character vector giving the packages to look into for
-documentation, or <code>NULL</code>. By default, all packages whose
-namespaces are loaded are used. To avoid a name being deparsed use e.g.
-<code>(pkg_ref)</code> (see the examples).
-</p>
+<p>a name or character vector giving the packages to look
+into for documentation, or <code>NULL</code>.  By default, all packages
+whose namespaces are loaded are used.  To avoid a name being deparsed use e.g.
+<code>(pkg_ref)</code> (see the examples).</p>
 </td>
 </tr>
-<tr style="vertical-align: top;">
+<tr>
+<td><code id="felp_:_...">...</code></td>
 <td>
-<code>…</code>
-</td>
-<td>
-<p>
-Arguments passed on to <code><a href="https://rdrr.io/r/utils/help.html" class="external-link">utils::help</a></code>
+
+<p>Arguments passed on to <code><a href="https://rdrr.io/r/utils/help.html" class="external-link">utils::help</a></code>
 </p>
+
 <dl>
-<dt>
-<code>lib.loc</code>
-</dt>
+<dt><code>lib.loc</code></dt>
 <dd>
-<p>
-a character vector of directory names of <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>
-libraries, or <code>NULL</code>. The default value of <code>NULL</code>
-corresponds to all libraries currently known. If the default is used,
-the loaded packages are searched before the libraries. This is not used
-for HTML help (see ‘Details’).
-</p>
+<p>a character vector of directory names of <span class="rlang"><b>R</b></span> libraries,
+or <code>NULL</code>.  The default value of <code>NULL</code> corresponds to all
+libraries currently known.  If the default is used, the loaded
+packages are searched before the libraries.  This is not used for
+HTML help (see ‘Details’).</p>
 </dd>
-<dt>
-<code>verbose</code>
-</dt>
+<dt><code>verbose</code></dt>
 <dd>
-<p>
-logical; if <code>TRUE</code>, the file name is reported.
-</p>
+<p>logical; if <code>TRUE</code>, the file name is reported.</p>
 </dd>
-<dt>
-<code>try.all.packages</code>
-</dt>
+<dt><code>try.all.packages</code></dt>
 <dd>
-<p>
-logical; see <code>Note</code>.
-</p>
+<p>logical; see <code>Note</code>.</p>
 </dd>
-<dt>
-<code>help_type</code>
-</dt>
+<dt><code>help_type</code></dt>
 <dd>
-<p>
-character string: the type of help required. Possible values are
-<code>“text”</code>, <code>“html”</code> and <code>“pdf”</code>. Case is
-ignored, and partial matching is allowed.
-</p>
+<p>character string: the type of help required.
+Possible values are <code>"text"</code>, <code>"html"</code> and <code>"pdf"</code>.
+Case is ignored, and partial matching is allowed.</p>
 </dd>
 </dl>
 </td>
 </tr>
 </table>
-<h4>
-Examples
-</h4>
-<pre class="r"><code class="language-R"><span><span class="co"># Identical to help(identity); print(identity)</span></span>
+<h4>Examples</h4>
+
+<pre><code class="language-R"><span><span class="co"># Identical to help(identity); print(identity)</span></span>
 <span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span><span class="va">identity</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Identical to help(iris); str(iris)</span></span>
@@ -280,60 +241,52 @@ Examples
 <span><span class="fu"><a href="../reference/felp.html">felp</a></span><span class="op">(</span>package <span class="op">=</span> <span class="va">stats</span><span class="op">)</span></span>
 <span></span>
 <span></span></code></pre>
+
+
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="felpdataset">felp(dataset)<a class="anchor" aria-label="anchor" href="#felpdataset"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dummy</span><span class="op">?</span><span class="va">.</span> <span class="co"># and `felp(dummy)` return sructure and document of `dummy` dataset.</span></span></code></pre></div>
 <pre class="text"><code>List of 2
  $ a: chr "a"
  $ b: num 1</code></pre>
-<pre><code>Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
-
-Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
-
-Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf
-
-Warning in max(i1[i1 &lt; i]): no non-missing arguments to max; returning -Inf</code></pre>
 <div class="r-help-page">
 <div class="container">
+
 <table style="width: 100%;" class="table"><tr>
-<td>
-dummy
-</td>
-<td style="text-align: right;">
-R Documentation
-</td>
+<td>dummy</td>
+<td style="text-align: right;">R Documentation</td>
 </tr></table>
-<h3>
-A dummy data for felp
-</h3>
-<h4>
-Description
-</h4>
-<p>
-A dummy data for felp
+<h3 id="dummy">A dummy data for felp</h3>
+
+<h4>Description</h4>
+
+<p>A dummy data for felp
 </p>
-<h4>
-Usage
-</h4>
-<pre class="r"><code class="language-R"><span><span class="va">dummy</span></span></code></pre>
-<h4>
-Format
-</h4>
-<p>
-An object of class <code>list</code> of length 2.
+
+
+<h4>Usage</h4>
+
+<pre><code class="language-R"><span><span class="va">dummy</span></span></code></pre>
+
+
+<h4>Format</h4>
+
+<p>An object of class <code>list</code> of length 2.
 </p>
+
+
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="felppackage">felp(package)<a class="anchor" aria-label="anchor" href="#felppackage"></a>
 </h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">felp</span><span class="op">?</span><span class="va">p</span> <span class="co"># and `felp(package = felp)` return document of `felp` package</span></span></code></pre></div>
 <pre class="text"><code>        Information on package 'felp'
 
@@ -363,14 +316,14 @@ BugReports:        https://github.com/atusy/felp/issues
 License:           MIT + file LICENSE
 Encoding:          UTF-8
 Roxygen:           list(markdown = TRUE)
-RoxygenNote:       7.2.1
-Imports:           prettycode, curl, data.table, dplyr, htmltools,
-                   magrittr, matrixStats, miniUI, reactable,
+RoxygenNote:       7.2.3
+Imports:           prettycode, callr, curl, data.table, dplyr,
+                   htmltools, magrittr, matrixStats, miniUI, reactable,
                    rstudioapi, rlang, shiny, stringi, utils
 Suggests:          knitr, printr, testthat (&gt;= 2.1.0), covr, rmarkdown
 VignetteBuilder:   knitr
 Language:          en-US
-Built:             R 4.2.1; ; 2022-10-09 12:48:14 UTC; unix
+Built:             R 4.3.3; ; 2024-03-27 15:39:19 UTC; unix
 
 Index:
 
@@ -399,7 +352,7 @@ fuzzyhelp               Fuzzily Search Help and View the Selection</code></pre>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
