@@ -379,6 +379,7 @@ create_server <- function(method = c("fzf", "lv")) {
 #' @param background Whether to run a shiny gadget in a background process.
 #'  The default value is `TRUE` and can be changed by
 #'  `option(fuzzyhelp.background = FALSE)`.
+#' @inheritParams shiny::runGadget
 #'
 #' @note
 #' The default fuzzy match algorithm is a simplified version of
@@ -397,13 +398,14 @@ create_server <- function(method = c("fzf", "lv")) {
 fuzzyhelp <- function(
     query = "",
     method = getOption("fuzzyhelp.method", "fzf"),
-    background = getOption("fuzzyhelp.background", TRUE)) {
+    background = getOption("fuzzyhelp.background", TRUE),
+    viewer = shiny::paneViewer()) {
   app <- create_ui(query)
   server <- create_server(method)
 
   # Create new gadget on foreground
   if (!background) {
-    shiny::runGadget(app, server)
+    shiny::runGadget(app, server, viewer = viewer)
     return(invisible(NULL))
   }
 
@@ -412,7 +414,30 @@ fuzzyhelp <- function(
     .env$fuzzyhelp_url <- tempfile()
   }
 
-  # Re-use existing gadget
+  # View existing gadget
+  if (fuzzyhelp_bg_view(viewer)) {
+    return(.env$fuzzyhelp)
+  }
+
+  # Create new gadget on background
+  if (rstudioapi::isAvailable()) {
+    .env$fuzzyhelp <- fuzzyhelp_bg_start(app, server, identity)
+    for (i in 1:10) { # TODO: implement exponential backoff
+      if (fuzzyhelp_bg_view(viewer)) {
+        return(.env$fuzzyhelp)
+      } else {
+        message("Waiting for fuzzyhelp UI to start")
+        Sys.sleep(0.5)
+      }
+    }
+    stop("Failed to open fuzzyhelp UI")
+  }
+
+  .env$fuzzyhelp <- fuzzyhelp_bg_start(app, server, viewer)
+  return(.env$fuzzyhelp)
+}
+
+fuzzyhelp_bg_view <- function(viewer) {
   if (
     !is.null(.env$fuzzyhelp) &&
       is.null(.env$fuzzyhelp$get_exit_status()) &&
@@ -420,24 +445,29 @@ fuzzyhelp <- function(
   ) {
     url <- readLines(.env$fuzzyhelp_url)[1L]
     if (url != "") {
-      shiny::paneViewer()(url)
-      return(.env$fuzzyhelp)
+      viewer(url)
+      return(TRUE)
     }
   }
+  return(FALSE)
+}
 
-  # Create new gadget on background
-  .env$fuzzyhelp <- callr::r_bg(
-    function(..., .env) {
+fuzzyhelp_bg_start <- function(app, server, viewer) {
+  writeLines("", .env$fuzzyhelp_url) # Ensure content is empty
+  callr::r_bg(
+    function(..., .env, base_viewer) {
       viewer <- function(url) {
         writeLines(url, .env$fuzzyhelp_url)
-        shiny::paneViewer()(url)
+        base_viewer(url)
       }
       shiny::runGadget(..., viewer = viewer)
     },
-    args = list(app = app, server = server, .env = .env),
+    args = list(app = app, server = server, .env = .env, base_viewer = viewer),
     env = Sys.getenv(),
     package = TRUE
   )
+}
 
-  return(.env$fuzzyhelp)
+fuzzyhelp_addin <- function() {
+  fuzzyhelp(background = TRUE)
 }
