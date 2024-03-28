@@ -26,6 +26,10 @@ The default value is \code{TRUE} and can be changed by
 dialog window, or external browser--by passing in a call to one of the
 \code{\link[shiny:viewer]{viewer()}} functions.}
 }
+\value{
+If the \code{background} argument is \code{TRUE}, then the return value inherits from
+\code{callr::r_bg()}. Otherwise, \code{NULL} is returned.
+}
 \description{
 Users no more have to afraid of exact name of the object they need help.
 A shiny gadget helps you to find a topic fuzzily.
