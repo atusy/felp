@@ -421,16 +421,26 @@ fuzzyhelp <- function(
 
   # Create new gadget on background
   if (rstudioapi::isAvailable()) {
+    # Just start the UI without viewer because RStudio's viewer
+    # is not available fro the background process.
     .env$fuzzyhelp <- fuzzyhelp_bg_start(app, server, identity)
-    for (i in 1:10) { # TODO: implement exponential backoff
+
+    # Wait and view UI in the main process.
+    min_seed <- 1L
+    for (i in c(rep(min_seed, 10L), seq(min_seed + 1, 10))) {
       if (fuzzyhelp_bg_view(viewer)) {
         return(.env$fuzzyhelp)
       } else {
-        message("Waiting for fuzzyhelp UI to start")
-        Sys.sleep(0.5)
+        # Wait with exponential backoff
+        t <- max((i**2) / 10, 0.5)
+        if (i > min_seed) {
+          # Don't be too noisy
+          message("Failed to open fuzzyhelp UI. Will retry in ", t, " seconds")
+        }
+        Sys.sleep(t)
       }
     }
-    stop("Failed to open fuzzyhelp UI")
+    stop("Failed to open fuzzyhelp UI. Try using fuzzyhelp(background = FALSE)")
   }
 
   .env$fuzzyhelp <- fuzzyhelp_bg_start(app, server, viewer)
