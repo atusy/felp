@@ -465,14 +465,21 @@ fuzzyhelp_bg_view <- function(viewer) {
 fuzzyhelp_bg_start <- function(app, server, viewer) {
   writeLines("", .env$fuzzyhelp_url) # Ensure content is empty
   callr::r_bg(
-    function(..., .env, base_viewer) {
+    function(..., .env, base_viewer, base_options) {
+      do.call(options, base_options)
       viewer <- function(url) {
         writeLines(url, .env$fuzzyhelp_url)
         base_viewer(url)
       }
       shiny::runGadget(..., viewer = viewer)
     },
-    args = list(app = app, server = server, .env = .env, base_viewer = viewer),
+    args = list(
+      app = app,
+      server = server,
+      .env = .env,
+      base_viewer = viewer,
+      base_options = options()
+    ),
     env = Sys.getenv(),
     package = TRUE
   )
