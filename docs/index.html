@@ -85,11 +85,23 @@
 </h1></div>
 <p><code>felp</code> is a short of <strong>f</strong>unctional h<strong>elp</strong>, and provides</p>
 <ul>
-<li>fuzzy search and preview of help with <code>fuzzyhelp</code> function or “Fuzzy Search on R Help” RStudio Addin</li>
-<li>the <code>?.</code> pseudo-post fix operator to simultaneously display a help document and a structure of an object</li>
-<li>the <code>?p</code> pseudo-post fix operator to display document of a package</li>
+<li>
+<a href="fuzzy-search-and-preview-of-help">fuzzy search and preview of help</a>
+<ul>
+<li>with <code>fuzzyhelp</code> function or “Fuzzy Search on R Help” RStudio Addin</li>
 </ul>
-<p>and more in <a href="#Syntax">Syntax</a> and <a href="https://felp.atusy.net/articles/felp.html" class="external-link">Get started</a></p>
+</li>
+<li>
+<a href="#enhanced-alternatives-of-base-features">Enhanced alternatives of base features</a>
+<ul>
+<li>
+<code>?.</code> pseudo-postfix operator to simultaneously display a help document and a structure of an object</li>
+<li>
+<code>?p</code> pseudo-postfix operator to display document of a package</li>
+<li>and more</li>
+</ul>
+</li>
+</ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -107,8 +119,19 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="syntax">Syntax<a class="anchor" aria-label="anchor" href="#syntax"></a>
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
+<div class="section level3">
+<h3 id="fuzzy-search-and-preview-of-help">Fuzzy search and preview of help<a class="anchor" aria-label="anchor" href="#fuzzy-search-and-preview-of-help"></a>
+</h3>
+<p>with <code><a href="reference/fuzzyhelp.html">fuzzyhelp()</a></code> or “Fuzzy Search on R Help” RStudio Addin</p>
+<div class="float">
+<img src="reference/figures/fuzzyhelp.gif" alt="Fuzzy search and preview of help"><div class="figcaption">Fuzzy search and preview of help</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="enhanced-alternatives-of-base-features">Enhanced alternatives of base features<a class="anchor" aria-label="anchor" href="#enhanced-alternatives-of-base-features"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ? operator</span></span>
 <span><span class="op">?</span><span class="va">help</span></span>
@@ -127,6 +150,7 @@
 <span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span><span class="va">help</span>, <span class="va">utils</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/felp.html">felp</a></span><span class="op">(</span>package <span class="op">=</span> <span class="va">utils</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
 
