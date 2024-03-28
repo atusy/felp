@@ -1,4 +1,4 @@
 Name: Fuzzy Search on R Help
 Description: Search and view help files with fuzzy queries.
-Binding: fuzzyhelp
+Binding: fuzzyhelp_addin
 Interactive: true
