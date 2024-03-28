@@ -9,12 +9,13 @@
 
 `felp` is a short of **f**unctional h**elp**, and provides
 
-- fuzzy search and preview of help with `fuzzyhelp` function or "Fuzzy Search on R Help" RStudio Addin
-- the `?.` pseudo-post fix operator to simultaneously display a help document
-  and a structure of an object
-- the `?p` pseudo-post fix operator to display document of a package
-
-and more in [Syntax](#Syntax) and [Get started](https://felp.atusy.net/articles/felp.html)
+- [fuzzy search and preview of help](fuzzy-search-and-preview-of-help)
+    - with `fuzzyhelp` function or "Fuzzy Search on R Help" RStudio Addin
+- [Enhanced alternatives of base features](#enhanced-alternatives-of-base-features)
+    - `?.` pseudo-postfix operator to simultaneously display a help document
+      and a structure of an object
+    - `?p` pseudo-postfix operator to display document of a package
+    - and more
 
 ## Installation
 
@@ -30,7 +31,15 @@ install.packages("felp")
 source("https://install-github.me/atusy/felp")
 ```
 
-## Syntax
+## Features
+
+### Fuzzy search and preview of help
+
+with `fuzzyhelp()` or "Fuzzy Search on R Help" RStudio Addin
+
+![Fuzzy search and preview of help](man/figures/fuzzyhelp.gif)
+
+### Enhanced alternatives of base features
 
 ``` r
 # ? operator
