@@ -387,7 +387,9 @@ create_server <- function(method = c("fzf", "lv")) {
 #' excludes bonuses from relationship with matched characters and their
 #' previous characters.
 #'
-#' @return NULL
+#' @return
+#'   If the `background` argument is `TRUE`, then the return value inherits from
+#'  `callr::r_bg()`. Otherwise, `NULL` is returned.
 #'
 #' @examples
 #' if (FALSE) {
