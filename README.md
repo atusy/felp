@@ -37,7 +37,7 @@ source("https://install-github.me/atusy/felp")
 
 with `fuzzyhelp()` or "Fuzzy Search on R Help" RStudio Addin
 
-![Fuzzy search and preview of help](man/figures/fuzzyhelp.gif)
+![Fuzzy search and preview of help](https://felp.atusy.net/reference/figures/fuzzyhelp.gif)
 
 ### Enhanced alternatives of base features
 
