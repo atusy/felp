@@ -22,5 +22,4 @@ There are currently no downstream dependencies for this package.
 
 ## Remarks
 
-Corrected problems shown on
-<https://cran.r-project.org/web/checks/check_results_felp.html>.
+Re-submittion of v0.4.0 that fixes invalid link in README.md
