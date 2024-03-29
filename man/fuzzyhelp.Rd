@@ -7,7 +7,8 @@
 fuzzyhelp(
   query = "",
   method = getOption("fuzzyhelp.method", "fzf"),
-  background = getOption("fuzzyhelp.background", TRUE)
+  background = getOption("fuzzyhelp.background", TRUE),
+  viewer = shiny::paneViewer()
 )
 }
 \arguments{
@@ -20,6 +21,14 @@ default value can be tweaked by \code{options(fuzzyhelp.method = "lv")}.}
 \item{background}{Whether to run a shiny gadget in a background process.
 The default value is \code{TRUE} and can be changed by
 \code{option(fuzzyhelp.background = FALSE)}.}
+
+\item{viewer}{Specify where the gadget should be displayed--viewer pane,
+dialog window, or external browser--by passing in a call to one of the
+\code{\link[shiny:viewer]{viewer()}} functions.}
+}
+\value{
+If the \code{background} argument is \code{TRUE}, then the return value inherits from
+\code{callr::r_bg()}. Otherwise, \code{NULL} is returned.
 }
 \description{
 Users no more have to afraid of exact name of the object they need help.
