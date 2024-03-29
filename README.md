@@ -9,7 +9,7 @@
 
 `felp` is a short of **f**unctional h**elp**, and provides
 
-- [fuzzy search and preview of help](fuzzy-search-and-preview-of-help)
+- [fuzzy search and preview of help](#fuzzy-search-and-preview-of-help)
     - with `fuzzyhelp` function or "Fuzzy Search on R Help" RStudio Addin
 - [Enhanced alternatives of base features](#enhanced-alternatives-of-base-features)
     - `?.` pseudo-postfix operator to simultaneously display a help document
