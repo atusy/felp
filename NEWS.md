@@ -1,4 +1,4 @@
-# felp 0.3.0.9999
+# felp 0.4.0
 
 - Support `fuzzyhelp` to run Shiny App in background without blocking user terminal.
   The new behavior is enabled by default and can be disabled by passing `FALSE` to the `background` argument or to the `fuzzyhelp.background` option (#18, #20).
