@@ -15,6 +15,13 @@ get_content <- function(x, i, background) {
   type <- x$Type[i]
   topic <- x$Topic[i]
   package <- x$Package[i]
+  if (type == "demo") {
+    return(if (background) {
+      sprintf('Call <code>demo("%s")</code> to see demo', topic)
+    } else {
+      'Press "Done" to see demo.'
+    })
+  }
   if (type == "help") {
     p <- startDynamicHelp()
     if (is.null(p)) {
@@ -26,13 +33,6 @@ get_content <- function(x, i, background) {
   }
   if (type == "vignette") {
     return(get_vignette(topic, package))
-  }
-  if (type == "demo") {
-    return(if (background) {
-      sprintf('Call <code>demo("%s")</code> to see demo', topic)
-    } else {
-      'Press "Done" to see demo.'
-    })
   }
   paste("Viewer not available for the type:", type)
 }
