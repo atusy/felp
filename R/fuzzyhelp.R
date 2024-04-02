@@ -4,7 +4,7 @@ NULL
 
 #' Get preview content for Shiny UI
 #' @noRd
-get_content <- function(x, i) {
+get_content <- function(x, i, background) {
   if (NROW(x) == 0L || length(i) == 0L) {
     return("")
   }
@@ -28,7 +28,11 @@ get_content <- function(x, i) {
     return(get_vignette(topic, package))
   }
   if (type == "demo") {
-    return('Press "Done" to see demo.')
+    return(if (background) {
+      sprintf('Call <code>demo("%s")</code> to see demo', topic)
+    } else {
+      'Press "Done" to see demo.'
+    })
   }
   paste("Viewer not available for the type:", type)
 }
@@ -242,9 +246,13 @@ search_toc <- function(df, queries, ...) {
     dplyr::select(!"SCORE")
 }
 
-create_ui <- function(query = "") {
+create_ui <- function(query = "", background = FALSE) {
   miniUI::miniPage(
-    miniUI::gadgetTitleBar("Fuzzy Help Search"),
+    if (background) {
+      miniUI::gadgetTitleBar("Fuzzy Help Search", NULL, NULL)
+    } else {
+      miniUI::gadgetTitleBar("Fuzzy Help Search")
+    },
     miniUI::miniContentPanel(
       shiny::textInput(
         "query",
@@ -294,7 +302,7 @@ parse_query <- function(string) {
   queries[queries != ""]
 }
 
-create_server <- function(method = c("fzf", "lv")) {
+create_server <- function(method = c("fzf", "lv"), background = FALSE) {
   method <- match.arg(method)
   function(input, output) {
     toc <- create_toc()
@@ -326,7 +334,7 @@ create_server <- function(method = c("fzf", "lv")) {
     })
     reactiveHelp <- shiny::reactive({
       arguments <- list(style = "width: 100%; height: 100%;", id = "helpViewer")
-      content <- get_content(reactiveToc(), reactiveSelection())
+      content <- get_content(reactiveToc(), reactiveSelection(), background)
       if (grepl("^http://", content)) {
         arguments$src <- content
       } else {
@@ -353,21 +361,23 @@ create_server <- function(method = c("fzf", "lv")) {
     output$tocViewer <- reactable::renderReactable(reactiveTocViewer())
     output$helpViewer <- shiny::renderUI(reactiveHelp())
 
-    shiny::observeEvent(input$done, {
-      shiny::stopApp()
-      selection <- reactiveToc()[reactiveSelection(), ]
-      type <- selection$Type[1L]
-      topic <- selection$Topic[1L]
-      package <- selection$Package[1L]
-      if (rstudioapi::isAvailable()) {
-        rstudioapi::sendToConsole(
-          sprintf('%s("%s", package = "%s")', type, topic, package),
-          execute = TRUE
-        )
-      } else {
-        getNamespace("utils")[[type]]((topic), (package))
-      }
-    })
+    if (!background) {
+      shiny::observeEvent(input$done, {
+        shiny::stopApp()
+        selection <- reactiveToc()[reactiveSelection(), ]
+        type <- selection$Type[1L]
+        topic <- selection$Topic[1L]
+        package <- selection$Package[1L]
+        if (rstudioapi::isAvailable()) {
+          rstudioapi::sendToConsole(
+            sprintf('%s("%s", package = "%s")', type, topic, package),
+            execute = TRUE
+          )
+        } else {
+          getNamespace("utils")[[type]]((topic), (package))
+        }
+      })
+    }
   }
 }
 
@@ -412,11 +422,13 @@ startDynamicHelp <- function() {
 
 #' Fuzzily Search Help and View the Selection
 #'
-#' Users no more have to afraid of exact name of the object they need help.
+#' Users no longer have to remember the exact name to find help, vignettes,
+#' and demo.
 #' A shiny gadget helps you to find a topic fuzzily.
 #' Click radio buttons to switch preview contents.
 #' Click "Done" or "Cancel" to close the widget.
-#' The "Done" button will also hook `help` function on the selection.
+#' When `background = FALSE`, the "Done" button will also hook `help`,
+#' `vignette`, or `demo`, accordingly.
 #'
 #' @param query An initial query to search for the help system.
 #' @param method A fuzzy match method to use. Choices are "fzf" and "lv"
@@ -448,8 +460,8 @@ fuzzyhelp <- function(
     method = getOption("fuzzyhelp.method", "fzf"),
     background = getOption("fuzzyhelp.background", TRUE),
     viewer = shiny::paneViewer()) {
-  app <- create_ui(query)
-  server <- create_server(method)
+  app <- create_ui(query, background)
+  server <- create_server(method, background)
 
   # Create new gadget on foreground
   if (!background) {
