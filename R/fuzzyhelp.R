@@ -16,7 +16,13 @@ get_content <- function(x, i) {
   topic <- x$Topic[i]
   package <- x$Package[i]
   if (type == "help") {
-    return(get_help(topic, package))
+    p <- startDynamicHelp()
+    if (is.null(p)) {
+      return(get_help(topic, package))
+    }
+    h <- help((topic), (package), help_type = "html")
+    u <- sprintf("http://127.0.0.1:%d/library/%s/html/%s.html", p, package, basename(h))
+    return(u)
   }
   if (type == "vignette") {
     return(get_vignette(topic, package))
@@ -318,12 +324,14 @@ create_server <- function(method = c("fzf", "lv")) {
       reactiveToc() # avoids noisy refresh
       reactable::getReactableState("tocViewer", "selected")
     })
-    reactiveHelp <- shiny::reactive(
-      htmltools::tags$iframe(
-        srcdoc = get_content(reactiveToc(), reactiveSelection()),
-        style = "width: 100%; height: 100%;",
-        id = "helpViewer",
-        onload = "(function(){
+    reactiveHelp <- shiny::reactive({
+      arguments <- list(style = "width: 100%; height: 100%;", id = "helpViewer")
+      content <- get_content(reactiveToc(), reactiveSelection())
+      if (grepl("^http://", content)) {
+        arguments$src <- content
+      } else {
+        arguments$srcdoc <- content
+        arguments$onload <- "(function(){
           // replace anchors to avoid nesting shiny widgets
           const pattern = document.baseURI + '#';
           const iframe = document.querySelector('#helpViewer iframe');
@@ -338,8 +346,9 @@ create_server <- function(method = c("fzf", "lv")) {
               }
             });
         })();"
-      )
-    )
+      }
+      do.call(htmltools::tags$iframe, arguments)
+    })
 
     output$tocViewer <- reactable::renderReactable(reactiveTocViewer())
     output$helpViewer <- shiny::renderUI(reactiveHelp())
@@ -363,6 +372,43 @@ create_server <- function(method = c("fzf", "lv")) {
 }
 
 .env <- new.env()
+
+startDynamicHelp <- function() {
+  if (
+    !is.null(.env$helpProcess) &&
+      is.null(.env$helpProcess$get_exit_status()) &&
+      is.integer(.env$helpPort)
+  ) {
+    return(.env$helpPort)
+  }
+
+  tf <- tempfile()
+  writeLines("", tf)
+
+  .env$helpProcess <- callr::r_bg(function(output) {
+    port <- tools::startDynamicHelp(NA)
+    writeLines(as.character(port), output)
+
+    # keep the process running
+    while (TRUE) {
+      Sys.sleep(60 * 60 * 24) # without sleep, dynamic help surver stop responding
+    }
+  }, list(output = tf))
+
+  # Wait up to 1 second until the server is ready
+  for (. in seq(10)) {
+    port <- readLines(tf)
+    if (port != "") {
+      port <- as.integer(port)
+      .env$helpPort <- port
+      return(port)
+    }
+    Sys.sleep(0.1)
+  }
+
+  # If server is unavailable, return NULL and fallback to using Rd2HTML
+  return(NULL)
+}
 
 #' Fuzzily Search Help and View the Selection
 #'
