@@ -17,7 +17,7 @@ get_content <- function(x, i, background) {
   package <- x$Package[i]
   if (type == "demo") {
     return(if (background) {
-      sprintf('Call <code>demo("%s")</code> to see demo', topic)
+      sprintf('Call <code>demo("%s", "%s")</code> to see demo', topic, package)
     } else {
       'Press "Done" to see demo.'
     })
