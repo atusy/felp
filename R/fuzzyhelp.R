@@ -22,18 +22,26 @@ get_content <- function(x, i, background) {
       'Press "Done" to see demo.'
     })
   }
+
+  helpPort <- startDynamicHelp()
+  helpUrl <- "http://127.0.0.1:%d/library/%s/%s/%s%s"
+
   if (type == "help") {
-    p <- startDynamicHelp()
-    if (is.null(p)) {
+    if (is.null(helpPort)) {
       return(get_help(topic, package))
     }
     h <- help((topic), (package), help_type = "html")
-    u <- sprintf("http://127.0.0.1:%d/library/%s/html/%s.html", p, package, basename(h))
-    return(u)
+    return(sprintf(helpUrl, helpPort, package, "html", basename(h), ".html"))
   }
+
   if (type == "vignette") {
-    return(get_vignette(topic, package))
+    if (is.null(helpPort)) {
+      return(get_vignette(topic, package))
+    }
+    v <- vignette(topic, package)
+    return(sprintf(helpUrl, helpPort, basename(v$Dir), "doc", v$PDF, ""))
   }
+
   paste("Viewer not available for the type:", type)
 }
 
