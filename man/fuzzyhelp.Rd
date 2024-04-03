@@ -31,11 +31,13 @@ If the \code{background} argument is \code{TRUE}, then the return value inherits
 \code{callr::r_bg()}. Otherwise, \code{NULL} is returned.
 }
 \description{
-Users no more have to afraid of exact name of the object they need help.
+Users no longer have to remember the exact name to find help, vignettes,
+and demo.
 A shiny gadget helps you to find a topic fuzzily.
 Click radio buttons to switch preview contents.
 Click "Done" or "Cancel" to close the widget.
-The "Done" button will also hook \code{help} function on the selection.
+When \code{background = FALSE}, the "Done" button will also hook \code{help},
+\code{vignette}, or \code{demo}, accordingly.
 }
 \note{
 The default fuzzy match algorithm is a simplified version of
