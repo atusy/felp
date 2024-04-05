@@ -1,3 +1,9 @@
+# felp 0.5.0
+
+- On`fuzzyhelp()`, help/vignette contents gain syntax highlights and links. It formerly used `Rd2HTML()` to generate HTML contents. Now the contents inherit from a help server with `startDynamicHelp()`, which means they are exactly same as the contents of `help()` or `vignette()`.
+- On `fuzzyhelp()`, demo contents can be previewed.
+- On `fuzzyhelp(background = FALSE)`, "Done" and "Cancel" buttons are removed because the feature of the "Done" requires the Shiny app run on the main thread.
+
 # felp 0.4.0
 
 - Support `fuzzyhelp` to run Shiny App in background without blocking user terminal.
