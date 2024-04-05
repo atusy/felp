@@ -4,7 +4,7 @@ NULL
 
 #' Get preview content for Shiny UI
 #' @noRd
-get_content <- function(x, i, background) {
+get_content <- function(x, i) {
   if (NROW(x) == 0L || length(i) == 0L) {
     return("")
   }
@@ -15,23 +15,15 @@ get_content <- function(x, i, background) {
   type <- x$Type[i]
   topic <- x$Topic[i]
   package <- x$Package[i]
-  if (type == "demo") {
-    return(if (background) {
-      sprintf('Call <code>demo("%s", "%s")</code> to see demo', topic, package)
-    } else {
-      'Press "Done" to see demo.'
-    })
-  }
-
   helpPort <- startDynamicHelp()
-  helpUrl <- "http://127.0.0.1:%d/library/%s/%s/%s%s"
+  helpUrl <- "http://127.0.0.1:%d/%s/%s/%s/%s%s"
 
   if (type == "help") {
     if (is.null(helpPort)) {
       return(get_help(topic, package))
     }
     h <- help((topic), (package), help_type = "html")
-    return(sprintf(helpUrl, helpPort, package, "html", basename(h), ".html"))
+    return(sprintf(helpUrl, helpPort, "library", package, "html", basename(h), ".html"))
   }
 
   if (type == "vignette") {
@@ -39,7 +31,14 @@ get_content <- function(x, i, background) {
       return(get_vignette(topic, package))
     }
     v <- vignette(topic, package)
-    return(sprintf(helpUrl, helpPort, basename(v$Dir), "doc", v$PDF, ""))
+    return(sprintf(helpUrl, helpPort, "library", basename(v$Dir), "doc", v$PDF, ""))
+  }
+
+  if (type == "demo") {
+    if (is.null(helpPort)) {
+      return(sprintf('Call <code>demo("%s", "%s")</code> to see demo', topic, package))
+    }
+    return(sprintf(helpUrl, helpPort, "library", package, "Demo", topic, ""))
   }
 
   paste("Viewer not available for the type:", type)
@@ -342,7 +341,7 @@ create_server <- function(method = c("fzf", "lv"), background = FALSE) {
     })
     reactiveHelp <- shiny::reactive({
       arguments <- list(style = "width: 100%; height: 100%;", id = "helpViewer")
-      content <- get_content(reactiveToc(), reactiveSelection(), background)
+      content <- get_content(reactiveToc(), reactiveSelection())
       if (grepl("^http://", content)) {
         arguments$src <- content
       } else {
