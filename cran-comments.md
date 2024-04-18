@@ -1,6 +1,6 @@
 ## Test environments
 
-- local: x86_64-pc-linux-gnu (R-4.2)
+- local: x86_64-pc-linux-gnu (R-4.3)
 - devtools
     - `check_rhub()`
     - `check_win_devel()`
@@ -19,7 +19,3 @@
 ## revdepcheck results
 
 There are currently no downstream dependencies for this package.
-
-## Remarks
-
-Re-submittion of v0.4.0 that fixes invalid link in README.md
