@@ -12,3 +12,4 @@
 ^\.github$
 ^CRAN-SUBMISSION$
 ^man/figures/fuzzyhelp\.gif$
+^revdep$
