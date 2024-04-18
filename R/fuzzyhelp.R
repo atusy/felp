@@ -30,7 +30,7 @@ get_content <- function(x, i) {
     if (is.null(helpPort)) {
       return(get_vignette(topic, package))
     }
-    v <- vignette(topic, package)
+    v <- utils::vignette(topic, package)
     return(sprintf(helpUrl, helpPort, "library", basename(v$Dir), "doc", v$PDF, ""))
   }
 
