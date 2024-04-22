@@ -4,7 +4,7 @@ NULL
 
 #' Get preview content for Shiny UI
 #' @noRd
-get_content <- function(x, i, helpPort) {
+get_content <- function(x, i, helpPort, rstudioServer) {
   if (NROW(x) == 0L || length(i) == 0L) {
     return("")
   }
@@ -15,14 +15,18 @@ get_content <- function(x, i, helpPort) {
   type <- x$Type[i]
   topic <- x$Topic[i]
   package <- x$Package[i]
-  helpUrl <- "http://127.0.0.1:%d/%s/%s/%s/%s%s"
+  helpUrl <- if (rstudioServer) {
+    "/help/%s/%s/%s/%s%s"
+  } else {
+    paste0("http://127.0.0.1:", helpPort, "/%s/%s/%s/%s%s")
+  }
 
   if (type == "help") {
     if (is.null(helpPort)) {
       return(get_help(topic, package))
     }
     h <- help((topic), (package), help_type = "html")
-    return(sprintf(helpUrl, helpPort, "library", package, "html", basename(h), ".html"))
+    return(sprintf(helpUrl, "library", package, "html", basename(h), ".html"))
   }
 
   if (type == "vignette") {
@@ -30,14 +34,14 @@ get_content <- function(x, i, helpPort) {
       return(get_vignette(topic, package))
     }
     v <- utils::vignette(topic, package)
-    return(sprintf(helpUrl, helpPort, "library", basename(v$Dir), "doc", v$PDF, ""))
+    return(sprintf(helpUrl, "library", basename(v$Dir), "doc", v$PDF, ""))
   }
 
   if (type == "demo") {
     if (is.null(helpPort)) {
       return(sprintf('Call <code>demo("%s", "%s")</code> to see demo', topic, package))
     }
-    return(sprintf(helpUrl, helpPort, "library", package, "Demo", topic, ""))
+    return(sprintf(helpUrl, "library", package, "Demo", topic, ""))
   }
 
   paste("Viewer not available for the type:", type)
@@ -308,7 +312,11 @@ parse_query <- function(string) {
   queries[queries != ""]
 }
 
-create_server <- function(method = c("fzf", "lv"), background = FALSE, helpPort = NULL) {
+create_server <- function(
+    method = c("fzf", "lv"),
+    background = FALSE,
+    helpPort = NULL,
+    rstudioServer = FALSE) {
   method <- match.arg(method)
   function(input, output) {
     toc <- create_toc()
@@ -340,8 +348,8 @@ create_server <- function(method = c("fzf", "lv"), background = FALSE, helpPort 
     })
     reactiveHelp <- shiny::reactive({
       arguments <- list(style = "width: 100%; height: 100%;", id = "helpViewer")
-      content <- get_content(reactiveToc(), reactiveSelection(), helpPort)
-      if (grepl("^http://", content)) {
+      content <- get_content(reactiveToc(), reactiveSelection(), helpPort, rstudioServer)
+      if (grepl("^http[s]?://", content) || (rstudioServer && grepl("^/help/", content))) {
         arguments$src <- content
       } else {
         arguments$srcdoc <- content
@@ -473,7 +481,8 @@ fuzzyhelp <- function(
     viewer = shiny::paneViewer()) {
   app <- create_ui(query, background)
   helpPort <- startDynamicHelp(background) # NOTE: eager evaluate
-  server <- create_server(method, background, helpPort)
+  rstudioServer <- rstudioapi::isAvailable() && rstudioapi::versionInfo()$mode == "server"
+  server <- create_server(method, background, helpPort, rstudioServer)
 
   # Create new gadget on foreground
   if (!background) {
