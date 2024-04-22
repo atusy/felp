@@ -3,10 +3,16 @@
 NULL
 
 #' Get preview content for Shiny UI
+#'
+#' @value `list(src?: character, srcdoc?: character)`
+#'  `src` and `srcdoc` are exclusive. If dynamic help server is available,
+#'  `src` returns address to the help page. Otherwise, `srcdoc` returns
+#'  HTML content of the help page.
+#'
 #' @noRd
 get_content <- function(x, i, helpPort, rstudioServer) {
   if (NROW(x) == 0L || length(i) == 0L) {
-    return("")
+    return(list(srcdoc = ""))
   }
   if (length(i) > 1L) {
     warning("i should be an integer vector of the length equal to 1.")
@@ -23,28 +29,33 @@ get_content <- function(x, i, helpPort, rstudioServer) {
 
   if (type == "help") {
     if (is.null(helpPort)) {
-      return(get_help(topic, package))
+      return(list(srcdoc = if (is.null(helpPort)) get_help(topic, package)))
+    } else {
+      h <- help((topic), (package), help_type = "html")
+      return(
+        list(src = sprintf(helpUrl, "library", package, "html", basename(h), ".html"))
+      )
     }
-    h <- help((topic), (package), help_type = "html")
-    return(sprintf(helpUrl, "library", package, "html", basename(h), ".html"))
   }
 
   if (type == "vignette") {
     if (is.null(helpPort)) {
-      return(get_vignette(topic, package))
+      return(list(srcdoc = if (is.null(helpPort)) get_vignette(topic, package)))
+    } else {
+      v <- utils::vignette(topic, package)
+      return(list(src = sprintf(helpUrl, "library", basename(v$Dir), "doc", v$PDF, "")))
     }
-    v <- utils::vignette(topic, package)
-    return(sprintf(helpUrl, "library", basename(v$Dir), "doc", v$PDF, ""))
   }
 
   if (type == "demo") {
     if (is.null(helpPort)) {
-      return(sprintf('Call <code>demo("%s", "%s")</code> to see demo', topic, package))
+      return(list(srcdoc = sprintf('Call <code>demo("%s", "%s")</code> to see demo', topic, package)))
+    } else {
+      return(list(src = sprintf(helpUrl, "library", package, "Demo", topic, "")))
     }
-    return(sprintf(helpUrl, "library", package, "Demo", topic, ""))
   }
 
-  paste("Viewer not available for the type:", type)
+  return(list(srcdoc = paste("Viewer not available for the type:", type)))
 }
 
 #' Create ToC of help
@@ -349,10 +360,10 @@ create_server <- function(
     reactiveHelp <- shiny::reactive({
       arguments <- list(style = "width: 100%; height: 100%;", id = "helpViewer")
       content <- get_content(reactiveToc(), reactiveSelection(), helpPort, rstudioServer)
-      if (grepl("^http[s]?://", content) || (rstudioServer && grepl("^/help/", content))) {
-        arguments$src <- content
+      if (is.null(content$srcdoc)) {
+        arguments$src <- content$src
       } else {
-        arguments$srcdoc <- content
+        arguments$srcdoc <- content$srcdoc
         arguments$onload <- "(function(){
           // replace anchors to avoid nesting shiny widgets
           const pattern = document.baseURI + '#';
