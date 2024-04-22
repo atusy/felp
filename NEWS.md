@@ -1,3 +1,7 @@
+# felp 0.5.1
+
+- Fixed `fuzzyhelp()` not showing preview on RStudio Server.
+
 # felp 0.5.0
 
 - On `fuzzyhelp()`, help/vignette contents gain syntax highlights and links. It formerly used `Rd2HTML()` to generate HTML contents. Now the contents inherit from a help server with `startDynamicHelp()`, which means they are exactly same as the contents of `help()` or `vignette()`.
