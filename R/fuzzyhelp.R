@@ -4,7 +4,7 @@ NULL
 
 #' Get preview content for Shiny UI
 #' @noRd
-get_content <- function(x, i) {
+get_content <- function(x, i, helpPort) {
   if (NROW(x) == 0L || length(i) == 0L) {
     return("")
   }
@@ -15,7 +15,6 @@ get_content <- function(x, i) {
   type <- x$Type[i]
   topic <- x$Topic[i]
   package <- x$Package[i]
-  helpPort <- startDynamicHelp()
   helpUrl <- "http://127.0.0.1:%d/%s/%s/%s/%s%s"
 
   if (type == "help") {
@@ -309,7 +308,7 @@ parse_query <- function(string) {
   queries[queries != ""]
 }
 
-create_server <- function(method = c("fzf", "lv"), background = FALSE) {
+create_server <- function(method = c("fzf", "lv"), background = FALSE, helpPort = NULL) {
   method <- match.arg(method)
   function(input, output) {
     toc <- create_toc()
@@ -341,7 +340,7 @@ create_server <- function(method = c("fzf", "lv"), background = FALSE) {
     })
     reactiveHelp <- shiny::reactive({
       arguments <- list(style = "width: 100%; height: 100%;", id = "helpViewer")
-      content <- get_content(reactiveToc(), reactiveSelection())
+      content <- get_content(reactiveToc(), reactiveSelection(), helpPort)
       if (grepl("^http://", content)) {
         arguments$src <- content
       } else {
@@ -389,8 +388,13 @@ create_server <- function(method = c("fzf", "lv"), background = FALSE) {
 }
 
 .env <- new.env()
+# 31537
 
-startDynamicHelp <- function() {
+startDynamicHelp <- function(background) {
+  if (background) {
+    return(tools::startDynamicHelp(NA))
+  }
+
   if (
     !is.null(.env$helpProcess) &&
       is.null(.env$helpProcess$get_exit_status()) &&
@@ -468,7 +472,8 @@ fuzzyhelp <- function(
     background = getOption("fuzzyhelp.background", TRUE),
     viewer = shiny::paneViewer()) {
   app <- create_ui(query, background)
-  server <- create_server(method, background)
+  helpPort <- startDynamicHelp(background) # NOTE: eager evaluate
+  server <- create_server(method, background, helpPort)
 
   # Create new gadget on foreground
   if (!background) {
