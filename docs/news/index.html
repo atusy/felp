@@ -51,7 +51,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.5.0" id="felp-050">felp 0.5.0<a class="anchor" aria-label="anchor" href="#felp-050"></a></h2>
+<h2 class="page-header" data-toc-text="0.5.1" id="felp-051">felp 0.5.1<a class="anchor" aria-label="anchor" href="#felp-051"></a></h2>
+<ul><li>Fixed <code><a href="../reference/fuzzyhelp.html">fuzzyhelp()</a></code> not showing preview on RStudio Server.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="felp-050">felp 0.5.0<small>2024-04-18</small><a class="anchor" aria-label="anchor" href="#felp-050"></a></h2>
 <ul><li>On <code><a href="../reference/fuzzyhelp.html">fuzzyhelp()</a></code>, help/vignette contents gain syntax highlights and links. It formerly used <code>Rd2HTML()</code> to generate HTML contents. Now the contents inherit from a help server with <code>startDynamicHelp()</code>, which means they are exactly same as the contents of <code><a href="https://rdrr.io/r/utils/help.html" class="external-link">help()</a></code> or <code><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette()</a></code>.</li>
 <li>On <code><a href="../reference/fuzzyhelp.html">fuzzyhelp()</a></code>, demo contents can be previewed.</li>
 <li>On <code>fuzzyhelp(background = FALSE)</code>, “Done” and “Cancel” buttons are removed because the feature of the “Done” requires the Shiny app run on the main thread.</li>
