@@ -42,8 +42,6 @@ Suggests:
     knitr,
     printr,
     testthat (>= 2.1.0),
-    covr,
-    rmarkdown
 VignetteBuilder:
     knitr
 Language: en-US
