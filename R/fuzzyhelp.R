@@ -277,7 +277,8 @@ create_ui <- function(query = "", background = FALSE) {
     miniUI::miniContentPanel(
       shiny::textInput(
         "query",
-        label = "Search query",
+        label = NULL,
+        placeholder = "Search query",
         value = paste(query, collapse = " "),
         width = "100%"
       ),
