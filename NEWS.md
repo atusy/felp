@@ -1,6 +1,11 @@
-# felp 0.5.1
+# felp 0.6.0
 
-- Fixed `fuzzyhelp()` not showing preview on RStudio Server.
+- Fixed `fuzzyhelp()` not showing preview on RStudio Server (#23).
+- Remove **covr** and **rmarkdown** from suggests (#24).
+- Improved Shiny UI of `fuzzyhelp()` (#25)
+    - resize with CSS instead of JS so that resize works properly on Chrome and Firefox
+    - increase height of help viewer
+    - theming TOC to be striped, be dense, and to highlight hovered-row
 
 # felp 0.5.0
 
