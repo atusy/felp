@@ -325,7 +325,14 @@ create_server <- function(
         defaultPageSize = 20,
         selection = "single",
         defaultSelected = if (nrow(toc_matched) != 0) 1L,
-        onClick = "select"
+        onClick = "select",
+        striped = TRUE,
+        highlight = TRUE,
+        theme = reactable::reactableTheme(
+          cellPadding = "2px",
+          style = list(fontSize = "0.9em"),
+          highlight = "beige"
+        )
       )
     }))
     reactiveSelection <- shiny::reactive({
