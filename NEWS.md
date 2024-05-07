@@ -6,6 +6,7 @@
     - resize with CSS instead of JS so that resize works properly on Chrome and Firefox
     - increase height of help viewer
     - theming TOC to be striped, be dense, and to highlight hovered-row
+- Improved performance of `fuzzyhelp()` (#26)
 
 # felp 0.5.0
 
