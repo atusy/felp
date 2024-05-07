@@ -189,7 +189,7 @@ adist2 <- function(x, y, case_sensitive) {
 }
 
 score_toc_filtered <- list(
-  fzf = function(toc, queries) {
+  fzf = function(toc, queries, ..., score_matrix = score_matrix) {
     query_chars_list <- split_chars(queries)
     score <- score_matrix(toc$Package, query_chars_list, extra_bonus = FALSE)
     topic <- score_matrix(toc$Topic, query_chars_list, extra_bonus = FALSE)
@@ -197,7 +197,7 @@ score_toc_filtered <- list(
     score[right] <- topic[right]
     return(-colSums(score))
   },
-  lv = function(toc, queries) {
+  lv = function(toc, queries, ...) {
     res <- adist2(toc$Package, queries)
     topic <- adist2(toc$Topic, queries)
     right <- res > topic
@@ -217,7 +217,7 @@ detect <- function(package, topic, query, case_sensitive) {
   return(d)
 }
 
-score_toc <- function(toc, queries, method = c("fzf", "lv")) {
+score_toc <- function(toc, queries, method = c("fzf", "lv"), ...) {
   n <- nrow(toc)
   score <- rep(NA_integer_, n)
   method <- match.arg(method)
@@ -247,7 +247,7 @@ score_toc <- function(toc, queries, method = c("fzf", "lv")) {
 
   # Calculate and return score for filtered items
   score[prefilter] <- score_toc_filtered[[method]](
-    toc[prefilter, ], unique_queries
+    toc[prefilter, ], unique_queries, ...
   )
   return(score)
 }
@@ -304,10 +304,16 @@ create_server <- function(
     helpPort = NULL,
     rstudioServer = FALSE) {
   method <- match.arg(method)
+  toc <- create_toc()
+  score_matrix2 <- memoise::memoise(score_matrix)
   function(input, output) {
-    toc <- create_toc()
     reactiveQueries <- shiny::reactive(parse_query(input$query))
-    reactiveToc <- shiny::reactive(search_toc(toc, reactiveQueries(), method = method))
+    reactiveToc <- shiny::reactive(search_toc(
+      toc,
+      reactiveQueries(),
+      method = method,
+      score_matrix = score_matrix2
+    ))
     reactiveTocViewer <- shiny::reactive(local({
       toc_matched <- dplyr::mutate(
         reactiveToc(),
