@@ -289,6 +289,15 @@ create_ui <- function(query = "", background = FALSE) {
     htmltools::tags$style("
       #tocViewer { overflow: hidden; resize: vertical; margin-bottom: 15px }
     "),
+    htmltools::tags$script("(function() {
+      const url = new URL(window.location.href);
+      const q = url.searchParams.get('q');
+      if (q != null) {
+        const input = document.getElementById('query');
+        input.value = q;
+        input.dispatchEvent(new Event('input'));
+      }
+    })();"),
     style = "display: grid; grid-template-rows: auto 1fr; height: 100vh"
   )
 }
@@ -296,6 +305,11 @@ create_ui <- function(query = "", background = FALSE) {
 parse_query <- function(string) {
   queries <- stringi::stri_split_fixed(string, " ")[[1L]]
   queries[queries != ""]
+}
+
+updateQueryString <- function(query, package, topic) {
+  s <- paste0("?q=", query)
+  shiny::updateQueryString(s)
 }
 
 create_server <- function(
@@ -307,7 +321,11 @@ create_server <- function(
   toc <- create_toc()
   score_matrix2 <- memoise::memoise(score_matrix)
   function(input, output) {
-    reactiveQueries <- shiny::reactive(parse_query(input$query))
+    reactiveRawQuery <- shiny::reactive(input$query)
+    shiny::observe({
+      updateQueryString(reactiveRawQuery())
+    })
+    reactiveQueries <- shiny::reactive(parse_query(reactiveRawQuery()))
     reactiveToc <- shiny::reactive(search_toc(
       toc,
       reactiveQueries(),
