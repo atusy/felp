@@ -12,16 +12,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Functional Help for Functions, Objects, and Packages">
-<meta property="og:description" content="
-    Enhance R help system by fuzzy search and preview interface, pseudo-postfix operators, and more.
-    The `?.` pseudo-postfix operator and the `?` prefix operator displays documents and contents (source or structure) of objects simultaneously to help understanding the objects.
-    The `?p` pseudo-postfix operator displays package documents, and is shorter than help(package = foo).">
+<meta property="og:description" content="Enhance R help system by fuzzy search and preview interface, pseudo-postfix operators, and more. The `?.` pseudo-postfix operator and the `?` prefix operator displays documents and contents (source or structure) of objects simultaneously to help understanding the objects. The `?p` pseudo-postfix operator displays package documents, and is shorter than help(package = foo).">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -124,16 +121,21 @@
 <div class="section level3">
 <h3 id="fuzzy-search-and-preview-of-help">Fuzzy search and preview of help<a class="anchor" aria-label="anchor" href="#fuzzy-search-and-preview-of-help"></a>
 </h3>
-<p>with <code><a href="reference/fuzzyhelp.html">fuzzyhelp()</a></code> or “Fuzzy Search on R Help” RStudio Addin</p>
+<p>with <code><a href="reference/fuzzyhelp.html">felp::fuzzyhelp()</a></code> or “Fuzzy Search on R Help” RStudio Addin:</p>
 <div class="float">
 <img src="https://felp.atusy.net/reference/figures/fuzzyhelp.gif" alt="Fuzzy search and preview of help"><div class="figcaption">Fuzzy search and preview of help</div>
 </div>
+<p>This feature is a <a href="Shiny">https://shiny.posit.co/</a> app and is also available online at <a href="https://atusy.shinyapps.io/fuzzyhelp/" class="external-link uri">https://atusy.shinyapps.io/fuzzyhelp/</a>. Note that some features are disabled in the online version (e.g., links between help topics and syntax highlights). Also, the online version has a limit on the number of available packages (<strong>tidyverse</strong> + <strong>felp</strong>).</p>
+<p>There is also a similar project at <a href="https://helpr.atusy.net/" class="external-link uri">https://helpr.atusy.net/</a> based on <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">WebR</a>. The main differences are appearance and the number of available packages. <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">WebR</a>-based project supports installing any package on CRAN. Once you type <code>{{ packageName }}::</code> (e.g., <code>dplyr::</code>), <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">WebR</a> installs the package and you can find help topics in the package (e.g., <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate</a></code>).</p>
 </div>
 <div class="section level3">
 <h3 id="enhanced-alternatives-of-base-features">Enhanced alternatives of base features<a class="anchor" aria-label="anchor" href="#enhanced-alternatives-of-base-features"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># ? operator</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://felp.atusy.net/" class="external-link">felp</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># ? operator</span></span>
 <span><span class="op">?</span><span class="va">help</span></span>
 <span><span class="op">?</span><span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span></span>
 <span></span>
@@ -208,7 +210,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
