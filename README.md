@@ -42,6 +42,9 @@ with `fuzzyhelp()` or "Fuzzy Search on R Help" RStudio Addin
 ### Enhanced alternatives of base features
 
 ``` r
+library(felp)
+
+
 # ? operator
 ?help
 ?utils::help
