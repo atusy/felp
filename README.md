@@ -35,9 +35,21 @@ source("https://install-github.me/atusy/felp")
 
 ### Fuzzy search and preview of help
 
-with `felp::fuzzyhelp()` or "Fuzzy Search on R Help" RStudio Addin
+with `felp::fuzzyhelp()` or "Fuzzy Search on R Help" RStudio Addin:
 
 ![Fuzzy search and preview of help](https://felp.atusy.net/reference/figures/fuzzyhelp.gif)
+
+This feature is a [https://shiny.posit.co/](Shiny) app and is also available online at <https://atusy.shinyapps.io/fuzzyhelp/>.
+Note that some features are disabled in the online version (e.g., links between help topics and syntax highlights).
+Also, the online version has a limit on the number of available packages (**tidyverse** + **felp**).
+
+There is also a similar project at <https://helpr.atusy.net/> based on [WebR].
+The main differences are appearance and the number of available packages.
+[WebR]-based project supports installing any package on CRAN.
+Once you type `{{ packageName }}::` (e.g., `dplyr::`), [WebR] installs the package and you can find help topics in the package (e.g., `dplyr::mutate`).
+
+[WebR]: https://docs.r-wasm.org/webr/latest/
+
 
 ### Enhanced alternatives of base features
 
