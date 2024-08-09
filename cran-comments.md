@@ -14,7 +14,28 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 notes
+
+1 note says that some of the URIs are possibly invalid, but they are valid.
+
+```
+* checking CRAN incoming feasibility ... [10s] NOTE
+Maintainer: 'Atsushi Yasumoto <atusy.rpkg@gmail.com>'
+
+Found the following (possibly) invalid URLs:
+  URL: https://atusy.shinyapps.io/fuzzyhelp/
+    From: README.md
+    Status: 202
+    Message: Accepted
+  URL: https://felp.atusy.net/
+    From: DESCRIPTION
+    Status: Error
+    Message: Recv failure: Connection was reset
+  URL: https://helpr.atusy.net/
+    From: README.md
+    Status: Error
+    Message: Recv failure: Connection was reset
+```
 
 ## revdepcheck results
 
