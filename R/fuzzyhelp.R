@@ -4,7 +4,7 @@ NULL
 
 #' Get preview content for Shiny UI
 #'
-#' @value `list(src?: character, srcdoc?: character)`
+#' @return `list(src?: character, srcdoc?: character)`
 #'  `src` and `srcdoc` are exclusive. If dynamic help server is available,
 #'  `src` returns address to the help page. Otherwise, `srcdoc` returns
 #'  HTML content of the help page.
