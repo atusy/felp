@@ -39,7 +39,7 @@ with `felp::fuzzyhelp()` or "Fuzzy Search on R Help" RStudio Addin:
 
 ![Fuzzy search and preview of help](https://felp.atusy.net/reference/figures/fuzzyhelp.gif)
 
-This feature is a [https://shiny.posit.co/](Shiny) app and is also available online at <https://atusy.shinyapps.io/fuzzyhelp/>.
+This feature is a [Shiny](https://shiny.posit.co/) app and is also available online at <https://atusy.shinyapps.io/fuzzyhelp/>.
 Note that some features are disabled in the online version (e.g., links between help topics and syntax highlights).
 Also, the online version has a limit on the number of available packages (**tidyverse** + **felp**).
 
